@@ -42,7 +42,8 @@ está, pásalo con `--bds`). Úsalo después de tocar cualquier `BP/entities/*.j
   prueban y pueden salir como `CHECK`; mira el `filters` del evento antes de tocar nada.
 - Solo toca la carpeta del servidor (mundo `mv_test`, packs de desarrollo, `server.properties` con
   copia de seguridad restaurada al final). No lo arranques para otra cosa ni cambies su versión.
-- Visual con animaciones en movimiento: skill **mv-blockbench**.
+- Visual con animaciones en movimiento y separación de capas medida (`bbcheck.py`): skill **mv-blockbench**.
+  Tras tocar una capa: `python -I tools/bbcheck.py --measure <mob>` (necesita Blockbench abierto).
 
 ## CI
 

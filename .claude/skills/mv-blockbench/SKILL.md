@@ -1,7 +1,7 @@
 ---
 name: mv-blockbench
 description: Usar Blockbench (MCP blockbench) en Mob Variants - ver una variante con sus capas y animaciones vanilla en movimiento, comprobar que los cosméticos siguen a los huesos, ajustar o crear capas (huesos con nombre/pivote vanilla) y pintar texturas. Úsala cuando render.py no basta (animaciones, edición visual) o el usuario pida revisar algo en Blockbench.
-allowed-tools: Bash(python -I tools/bbscene.py:*), Bash(python -I tools/bbapply.py:*), Bash(curl -s -m 3 http://127.0.0.1:8787/ping), mcp__blockbench__get_status, mcp__blockbench__execute_script, mcp__blockbench__screenshot, mcp__blockbench__screenshot_views, mcp__blockbench__list_outliner, mcp__blockbench__get_element, mcp__blockbench__list_animations, mcp__blockbench__list_textures, mcp__blockbench__get_texture, mcp__blockbench__check_model, mcp__blockbench__get_orientation, mcp__blockbench__which_side, mcp__blockbench__set_camera_angle, Read(tools/out/*)
+allowed-tools: Bash(python tools/bbcheck.py:*), Bash(python -I tools/bbcheck.py:*), Bash(python -I tools/bbscene.py:*), Bash(python -I tools/bbapply.py:*), Bash(curl -s -m 3 http://127.0.0.1:8787/ping), mcp__blockbench__get_status, mcp__blockbench__execute_script, mcp__blockbench__screenshot, mcp__blockbench__screenshot_views, mcp__blockbench__list_outliner, mcp__blockbench__get_element, mcp__blockbench__list_animations, mcp__blockbench__list_textures, mcp__blockbench__get_texture, mcp__blockbench__check_model, mcp__blockbench__get_orientation, mcp__blockbench__which_side, mcp__blockbench__set_camera_angle, Read(tools/out/*)
 ---
 
 # Blockbench en este proyecto
@@ -22,6 +22,17 @@ Las herramientas de pintura y `pack_uv` solo según la skill mv-texture.
    menú **Tools ▸ Start MCP Server**."
 2. Si el ping va pero no tienes las herramientas: "Ejecuta `/mcp` en Claude Code y reconecta
    **blockbench** (o reinicia la sesión)."
+
+## Atajos (úsalos antes que las llamadas sueltas: gastan muchos menos tokens)
+
+- `python tools/bbcheck.py <mob> [--bp …] [--nobp --roll xvar=20] [--anim A …] [--views front_right,left] [--frames 4]`
+  → UNA hoja `tools/out/bb/<mob>_sheet.png` (reposo + cada animación en varios instantes) y la medición
+  de sus capas. Lee esa imagen; no hagas capturas una a una.
+- `python -I tools/bbcheck.py --measure [mob …] [--max-px 0.5] [--verbose]` → sin imágenes: cuántos px
+  se separa cada capa del hueso vanilla de su nombre en todas las animaciones de adulto (todos los mobs:
+  ~4 min). Solo imprime las que se separan. `FULL` (con --verbose) = modelo completo, no capa.
+  Resultado 2026-11-18: frog_crown 2.5 px, irongolem_rose 1.9, sniffer_pitchflower 1.1, sniffer_torchflower 1.2.
+- Sin BP las capas dependen del sorteo: `--nobp --roll xvar=N` (0-99) fija el sorteo para ver una concreta.
 
 ## 1. Cargar una variante (base + capas + texturas + animaciones)
 
