@@ -31,11 +31,14 @@ from mvsim import spawn_distribution  # noqa: E402
 
 HARNESS = os.path.join(ROOT, "tools", "bds", "mv_test_bp")
 WORLD = "mv_test"
+# Server messages that are not about the packs.
+NOISE = ("errorMessage=(null)", "ALLOW LIST WARNING", "Allow list is enabled", "allowlist add", "allowlist.json",
+         "] =====", "WARN] \n", "WARN] ")
 BOSSES = ["minecraft:ender_dragon", "minecraft:wither", "minecraft:warden", "minecraft:elder_guardian"]
 PROPS = {
     "level-name": WORLD, "level-type": "FLAT", "gamemode": "creative", "difficulty": "easy",
     "server-port": "19152", "server-portv6": "19153", "content-log-file-enabled": "true",
-    "content-log-console-output-enabled": "true", "allow-cheats": "true", "online-mode": "false",
+    "content-log-console-output-enabled": "true", "allow-cheats": "true",
 }
 
 
@@ -185,7 +188,7 @@ def main() -> int:
             if "mob" in d:
                 results[d["mob"]] = d
     log_lines = [ln for ln in lines if ("ERROR" in ln or "WARN" in ln or "[Json]" in ln or "error" in ln.lower())
-                 and "MVTEST" not in ln]
+                 and "MVTEST" not in ln and not any(n in ln for n in NOISE) and not ln.rstrip().endswith("]")]
     problems = 0
     print()
     if not done:

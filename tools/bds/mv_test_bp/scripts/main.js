@@ -5,7 +5,8 @@
 import { world, system } from "@minecraft/server";
 import { MOBS, COUNT, BOSS_COUNT, BOSSES } from "./config.js";
 
-const LOC = { x: 0.5, y: -59, z: 0.5 }; // just above the superflat surface (y = -61)
+// y = 64: surface altitude, so filters like is_altitude >= 30 (zombie marks) take the surface branch.
+const LOC = { x: 0.5, y: 64, z: 0.5 };
 
 function log(obj) {
   console.warn("MVTEST " + JSON.stringify(obj));
