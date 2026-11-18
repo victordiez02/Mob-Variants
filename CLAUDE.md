@@ -49,6 +49,8 @@ No hay que copiar nada: guardar y volver a entrar al mundo basta.
 - **mv-verify**: comprobar cualquier cambio (check, render, Content Log, BDS, CI).
 - **mv-skin**: skins nuevas (`addskin.py`), cosméticos como capa y mobs nuevos.
 - **mv-release**: commits, versiones, paquetes, releases y Minecraft nuevo.
+- **mv-texture**: texturas: plantillas UV, migrar skins a otro modelo (`texuv.py retarget`), recolorear,
+  `lint`, pintar en Blockbench.
 - **mv-blockbench**: Blockbench por MCP: variantes con animaciones en movimiento, editar capas, texturas.
   No arranques Blockbench ni el MCP tú (está denegado en `.claude/settings.json`): pídeselo al usuario.
 
