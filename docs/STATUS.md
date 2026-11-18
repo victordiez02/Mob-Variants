@@ -90,6 +90,9 @@ ocelote, husk.
       (`sniffer_torchflower` desplazado 1,75 en Z), evocador y vindicador (`body` con pivote 12 en vez
       de 24 y padre `waist`), y casi todas las capas del zombi (cuelgan de `spine`, que no existe en
       vanilla). Las de padre `root` cuando vanilla no tiene padre son inofensivas mientras nada anime `root`.
+    - **Vindicador**: `vindicator9.png` y `vindicator12.png` son idénticas (una variante repetida).
+    - **Wither**: `wither_armor_blue.png` mide 64×32 y `geometry.mv.wither_boss_armor` declara 64×64
+      (la textura se estira al doble en vertical).
     - Inofensivo: `mv_default2` del pollo (rama de bebé inalcanzable), `mv_empty` del esqueleto wither,
       `mv_ghost` del guardián y `mv_exploding` del dragón no se usan.
 

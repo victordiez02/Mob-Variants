@@ -11,6 +11,7 @@ scripts que necesitan Pillow si está instalado en el usuario.
 python -I tools/check.py [mob ...]      # todo lo estático: validate + bpcheck + simulate (resumen)
 python tools/render.py <mob>            # imágenes de las variantes -> tools/out/<mob>.png
 python -I tools/contentlog.py --since 20:10   # errores del Content Log del juego, agrupados
+python -I tools/addskin.py <mob> <png>        # skin nueva en entidad, render controller y BP
 ```
 
 Todos devuelven código 1 si hay errores.
@@ -24,6 +25,10 @@ Todos devuelven código 1 si hay errores.
 | `render.py <mob> [opciones]` | Renderizador por software: dibuja cada combinación distinta (de más a menos probable) con todas sus capas, `part_visibility` y la pose estática de las animaciones de la entidad. Opciones: `--nobp`, `--bp mv:variant=3`, `--q is_angry=1`, `--q climate=warm`, `--view front\|back\|side\|top\|all`, `--max N`, `--size PX`, `--nopose`, `--out`. Ver detalles en la cabecera del script. |
 | `contentlog.py [--since HH:MM] [--all] [--list] [--file F]` | Lee el Content Log más reciente de `%APPDATA%\Minecraft Bedrock\logs`, solo errores y avisos, agrupando los repetidos. |
 | `geotool.py fit \| faces \| limbmerge` | Pasar skins de modelos re-rigueados al modelo vanilla: `fit` (qué % del UV del modelo propio cae dentro de cada modelo vanilla), `faces <geo addon> <geo vanilla> [hueso=huesoVanilla …]` (cara a cara), `limbmerge <geo addon> <geo vanilla> <texturas…>` (recoloca extremidades partidas; **modifica las texturas**). Como módulo, `build_overlay()` genera capas a partir de huesos de un modelo antiguo (ver `refactor(witch)`, `refactor(spider)`, `refactor(pig)` en git). |
+| `addskin.py <mob> <png> [--array A] [--key K] [--weight W] [--dry-run]` | Añade una skin en todos los sitios: copia el PNG, clave `mv_defaultN` en la entidad, entrada en el array del render controller y, si el array se lee como `[v.mv_variant - 1]`, `range` y `randomize` del BP. Conserva el formato de los archivos (diffs mínimos). |
+| `package.py` | Comprueba que los manifests concuerdan (versiones, dependencia BP → RP) y genera `dist/MobVariants_RP_<v>.mcpack`, `…_BP_<v>.mcpack` y `MobVariants_<v>.mcaddon`. |
+| `bdstest.py [mob ...] [--bds DIR] [--count N] [--keep]` | Prueba el BP en el motor real con Bedrock Dedicated Server (`MV_BDS` = carpeta del servidor): mundo plano nuevo con RP, BP y el BP de pruebas `tools/bds/mv_test_bp` (Script API), hace aparecer cada mob N veces y compara el % de cada `mv:*` con el esperado del `randomize`, además de listar los errores del servidor. Solo toca la carpeta del servidor (copia de seguridad de `server.properties`). |
+| `hooks/pre-commit` | validate + bpcheck (+ ruff si cambian scripts) antes de cada commit. Se activa una vez con `git config core.hooksPath tools/hooks`. |
 | `getvanilla.py [--force \| --version]` | Descarga la plantilla `vanilla/` (bedrock-samples) de la versión fijada en `VERSION`. |
 | `mvlib.py`, `molang.py`, `mvsim.py` | Módulos: JSON con comentarios, índices de packs, geometrías (herencia 1.8, UV de caras), `save()` con formato compacto; intérprete de Molang (perezoso en `?:`, `&&`, `||`, como el juego); simulación de una entidad en un estado dado. |
 
