@@ -1,0 +1,103 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft:evocation_illager",
+      "min_engine_version": "1.8.0",
+      "materials": { "mv_default": "evoker", "mv_glow": "enderman" },
+      "textures": {
+        "mv_default": "textures/entity/illager/evoker",
+        "mv_default2": "textures/entity/illager/evoker2",
+        "mv_default3": "textures/entity/illager/evoker3",
+        "mv_default4": "textures/entity/illager/evoker4",
+        "mv_default5": "textures/entity/illager/evoker5",
+        "mv_default6": "textures/entity/illager/evoker6",
+        "mv_default7": "textures/entity/illager/evoker7",
+        "mv_default8": "textures/entity/illager/evoker8",
+        "mv_default9": "textures/entity/illager/evoker9",
+        "mv_default10": "textures/entity/illager/evoker10",
+        "mv_default11": "textures/entity/illager/evoker11",
+        "mv_default12": "textures/entity/illager/evoker12",
+        "mv_default13": "textures/entity/illager/evoker13",
+        "mv_default14": "textures/entity/illager/evoker14",
+        "mv_default15": "textures/entity/illager/evoker15",
+        "mv_default16": "textures/entity/illager/evoker16",
+        "mv_default17": "textures/entity/illager/evoker17",
+        "mv_default18": "textures/entity/illager/evoker18",
+        "mv_default19": "textures/entity/illager/evoker19",
+        "mv_default20": "textures/entity/illager/evoker20",
+        "mv_default21": "textures/entity/illager/evoker21",
+        "mv_default22": "textures/entity/illager/evoker22",
+        "mv_default23": "textures/entity/illager/evoker23",
+        "mv_default24": "textures/entity/illager/evoker24",
+        "mv_default25": "textures/entity/illager/evoker25",
+        "mv_default26": "textures/entity/illager/evoker26",
+        "mv_default27": "textures/entity/illager/evoker27",
+        "mv_default28": "textures/entity/illager/evoker28",
+        "mv_default29": "textures/entity/illager/evoker29",
+        "mv_default30": "textures/entity/illager/evoker30",
+        "mv_default31": "textures/entity/illager/evoker31",
+        "mv_default32": "textures/entity/illager/evoker32",
+        "mv_no_hat": "textures/entity/illager/evoker_no_hat",
+        "mv_hat": "textures/entity/illager/evoker_hat",
+        "mv_hat2": "textures/entity/illager/evoker_hat2",
+        "mv_hat3": "textures/entity/illager/evoker_hat3",
+        "mv_wizard": "textures/entity/illager/evoker_wizard",
+        "mv_windcaller": "textures/entity/illager/evoker_windcaller",
+        "mv_enchanter": "textures/entity/illager/evoker_enchanter",
+        "mv_geomancer": "textures/entity/illager/evoker_geomancer",
+        "mv_chef": "textures/entity/illager/evoker_chef"
+      },
+      "geometry": {
+        "mv_default": "geometry.mv.evoker",
+        "mv_hat": "geometry.mv.evoker_hat",
+        "mv_wizard": "geometry.mv.evoker_wizard",
+        "mv_windcaller": "geometry.mv.evoker_windcaller",
+        "mv_enchanter": "geometry.mv.evoker_enchanter",
+        "mv_geomancer": "geometry.mv.evoker_geomancer",
+        "mv_chef": "geometry.mv.evoker_chef"
+      },
+      "animations": {
+        "root": "controller.animation.evoker.root",
+        "look_at_target": "animation.common.look_at_target",
+        "base_pose": "animation.evoker.base_pose",
+        "base_pose_sus": "animation.evoker.base_pose_sus",
+        "riding.legs": "animation.humanoid.riding.legs",
+        "idle1": "animation.evoker.idle1",
+        "idle2": "animation.evoker.idle2",
+        "idle3": "animation.evoker.idle3",
+        "move_upper_body": "animation.evoker.move_upper_body",
+        "move_lower_body": "animation.evoker.move_lower_body",
+        "casting1": "animation.evoker.spell1",
+        "casting2": "animation.evoker.spell2",
+        "default_trans1": "animation.evoker.default_trans1",
+        "default_trans2": "animation.evoker.default_trans2",
+        "celebrate": "animation.evoker.celebrate",
+        "dead1": "animation.evoker.dead1",
+        "dead2": "animation.evoker.dead2",
+        "dead3": "animation.evoker.dead3",
+        "dead4": "animation.evoker.dead4"
+      },
+      "particle_effects": {
+        "spell": "minecraft:evoker_spell",
+        "spell2a": "coptaine:evoker_spell2a",
+        "spell2b": "coptaine:evoker_spell2b"
+      },
+      "scripts": {
+        "initialize": ["v.xvar = Math.random(0,99);", "v.roll = math.random_integer(1, 5);"],
+        "pre_animation": [
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 25.44666) * query.modified_move_speed) * 57.3;",
+          "variable.tcos1 = (Math.cos(query.modified_distance_moved * 50.89333) * query.modified_move_speed) * 57.3;",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
+        ],
+        "animate": [
+          "root",
+          { "look_at_target": "query.is_alive" }
+        ]
+      },
+      "render_controllers": ["controller.render.mv.evoker", "controller.render.mv.evoker_hat"],
+      "spawn_egg": { "texture": "spawn_egg_evoker" }
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft:spider",
+      "min_engine_version": "1.8.0",
+      "materials": { "mv_default": "enderman" },
+      "textures": {
+        "mv_default": "textures/entity/spider/spider",
+        "mv_default2": "textures/entity/spider/spider2",
+        "mv_default3": "textures/entity/spider/spider3",
+        "mv_default4": "textures/entity/spider/spider4",
+        "mv_default5": "textures/entity/spider/spider5",
+        "mv_default6": "textures/entity/spider/spider6",
+        "mv_default7": "textures/entity/spider/spider7",
+        "mv_default8": "textures/entity/spider/spider8",
+        "mv_default9": "textures/entity/spider/spider9",
+        "mv_default10": "textures/entity/spider/spider10",
+        "mv_default11": "textures/entity/spider/spider11",
+        "mv_default12": "textures/entity/spider/spider12",
+        "mv_default13": "textures/entity/spider/spider13",
+        "mv_default14": "textures/entity/spider/spider14",
+        "mv_default15": "textures/entity/spider/spider15",
+        "mv_default16": "textures/entity/spider/spider16",
+        "mv_default17": "textures/entity/spider/spider17",
+        "mv_default18": "textures/entity/spider/spider18",
+        "mv_default19": "textures/entity/spider/spider19",
+        "mv_default20": "textures/entity/spider/spider20",
+        "mv_default21": "textures/entity/spider/spider21",
+        "mv_default22": "textures/entity/spider/spider22",
+        "mv_default23": "textures/entity/spider/spider23",
+        "mv_default24": "textures/entity/spider/spider24",
+        "mv_default25": "textures/entity/spider/spider25",
+        "mv_default26": "textures/entity/spider/spider26"
+      },
+      "geometry": {
+        "mv_default": "geometry.mv.spider",
+        "mv_giant_spider": "geometry.mv.giant_spider"
+      },
+      "animations": {
+        "look_at_target": "animation.spider.look_at_target",
+        "fangs": "animation.spider.fangs",
+        "walking": "animation.spider.walking",
+        "wall_climbing": "animation.spider.wall_climbing",
+        "attack": "animation.spider.attack",
+        "upside_down": "animation.spider.upside_down",
+        "look_at_target_upside_down": "animation.spider.look_at_target_upside_down",
+        "death": "animation.spider.death",
+        "general": "controller.animation.spider.general",
+        "orientation_controller": "controller.animation.spider.orientation_controller"
+      },
+      "scripts": {
+        "initialize": ["v.xvar = math.random(0,99);"],
+        "pre_animation": [
+          "variable.wobble = Math.sin(query.swell_amount * 5730) * query.swell_amount * 0.01 + 1.0;",
+          "variable.swelling_scale1 = (Math.pow(Math.clamp(query.swell_amount, 0.0, 1.0), 4.0) * 0.4 + 1.0) * variable.wobble;",
+          "variable.swelling_scale2 = (Math.pow(Math.clamp(query.swell_amount, 0.0, 1.0), 4.0) * 0.1 + 1.0) / variable.wobble;",
+          "variable.leg_rot = Math.cos(query.modified_distance_moved * 38.17326) * 80.22 * query.modified_move_speed;",
+          "variable.flash = Math.mod(Math.Round(query.swell_amount * 10.0), 2.0);",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
+        ],
+        "animate": [
+          "look_at_target",
+          "general",
+          "orientation_controller",
+          "fangs",
+          {
+            "look_at_target_upside_down": "query.is_wall_climbing && query.ground_speed > 0.2"
+          },
+          { "death": "!query.is_alive" }
+        ]
+      },
+      "render_controllers": ["controller.render.mv.spider"],
+      "spawn_egg": { "texture": "spawn_egg_spider" }
+    }
+  }
+}

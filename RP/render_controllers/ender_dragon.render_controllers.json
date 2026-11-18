@@ -1,0 +1,48 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.ender_dragon_default": {
+      "geometry": "Geometry.mv_default",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
+      "arrays": {
+        "textures": {
+          "array.xskins": [
+            "Texture.mv_default",
+            "Texture.mv_default2",
+            "Texture.mv_default3",
+            "Texture.mv_default4",
+            "Texture.mv_default5",
+            "Texture.mv_default6",
+            "Texture.mv_default7"
+          ]
+        }
+      }
+    },
+    "controller.render.mv.ender_dragon_death_pre_pass": {
+      "geometry": "Geometry.mv_default",
+      "materials": [
+        { "*": "Material.mv_dissolve_0" }
+      ],
+      "textures": ["Texture.mv_exploding"],
+      "part_visibility": [
+        { "*": "query.death_ticks > 1.0" }
+      ],
+      "is_hurt_color": {
+        "r": "this",
+        "g": "this",
+        "b": "this",
+        "a": "query.death_ticks > 1.0 ? variable.death_alpha : this"
+      }
+    },
+    "controller.render.mv.ender_dragon_death_main_pass": {
+      "geometry": "Geometry.mv_default",
+      "materials": [
+        { "*": "Material.mv_dissolve_1" }
+      ],
+      "textures": ["Texture.mv_default"]
+    }
+  }
+}

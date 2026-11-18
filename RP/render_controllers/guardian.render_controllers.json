@@ -1,0 +1,31 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.guardian": {
+      "geometry": "Geometry.mv_default",
+      "materials": [
+        {
+          "*": "q.is_ghost ? Material.mv_ghost : Material.mv_default"
+        }
+      ],
+      "textures": [
+        "q.is_elder ? Texture.mv_elder : (v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar])"
+      ],
+      "arrays": {
+        "textures": {
+          "array.xskins": [
+            "Texture.mv_default",
+            "Texture.mv_default2",
+            "Texture.mv_default3",
+            "Texture.mv_default4",
+            "Texture.mv_default5",
+            "Texture.mv_default6",
+            "Texture.mv_default7",
+            "Texture.mv_default8",
+            "Texture.mv_default9"
+          ]
+        }
+      }
+    }
+  }
+}

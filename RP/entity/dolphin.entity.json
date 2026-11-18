@@ -1,0 +1,45 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft:dolphin",
+      "materials": { "default": "dolphin", "mv_default": "dolphin" },
+      "textures": {
+        "default": "textures/entity/dolphin",
+        "baby": "textures/entity/dolphin/dolphin_baby",
+        "mv_default": "textures/entity/dolphin",
+        "mv_default2": "textures/entity/dolphin/dolphin2",
+        "mv_default3": "textures/entity/dolphin/dolphin3",
+        "mv_default4": "textures/entity/dolphin/dolphin4",
+        "mv_default5": "textures/entity/dolphin/dolphin5",
+        "mv_default6": "textures/entity/dolphin/dolphin6",
+        "mv_default7": "textures/entity/dolphin/dolphin7"
+      },
+      "geometry": {
+        "default": "geometry.dolphin",
+        "baby": "geometry.dolphin.baby",
+        "mv_default": "geometry.dolphin"
+      },
+      "animations": {
+        "move": "animation.dolphin.move",
+        "move_controller": "controller.animation.dolphin.general",
+        "general": "controller.animation.dolphin.general"
+      },
+      "particle_effects": { "dolphin_move_particle": "minecraft:dolphin_move_particle" },
+      "scripts": {
+        "initialize": ["v.xvar = Math.random(0,99);"],
+        "pre_animation": ["v.mv_active = !q.is_baby;"],
+        "scale": "v.mv_active ? 1.0 : (query.is_baby ? (1 / 0.65) : 1.0)",
+        "animate": [
+          { "move_controller": "!v.mv_active" },
+          { "general": "v.mv_active" }
+        ]
+      },
+      "render_controllers": [
+        { "controller.render.dolphin.v2": "!v.mv_active" },
+        { "controller.render.mv.dolphin": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_dolphin" }
+    }
+  }
+}

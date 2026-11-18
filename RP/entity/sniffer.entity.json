@@ -1,0 +1,79 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft:sniffer",
+      "materials": { "default": "sniffer", "mv_default": "sniffer" },
+      "textures": {
+        "default": "textures/entity/sniffer/sniffer",
+        "baby": "textures/entity/sniffer/snifflet",
+        "mv_default": "textures/entity/sniffer/sniffer",
+        "mv_default2": "textures/entity/sniffer/sniffer2",
+        "mv_default3": "textures/entity/sniffer/sniffer3",
+        "mv_default4": "textures/entity/sniffer/sniffer4",
+        "mv_default5": "textures/entity/sniffer/sniffer5",
+        "mv_default6": "textures/entity/sniffer/sniffer6",
+        "mv_default7": "textures/entity/sniffer/sniffer7",
+        "mv_default8": "textures/entity/sniffer/sniffer8",
+        "mv_default9": "textures/entity/sniffer/sniffer9"
+      },
+      "geometry": {
+        "default": "geometry.sniffer",
+        "baby": "geometry.sniffer.baby",
+        "mv_default": "geometry.mv.sniffer",
+        "mv_torchflower": "geometry.mv.sniffer_torchflower",
+        "mv_pitchflower": "geometry.mv.sniffer_pitchflower"
+      },
+      "animations": {
+        "baby_transform": "animation.sniffer.baby_transform",
+        "walk": "controller.animation.sniffer.walk",
+        "look_at_target": "animation.common.look_at_target",
+        "sniffsniff": "controller.animation.sniffer.sniffsniff",
+        "long_sniff": "controller.animation.sniffer.long_sniff",
+        "search": "controller.animation.sniffer.search",
+        "dig": "controller.animation.sniffer.dig",
+        "stand_up": "controller.animation.sniffer.stand_up",
+        "feeling_happy": "controller.animation.sniffer.feeling_happy",
+        "general": "controller.animation.sniffer.general",
+        "blink": "animation.wolf.blink",
+        "baby": "controller.animation.sniffer.baby"
+      },
+      "sound_effects": {
+        "drop_seed": "mob.sniffer.drop_seed",
+        "sniffsniff": "mob.sniffer.sniffsniff",
+        "searching": "mob.sniffer.searching",
+        "long_sniff": "mob.sniffer.long_sniff",
+        "digging": "mob.sniffer.digging",
+        "stand_up": "mob.sniffer.stand_up",
+        "happy": "mob.sniffer.happy"
+      },
+      "scripts": {
+        "initialize": ["v.xvar = math.random(0,99);"],
+        "pre_animation": [
+          "variable.moving = math.min(1.0, query.modified_move_speed * 10);",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
+          "v.mv_active = !q.is_baby;"
+        ],
+        "scale": "v.mv_active ? 1.0 : (query.is_baby ? (1 / 0.45) : 1.0)",
+        "animate": [
+          "general",
+          "walk",
+          "sniffsniff",
+          "long_sniff",
+          "search",
+          "dig",
+          "stand_up",
+          "feeling_happy",
+          { "baby": "v.mv_active" }
+        ]
+      },
+      "render_controllers": [
+        { "controller.render.sniffer.v2": "!v.mv_active" },
+        { "controller.render.mv.sniffer": "v.mv_active" },
+        { "controller.render.mv.sniffer_flower": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_sniffer" }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft:blaze",
+      "min_engine_version": "1.8.0",
+      "materials": { "mv_body": "blaze_body", "mv_head": "blaze_head" },
+      "textures": {
+        "mv_default": "textures/entity/blaze",
+        "mv_default2": "textures/entity/blaze/blaze2",
+        "mv_default3": "textures/entity/blaze/blaze3",
+        "mv_default4": "textures/entity/blaze/blaze4",
+        "mv_default5": "textures/entity/blaze/blaze5",
+        "mv_default6": "textures/entity/blaze/blaze6",
+        "mv_default7": "textures/entity/blaze/blaze7",
+        "mv_default8": "textures/entity/blaze/blaze8"
+      },
+      "geometry": { "mv_default": "geometry.blaze" },
+      "animations": {
+        "look_at_target": "animation.common.look_at_target",
+        "move": "controller.animation.blaze.move",
+        "flame": "controller.animation.blaze.flame"
+      },
+      "particle_effects": { "charged_flames": "minecraft:mobflame_emitter" },
+      "scripts": {
+        "initialize": ["v.xvar = Math.floor(Math.random(0, 99));"],
+        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"],
+        "animate": ["move", "flame"]
+      },
+      "render_controllers": ["controller.render.mv.blaze"],
+      "spawn_egg": { "texture": "spawn_egg_blaze" }
+    }
+  }
+}

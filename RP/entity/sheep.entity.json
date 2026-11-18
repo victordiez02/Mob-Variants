@@ -1,0 +1,67 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft:sheep",
+      "min_engine_version": "1.8.0",
+      "materials": {
+        "default": "sheep",
+        "mv_default": "sheep",
+        "mv_horns": "horns"
+      },
+      "textures": {
+        "default": "textures/entity/sheep/sheep",
+        "baby": "textures/entity/sheep/sheep_baby",
+        "mv_default": "textures/entity/sheep/sheep",
+        "mv_horns": "textures/entity/sheep/sheep_horns"
+      },
+      "geometry": {
+        "default": "geometry.sheep.v1.8",
+        "sheared": "geometry.sheep.sheared.v1.8",
+        "baby": "geometry.sheep.baby",
+        "mv_default": "geometry.mv.sheep",
+        "mv_sheared": "geometry.mv.sheep.sheared",
+        "mv_horns": "geometry.mv.sheep_horns",
+        "mv_empty": "geometry.mv.zombie_empty"
+      },
+      "animations": {
+        "setup": "animation.sheep.setup.v2",
+        "grazing": "animation.sheep.grazing.v2",
+        "walk": "animation.quadruped.walk",
+        "look_at_target": "animation.common.look_at_target",
+        "baby_transform": "animation.sheep.baby_transform",
+        "move": "controller.animation.sheep.move",
+        "baby_grazing": "animation.sheep.baby_grazing",
+        "death": "animation.sheep.death",
+        "blink": "animation.sheep.blink",
+        "mv_grazing": "animation.sheep.grazing",
+        "mv_walk": "animation.sheep.walk"
+      },
+      "scripts": {
+        "initialize": ["v.xvar = Math.random(0,99);"],
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_active = !q.is_baby;"
+        ],
+        "scale": "v.mv_active ? 1.0 : (query.is_baby ? 2.0 : 1.0)",
+        "animate": [
+          {
+            "look_at_target": "!v.mv_active || query.is_alive"
+          },
+          { "move": "!v.mv_active" },
+          { "baby_transform": "v.mv_active && (query.is_baby)" },
+          { "mv_walk": "v.mv_active && (query.modified_move_speed)" },
+          { "mv_grazing": "v.mv_active && (query.is_grazing)" },
+          { "death": "v.mv_active && (!query.is_alive)" },
+          { "blink": "v.mv_active && (query.is_alive)" }
+        ]
+      },
+      "render_controllers": [
+        { "controller.render.sheep.v2": "!v.mv_active" },
+        { "controller.render.mv.sheep": "v.mv_active" },
+        { "controller.render.mv.sheep_horns": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_sheep" }
+    }
+  }
+}

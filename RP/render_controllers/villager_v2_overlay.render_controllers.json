@@ -1,0 +1,33 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.villager_v2_overlay": {
+      "geometry": "variable.profession_index == 0 ? Geometry.mv_empty : Geometry.mv_overlay",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["array.xskins[variable.profession_index]"],
+      "arrays": {
+        "textures": {
+          "array.xskins": [
+            "Texture.mv_empty",
+            "Texture.mv_farmer_overlay",
+            "Texture.mv_fisherman_overlay",
+            "Texture.mv_shepherd_overlay",
+            "Texture.mv_fletcher_overlay",
+            "Texture.mv_librarian_overlay",
+            "Texture.mv_cartographer_overlay",
+            "Texture.mv_cleric_overlay",
+            "Texture.mv_armorer_overlay",
+            "Texture.mv_weapon_smith_overlay",
+            "Texture.mv_tool_smith_overlay",
+            "Texture.mv_butcher_overlay",
+            "Texture.mv_leatherworker_overlay",
+            "Texture.mv_stonemason_overlay",
+            "Texture.mv_nitwit_overlay"
+          ]
+        }
+      }
+    }
+  }
+}

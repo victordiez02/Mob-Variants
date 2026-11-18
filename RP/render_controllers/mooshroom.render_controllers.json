@@ -1,0 +1,17 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.mooshroom": {
+      "arrays": {
+        "textures": {
+          "Array.skins": ["Texture.mv_default", "Texture.mv_brown"]
+        }
+      },
+      "geometry": "Geometry.mv_default",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["Array.skins[query.variant]"]
+    }
+  }
+}

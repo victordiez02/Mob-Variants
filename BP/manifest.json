@@ -1,0 +1,26 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "§k§8x§r §l§5Mob Variants v5.0 [BP] §k§8x§r",
+    "description": "Optional behavior pack. It saves the variant of every mob, so variants never change over time and every player sees the same one. Without it, variants are re-rolled every time a mob is rendered.\n§7by Mr. Froiz",
+    "uuid": "ac0b16b4-ed4a-4d51-94bd-f698603ddbd1",
+    "version": [5, 0, 0],
+    "min_engine_version": [1, 26, 60]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "0e961a56-454c-409b-92ca-c49bdda64ade",
+      "version": [5, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "25be1ee8-f112-429b-8e13-ba8a19bee0e5",
+      "version": [5, 0, 0]
+    }
+  ],
+  "metadata": {
+    "authors": ["Mr. Froiz"]
+  }
+}

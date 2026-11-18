@@ -1,0 +1,25 @@
+// Render controller fox (only adult red foxes, the first vanilla variant).
+// v.mv_variant: 0 = red fox, 1 = platypus, 2 = Perry the Platypus.
+// Curse you, Perry the Platypus.
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.fox": {
+      "arrays": {
+        "geometries": {
+          "Array.geos": ["Geometry.mv_default", "Geometry.mv_platypus", "Geometry.mv_perry"]
+        }
+      },
+      "geometry": "Array.geos[v.mv_variant]",
+      "part_visibility": [
+        { "leg*": "!query.is_sleeping" }
+      ],
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": [
+        "v.mv_variant ? Texture.mv_perry : Texture.mv_red"
+      ]
+    }
+  }
+}

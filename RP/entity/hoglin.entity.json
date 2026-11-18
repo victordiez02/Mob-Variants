@@ -1,0 +1,65 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft:hoglin",
+      "materials": { "default": "hoglin", "mv_default": "hoglin" },
+      "textures": {
+        "default": "textures/entity/hoglin/hoglin",
+        "baby": "textures/entity/hoglin/hoglin_baby",
+        "mv_default": "textures/entity/hoglin/hoglin",
+        "mv_default2": "textures/entity/hoglin/hoglin2",
+        "mv_default3": "textures/entity/hoglin/hoglin3",
+        "mv_default4": "textures/entity/hoglin/hoglin4",
+        "mv_default5": "textures/entity/hoglin/hoglin5",
+        "mv_default6": "textures/entity/hoglin/hoglin6",
+        "mv_default7": "textures/entity/hoglin/hoglin7",
+        "mv_default8": "textures/entity/hoglin/hoglin8",
+        "mv_default9": "textures/entity/hoglin/hoglin9",
+        "mv_default10": "textures/entity/hoglin/hoglin10",
+        "mv_default11": "textures/entity/hoglin/hoglin11",
+        "mv_piglinhead": "textures/entity/skeleton/piglin_heads"
+      },
+      "geometry": {
+        "default": "geometry.hoglin",
+        "baby": "geometry.hoglin.baby",
+        "mv_default": "geometry.mv.hoglin",
+        "mv_empty": "geometry.mv.zombie_empty",
+        "mv_piglinhead": "geometry.mv.hoglin_piglinhead",
+        "mv_piglinhead2": "geometry.mv.hoglin_piglinhead2",
+        "mv_wither_skull": "geometry.mv.hoglin_wither_skull"
+      },
+      "animations": {
+        "walk": "controller.animation.hoglin.walk",
+        "look_at_target": "controller.animation.hoglin.look_at_target",
+        "attack": "controller.animation.hoglin.attack",
+        "vanilla_hoglin_baby_scaling": "animation.hoglin.baby_scaling",
+        "hoglin_baby_scaling": "controller.animation.hoglin.baby_scaling"
+      },
+      "scripts": {
+        "initialize": ["v.xvar = Math.random(0,99);"],
+        "pre_animation": [
+          "variable.tcos_right_side = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.tcos_left_side = -variable.tcos_right_side;",
+          "variable.attack_head_rot =  Math.sin(variable.attack_time * 180.0) * -37.3;",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
+          "v.mv_active = !q.is_baby;"
+        ],
+        "scale": "v.mv_active ? 1.0 : (query.is_baby ? 2.0 : 1.0)",
+        "animate": [
+          "look_at_target",
+          "walk",
+          "attack",
+          { "hoglin_baby_scaling": "v.mv_active" }
+        ]
+      },
+      "render_controllers": [
+        { "controller.render.hoglin.v2": "!v.mv_active" },
+        { "controller.render.mv.hoglin": "v.mv_active" },
+        { "controller.render.mv.hoglin_piglinhead": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_hoglin" }
+    }
+  }
+}

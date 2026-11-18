@@ -1,0 +1,80 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft:enderman",
+      "min_engine_version": "1.8.0",
+      "materials": { "mv_default": "enderman" },
+      "textures": {
+        "mv_default": "textures/entity/enderman/enderman",
+        "mv_default2": "textures/entity/enderman/enderman2",
+        "mv_default3": "textures/entity/enderman/enderman3",
+        "mv_default4": "textures/entity/enderman/enderman4",
+        "mv_default5": "textures/entity/enderman/enderman5",
+        "mv_default6": "textures/entity/enderman/enderman6",
+        "mv_default7": "textures/entity/enderman/enderman7",
+        "mv_default8": "textures/entity/enderman/enderman8",
+        "mv_default9": "textures/entity/enderman/enderman9",
+        "mv_default10": "textures/entity/enderman/enderman10",
+        "mv_default11": "textures/entity/enderman/enderman11",
+        "mv_default12": "textures/entity/enderman/enderman12",
+        "mv_default13": "textures/entity/enderman/enderman13",
+        "mv_default14": "textures/entity/enderman/enderman14",
+        "mv_default15": "textures/entity/enderman/enderman15",
+        "mv_default16": "textures/entity/enderman/enderman16",
+        "mv_default17": "textures/entity/enderman/enderman17",
+        "mv_default18": "textures/entity/enderman/enderman18",
+        "mv_default19": "textures/entity/enderman/enderman19",
+        "mv_default20": "textures/entity/enderman/enderman20",
+        "mv_default21": "textures/entity/enderman/enderman21",
+        "mv_default22": "textures/entity/enderman/enderman22",
+        "mv_default23": "textures/entity/enderman/enderman23",
+        "mv_default24": "textures/entity/enderman/enderman24",
+        "mv_default25": "textures/entity/enderman/enderman25",
+        "mv_default26": "textures/entity/enderman/enderman26",
+        "mv_jaw": "textures/entity/enderman/enderman_jaw"
+      },
+      "geometry": {
+        "mv_default": "geometry.mv.enderman",
+        "mv_jaw": "geometry.mv.enderman.jaw"
+      },
+      "animations": {
+        "look_at_target_default": "animation.humanoid.look_at_target.default",
+        "carrying": "animation.enderman.carrying",
+        "walking": "animation.enderman.walking",
+        "running": "animation.enderman.running",
+        "running_not_holding": "animation.enderman.running_not_holding",
+        "walking_not_holding": "animation.enderman.walking_not_holding",
+        "angry": "animation.enderman.angry",
+        "bob": "animation.humanoid.bob",
+        "death": "animation.enderman.death",
+        "blink": "animation.enderman.blink",
+        "general": "controller.animation.enderman.general",
+        "angry_controller": "controller.animation.enderman.angry",
+        "attack.rotations": "animation.humanoid.attack.rotations"
+      },
+      "scripts": {
+        "initialize": ["v.xvar = math.random(0,99);"],
+        "pre_animation": [
+          "variable.wobble = Math.sin(query.swell_amount * 5730) * query.swell_amount * 0.01 + 1.0;",
+          "variable.swelling_scale1 = (Math.pow(Math.clamp(query.swell_amount, 0.0, 1.0), 4.0) * 0.4 + 1.0) * variable.wobble;",
+          "variable.swelling_scale2 = (Math.pow(Math.clamp(query.swell_amount, 0.0, 1.0), 4.0) * 0.1 + 1.0) / variable.wobble;",
+          "variable.leg_rot = Math.cos(query.modified_distance_moved * 38.17326) * 80.22 * query.modified_move_speed;",
+          "variable.flash = Math.mod(Math.Round(query.swell_amount * 10.0), 2.0);",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"
+        ],
+        "animate": [
+          "look_at_target_default",
+          "angry_controller",
+          "general",
+          "attack.rotations",
+          { "death": "!query.is_alive" },
+          { "blink": "query.is_alive" },
+          { "carrying": "query.is_carrying_block" }
+        ]
+      },
+      "render_controllers": ["controller.render.mv.enderman", "controller.render.mv.enderman_jaw"],
+      "spawn_egg": { "texture": "spawn_egg_enderman" }
+    }
+  }
+}

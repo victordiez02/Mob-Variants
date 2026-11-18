@@ -1,0 +1,54 @@
+// Render controller frog (only temperate frogs, the first vanilla variant).
+// v.mv_variant: 1-10 = temperate skins, 11-19 = special skins, 20 = cake frog.
+// v.mv_mark: 1 = no crown, 2 = crown.
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.frog": {
+      "arrays": {
+        "textures": {
+          "Array.skins": [
+            "Texture.mv_temperate",
+            "Texture.mv_temperate2",
+            "Texture.mv_temperate3",
+            "Texture.mv_temperate4",
+            "Texture.mv_temperate5",
+            "Texture.mv_temperate6",
+            "Texture.mv_temperate7",
+            "Texture.mv_temperate8",
+            "Texture.mv_temperate9",
+            "Texture.mv_temperate10",
+            "Texture.mv_special",
+            "Texture.mv_special2",
+            "Texture.mv_special3",
+            "Texture.mv_special4",
+            "Texture.mv_special5",
+            "Texture.mv_special6",
+            "Texture.mv_special7",
+            "Texture.mv_special8",
+            "Texture.mv_special9",
+            "Texture.mv_cake_frog"
+          ]
+        }
+      },
+      "geometry": "Geometry.mv_default",
+      "part_visibility": [
+        { "croaking_body": "!query.is_eating_mob" }
+      ],
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["Array.skins[v.mv_variant - 1]"]
+    },
+    "controller.render.mv.frog_crown": {
+      "geometry": "v.mv_mark == 2 ? Geometry.mv_crown : Geometry.mv_empty",
+      "part_visibility": [
+        { "croaking_body": "!query.is_eating_mob" }
+      ],
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["Texture.mv_crown"]
+    }
+  }
+}

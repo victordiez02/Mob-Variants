@@ -1,0 +1,68 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft:iron_golem",
+      "materials": { "default": "iron_golem", "mv_default": "iron_golem" },
+      "textures": {
+        "default": "textures/entity/iron_golem",
+        "cracked_high": "textures/entity/iron_golem/cracked_high",
+        "cracked_med": "textures/entity/iron_golem/cracked_medium",
+        "cracked_low": "textures/entity/iron_golem/cracked_low",
+        "cracked_none": "textures/entity/iron_golem/cracked_none",
+        "mv_default": "textures/entity/iron_golem/iron_golem",
+        "mv_default2": "textures/entity/iron_golem/iron_golem2",
+        "mv_default3": "textures/entity/iron_golem/iron_golem3",
+        "mv_default4": "textures/entity/iron_golem/iron_golem4",
+        "mv_default5": "textures/entity/iron_golem/iron_golem5",
+        "mv_default6": "textures/entity/iron_golem/iron_golem6",
+        "mv_default7": "textures/entity/iron_golem/iron_golem7",
+        "mv_default8": "textures/entity/iron_golem/iron_golem8",
+        "mv_default9": "textures/entity/iron_golem/iron_golem9",
+        "mv_default10": "textures/entity/iron_golem/iron_golem10",
+        "mv_default11": "textures/entity/iron_golem/iron_golem11",
+        "mv_default12": "textures/entity/iron_golem/iron_golem12",
+        "mv_default13": "textures/entity/iron_golem/iron_golem13",
+        "mv_default14": "textures/entity/iron_golem/iron_golem14",
+        "mv_default15": "textures/entity/iron_golem/iron_golem15",
+        "mv_item_sorter": "textures/entity/iron_golem/iron_golem_item_sorter"
+      },
+      "geometry": {
+        "default": "geometry.irongolem",
+        "mv_default": "geometry.mv.irongolem",
+        "mv_empty": "geometry.mv.zombie_empty",
+        "mv_rose": "geometry.mv.irongolem_rose"
+      },
+      "animations": {
+        "walk": "animation.irongolem.walk",
+        "idle": "animation.irongolem.idle",
+        "has_target": "animation.irongolem.has_target",
+        "attack": "animation.irongolem.attack",
+        "flower": "animation.irongolem.flower",
+        "death": "animation.irongolem.death",
+        "look_at_target": "animation.common.look_at_target",
+        "general": "controller.animation.iron_golem.general"
+      },
+      "scripts": {
+        "initialize": ["v.xvar = Math.random(0,99);"],
+        "pre_animation": [
+          "variable.modified_tcos0 = Math.clamp(((Math.cos(query.modified_distance_moved * 13.5) * Math.min(query.modified_move_speed, 0.6) / variable.gliding_speed_value) * 25.0), -12.5, 12.5);",
+          "variable.attack_time = math.sin(variable.attack_time * 25);",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
+        ],
+        "animate": [
+          "general",
+          { "look_at_target": "query.is_alive" },
+          { "death": "!query.is_alive" }
+        ]
+      },
+      "render_controllers": [
+        "controller.render.mv.iron_golem",
+        "controller.render.mv.irongolem_rose",
+        "controller.render.iron_golem_cracks"
+      ],
+      "spawn_egg": { "texture": "spawn_egg_iron_golem" }
+    }
+  }
+}

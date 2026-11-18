@@ -1,0 +1,36 @@
+// Render controller turtle
+// v.mv_variant: pueden ser o bien una tortuga normal (1), o bien Donatello (2), o bien Leonardo (3), o bien Michelangelo (4), o bien Raphael (5),
+// o bien Squirtle (6).
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.turtle": {
+      "geometry": "Geometry.mv_default",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": [
+        "v.mv_variant ? array.xskinsq[v.mv_variant - 1] : (variable.xvar < 20 ? array.xskins[variable.xvar] : Texture.mv_default)"
+      ],
+      "arrays": {
+        "textures": {
+          "array.xskins": [
+            "Texture.mv_donatello",
+            "Texture.mv_leonardo",
+            "Texture.mv_michelangelo",
+            "Texture.mv_raphael",
+            "Texture.mv_squirtle"
+          ],
+          "array.xskinsq": [
+            "Texture.mv_default",
+            "Texture.mv_donatello",
+            "Texture.mv_leonardo",
+            "Texture.mv_michelangelo",
+            "Texture.mv_raphael",
+            "Texture.mv_squirtle"
+          ]
+        }
+      }
+    }
+  }
+}

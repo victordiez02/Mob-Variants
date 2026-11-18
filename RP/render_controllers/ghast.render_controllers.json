@@ -1,0 +1,48 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.ghast": {
+      "arrays": {
+        "textures": {
+          "array.xskins": [
+            "Texture.mv_default",
+            "Texture.mv_default2",
+            "Texture.mv_default3",
+            "Texture.mv_default4",
+            "Texture.mv_default5",
+            "Texture.mv_default6",
+            "Texture.mv_default7",
+            "Texture.mv_default8",
+            "Texture.mv_default9",
+            "Texture.mv_default10",
+            "Texture.mv_default11",
+            "Texture.mv_default12",
+            "Texture.mv_default13"
+          ],
+          "array.yskins": [
+            "Texture.mv_shooting",
+            "Texture.mv_shooting2",
+            "Texture.mv_shooting3",
+            "Texture.mv_shooting4",
+            "Texture.mv_shooting5",
+            "Texture.mv_shooting6",
+            "Texture.mv_shooting7",
+            "Texture.mv_shooting8",
+            "Texture.mv_shooting9",
+            "Texture.mv_shooting10",
+            "Texture.mv_shooting11",
+            "Texture.mv_shooting12",
+            "Texture.mv_shooting13"
+          ]
+        }
+      },
+      "geometry": "Geometry.mv_default",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": [
+        "variable.ischarging ? (v.mv_variant ? array.yskins[v.mv_variant - 1] : array.yskins[variable.xvar]) : (v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar])"
+      ]
+    }
+  }
+}

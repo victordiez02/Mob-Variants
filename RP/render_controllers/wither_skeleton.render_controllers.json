@@ -1,0 +1,53 @@
+// Render controller wither skeleton
+// v.mv_variant: skin del mob (1, ..., 9) o rey wither (100).
+// v.mv_mark: si es default (0), Nameless wither (1) o hunter wither (2).
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.wither_skeleton": {
+      "geometry": "v.mv_variant ? (v.mv_variant == 100 ? Geometry.mv_skeleton_king : Geometry.mv_default) : (variable.xvar > 20 && variable.xvar < 25 ? Geometry.mv_skeleton_king : Geometry.mv_default)",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": [
+        "v.mv_variant ? (v.mv_variant == 100 ? Texture.mv_skeleton_king : array.xskins[v.mv_variant - 1]) : (variable.xvar > 20 && variable.xvar < 25 ? Texture.mv_skeleton_king : array.xskins[variable.xvar])"
+      ],
+      "arrays": {
+        "textures": {
+          "array.xskins": [
+            "Texture.mv_default",
+            "Texture.mv_default2",
+            "Texture.mv_default3",
+            "Texture.mv_default4",
+            "Texture.mv_default5",
+            "Texture.mv_default6",
+            "Texture.mv_default7",
+            "Texture.mv_default8",
+            "Texture.mv_default9"
+          ]
+        }
+      }
+    },
+    "controller.render.mv.wither_skeleton_cape": {
+      "geometry": "v.mv_variant ? (v.mv_mark == 1 && v.mv_variant != 100 ? Geometry.mv_cape : Geometry.mv_empty) : (variable.xvar < 20 ? Geometry.mv_cape : Geometry.mv_empty)",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["Texture.mv_cape"]
+    },
+    "controller.render.mv.backpack": {
+      "geometry": "v.mv_variant ? (v.mv_mark == 2 && v.mv_variant != 100 ? Geometry.mv_backpack : Geometry.mv_empty) : (variable.xvar > 85 ? Geometry.mv_backpack : Geometry.mv_empty)",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["Texture.mv_backpack"]
+    },
+    "controller.render.mv.piglin_heads": {
+      "geometry": "v.mv_variant ? (v.mv_mark == 2 && v.mv_variant != 100 ? Geometry.mv_piglin_heads : Geometry.mv_empty) : (variable.xvar > 85 ? Geometry.mv_piglin_heads : Geometry.mv_empty)",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["Texture.mv_piglin_heads"]
+    }
+  }
+}

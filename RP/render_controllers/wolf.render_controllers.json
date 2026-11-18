@@ -1,0 +1,62 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.wolf": {
+      "arrays": {
+        "textures": {
+          "Array.default": [
+            "Texture.mv_pale_default",
+            "Texture.mv_ashen_default",
+            "Texture.mv_black_default",
+            "Texture.mv_chestnut_default",
+            "Texture.mv_rusty_default",
+            "Texture.mv_snowy_default",
+            "Texture.mv_spotted_default",
+            "Texture.mv_striped_default",
+            "Texture.mv_woods_default"
+          ],
+          "Array.angry": [
+            "Texture.mv_pale_angry",
+            "Texture.mv_ashen_angry",
+            "Texture.mv_black_angry",
+            "Texture.mv_chestnut_angry",
+            "Texture.mv_rusty_angry",
+            "Texture.mv_snowy_angry",
+            "Texture.mv_spotted_angry",
+            "Texture.mv_striped_angry",
+            "Texture.mv_woods_angry"
+          ],
+          "Array.tame": [
+            "Texture.mv_pale_tame",
+            "Texture.mv_ashen_tame",
+            "Texture.mv_black_tame",
+            "Texture.mv_chestnut_tame",
+            "Texture.mv_rusty_tame",
+            "Texture.mv_snowy_tame",
+            "Texture.mv_spotted_tame",
+            "Texture.mv_striped_tame",
+            "Texture.mv_woods_tame"
+          ]
+        }
+      },
+      "geometry": "Geometry.mv_default",
+      "materials": [
+        {
+          "*": "query.is_angry || query.has_owner ?  (query.is_angry? Material.mv_angry : Material.mv_tamed) : Material.mv_default"
+        }
+      ],
+      "textures": [
+        "query.is_angry ? Array.angry[query.variant] : (query.is_tamed ? Array.tame[query.variant] : Array.default[query.variant])"
+      ]
+    },
+    "controller.render.mv.wolf_mouth": {
+      "materials": [
+        {
+          "*": "query.is_angry || query.has_owner ?  (query.is_angry? Material.mv_angry : Material.mv_tamed) : Material.mv_default"
+        }
+      ],
+      "geometry": "Geometry.mv_mouth",
+      "textures": ["query.has_owner ? Texture.mv_mouth_tame : Texture.mv_mouth"]
+    }
+  }
+}

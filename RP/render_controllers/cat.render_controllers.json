@@ -1,0 +1,30 @@
+// Render controller cat (only adult white cats, the first vanilla variant).
+// v.mv_variant: 0 = white cat, 1 = Garfield, 2 = Puss in Boots, 3 = Nyan Cat, 4 = Tom.
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.cat": {
+      "arrays": {
+        "textures": {
+          "Array.skins": ["Texture.mv_garfield", "Texture.mv_pussinboots", "Texture.mv_nyan", "Texture.mv_tom"],
+          "Array.tame": [
+            "Texture.mv_garfield_tame",
+            "Texture.mv_pussinboots_tame",
+            "Texture.mv_nyan_tame",
+            "Texture.mv_tom_tame"
+          ]
+        },
+        "geometries": {
+          "Array.geos": ["Geometry.mv_garfield", "Geometry.mv_pussinboots", "Geometry.mv_nyan", "Geometry.mv_tom"]
+        }
+      },
+      "geometry": "v.mv_variant ? Array.geos[v.mv_variant - 1] : Geometry.mv_default",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": [
+        "v.mv_variant ? (q.is_tamed ? Array.tame[v.mv_variant - 1] : Array.skins[v.mv_variant - 1]) : (q.is_tamed ? Texture.mv_white_tame : Texture.mv_white)"
+      ]
+    }
+  }
+}

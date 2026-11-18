@@ -1,0 +1,54 @@
+// Render controller skeleton
+// v.mv_variant: skin del mob.
+// v.mv_mark: si tiene atuendo 1 (0) o atuendo 2 (1).
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.skeleton": {
+      "geometry": "Geometry.mv_default",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
+      "arrays": {
+        "textures": {
+          "array.xskins": [
+            "Texture.mv_default",
+            "Texture.mv_default2",
+            "Texture.mv_default3",
+            "Texture.mv_default4",
+            "Texture.mv_default5",
+            "Texture.mv_default6",
+            "Texture.mv_default7",
+            "Texture.mv_default8",
+            "Texture.mv_default9",
+            "Texture.mv_default10",
+            "Texture.mv_default11",
+            "Texture.mv_default12",
+            "Texture.mv_default13",
+            "Texture.mv_default14",
+            "Texture.mv_default15"
+          ]
+        }
+      }
+    },
+    "controller.render.mv.skeleton_clothes": {
+      "rebuild_animation_matrices": true,
+      "geometry": "v.mv_variant ? array.geosq[v.mv_mark] : (variable.xvar < 49 ? Geometry.mv_overlay : Geometry.mv_overlay2)",
+      "materials": [
+        { "*": "Material.mv_overlay" }
+      ],
+      "textures": [
+        "v.mv_variant ? array.skinsq[v.mv_mark] : (variable.xvar < 49 ? Texture.mv_overlay : Texture.mv_overlay2)"
+      ],
+      "arrays": {
+        "textures": {
+          "array.skinsq": ["Texture.mv_overlay", "Texture.mv_overlay2"]
+        },
+        "geometries": {
+          "array.geosq": ["Geometry.mv_overlay", "Geometry.mv_overlay2"]
+        }
+      }
+    }
+  }
+}

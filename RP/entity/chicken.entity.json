@@ -1,0 +1,85 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft:chicken",
+      "min_engine_version": "1.12.0",
+      "materials": {
+        "default": "chicken",
+        "legs": "chicken_legs",
+        "cold": "chicken_cold",
+        "mv_default": "entity_alphatest",
+        "mv_legs": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/chicken/chicken",
+        "warm": "textures/entity/chicken/chicken_warm",
+        "cold": "textures/entity/chicken/chicken_cold",
+        "baby_default": "textures/entity/chicken/chicken_temperate_baby",
+        "baby_warm": "textures/entity/chicken/chicken_warm_baby",
+        "baby_cold": "textures/entity/chicken/chicken_cold_baby",
+        "mv_default": "textures/entity/chicken/chicken",
+        "mv_default2": "textures/entity/chicken/chicken2",
+        "mv_default3": "textures/entity/chicken/chicken3",
+        "mv_default4": "textures/entity/chicken/chicken4",
+        "mv_default5": "textures/entity/chicken/chicken5",
+        "mv_duck": "textures/entity/chicken/duck",
+        "mv_duck2": "textures/entity/chicken/duck2",
+        "mv_duck3": "textures/entity/chicken/duck3",
+        "mv_goose": "textures/entity/chicken/goose",
+        "mv_goose2": "textures/entity/chicken/goose2",
+        "mv_goose3": "textures/entity/chicken/goose3",
+        "mv_goose4": "textures/entity/chicken/goose4"
+      },
+      "geometry": {
+        "default": "geometry.chicken.v1.12",
+        "warm": "geometry.chicken.v1.12",
+        "cold": "geometry.chicken.cold",
+        "baby": "geometry.chicken.baby",
+        "mv_default": "geometry.mv.chicken",
+        "mv_duck": "geometry.mv.duck",
+        "mv_goose": "geometry.mv.goose"
+      },
+      "animations": {
+        "move": "animation.chicken.move",
+        "look_at_target": "animation.common.look_at_target",
+        "baby_transform": "animation.chicken.baby_transform",
+        "vanilla_general": "animation.chicken.general",
+        "walk": "animation.chicken.walk",
+        "idle": "animation.chicken.idle",
+        "wing_flap": "animation.chicken.wing_flap",
+        "blink": "animation.chicken.blink",
+        "death": "animation.chicken.death",
+        "general": "controller.animation.chicken.general"
+      },
+      "scripts": {
+        "initialize": ["v.xvar = Math.random(0,99);"],
+        "pre_animation": [
+          "t.variant = query.property('minecraft:climate_variant');",
+          "v.index = (t.variant == 'temperate') ? 0 : ((t.variant == 'warm') ? 1 : 2);",
+          "v.is_cold = t.variant == 'cold';",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_active = !q.is_baby && q.property('minecraft:climate_variant') == 'temperate';"
+        ],
+        "scale": "v.mv_active ? 1.0 : (query.is_baby ? 2.0 : 1.0)",
+        "animate": [
+          { "vanilla_general": "!v.mv_active" },
+          { "move": "!v.mv_active && (query.modified_move_speed)" },
+          "look_at_target",
+          { "general": "v.mv_active" },
+          { "blink": "v.mv_active" },
+          { "death": "v.mv_active && (!query.is_alive)" },
+          {
+            "wing_flap": "v.mv_active && (!query.is_on_ground && query.modified_move_speed)"
+          },
+          { "baby_transform": "v.mv_active && (query.is_baby)" }
+        ]
+      },
+      "render_controllers": [
+        { "controller.render.chicken.v3": "!v.mv_active" },
+        { "controller.render.mv.chicken": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_chicken" }
+    }
+  }
+}

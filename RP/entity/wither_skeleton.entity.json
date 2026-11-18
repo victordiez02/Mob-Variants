@@ -1,0 +1,94 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "minecraft:wither_skeleton",
+      "min_engine_version": "1.8.0",
+      "materials": { "mv_default": "enderman" },
+      "textures": {
+        "mv_default": "textures/entity/skeleton/wither_skeleton",
+        "mv_default2": "textures/entity/skeleton/wither_skeleton2",
+        "mv_default3": "textures/entity/skeleton/wither_skeleton3",
+        "mv_default4": "textures/entity/skeleton/wither_skeleton4",
+        "mv_default5": "textures/entity/skeleton/wither_skeleton5",
+        "mv_default6": "textures/entity/skeleton/wither_skeleton6",
+        "mv_default7": "textures/entity/skeleton/wither_skeleton7",
+        "mv_default8": "textures/entity/skeleton/wither_skeleton8",
+        "mv_default9": "textures/entity/skeleton/wither_skeleton9",
+        "mv_skeleton_king": "textures/entity/skeleton/skeleton_king",
+        "mv_cape": "textures/entity/skeleton/wither_skeleton_cape",
+        "mv_backpack": "textures/entity/skeleton/backpack",
+        "mv_piglin_heads": "textures/entity/skeleton/piglin_heads",
+        "mv_empty": "textures/entity/empty"
+      },
+      "geometry": {
+        "mv_default": "geometry.mv.skeleton.wither",
+        "mv_skeleton_king": "geometry.mv.skeleton_king",
+        "mv_empty": "geometry.mv.zombie_empty",
+        "mv_cape": "geometry.mv.wither_skeleton_cape",
+        "mv_backpack": "geometry.mv.backpack",
+        "mv_piglin_heads": "geometry.mv.piglin_heads"
+      },
+      "animations": {
+        "root": "controller.animation.wither_skeleton.root",
+        "look_at_target": "animation.common.look_at_target",
+        "hide_right_item": "animation.wither_skeleton.hide_right_item",
+        "base_pose": "animation.wither_skeleton.base_pose",
+        "riding.legs": "animation.humanoid.riding.legs",
+        "idle1": "animation.wither_skeleton.idle1",
+        "idle2": "animation.wither_skeleton.idle2",
+        "idle3": "animation.wither_skeleton.idle3",
+        "move_upper_body": "animation.wither_skeleton.move_upper_body",
+        "move_upper_body_target1": "animation.wither_skeleton.move_upper_body_target1",
+        "move_upper_body_target2": "animation.wither_skeleton.move_upper_body_target2",
+        "move_upper_body_target3": "animation.wither_skeleton.move_upper_body_target3",
+        "move_upper_body_target1_default": "animation.wither_skeleton.move_upper_body_target1_default",
+        "move_upper_body_target2_default": "animation.wither_skeleton.move_upper_body_target2_default",
+        "move_upper_body_target3_default": "animation.wither_skeleton.move_upper_body_target3_default",
+        "move_lower_body": "animation.wither_skeleton.move_lower_body",
+        "fall": "controller.animation.mob.fall",
+        "falling_low": "animation.skeleton.falling_low",
+        "falling_trans": "animation.skeleton.falling_trans",
+        "falling_high": "animation.skeleton.falling_high",
+        "land_high": "animation.skeleton.land_high",
+        "land_low": "animation.skeleton.land_low",
+        "attack1": "animation.wither_skeleton.attack1",
+        "attack2": "animation.wither_skeleton.attack2",
+        "attack3": "animation.wither_skeleton.attack3",
+        "dead1": "animation.skeleton.dead1",
+        "dead2": "animation.skeleton.dead2",
+        "dead3": "animation.skeleton.dead3"
+      },
+      "scripts": {
+        "initialize": [
+          "v.xvar = Math.random(0,99);",
+          "v.roll = math.random_integer(1, 5);",
+          "v.attack_roll = 0;",
+          "v.fall = 0;"
+        ],
+        "pre_animation": [
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed) * 57.3;",
+          "variable.tcos1 = (Math.cos(query.modified_distance_moved * 76.34) * query.modified_move_speed) * 57.3;",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
+        ],
+        "animate": [
+          { "root": "v.fall == 0" },
+          "fall",
+          { "look_at_target": "query.is_alive && v.fall == 0" },
+          {
+            "hide_right_item": "v.mv_variant == 100 || (v.xvar > 20 && v.xvar < 25)"
+          }
+        ]
+      },
+      "render_controllers": [
+        "controller.render.mv.wither_skeleton",
+        "controller.render.mv.wither_skeleton_cape",
+        "controller.render.mv.backpack",
+        "controller.render.mv.piglin_heads"
+      ],
+      "spawn_egg": { "texture": "spawn_egg_wither_skeleton" },
+      "enable_attachables": true
+    }
+  }
+}

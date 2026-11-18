@@ -1,0 +1,65 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.zombie_villager_v2_base": {
+      "geometry": "Geometry.mv_default",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["array.xskins[variable.xvar]"],
+      "arrays": {
+        "textures": {
+          "array.xskins": [
+            "Texture.mv_default",
+            "Texture.mv_default2",
+            "Texture.mv_default3",
+            "Texture.mv_default4",
+            "Texture.mv_default5",
+            "Texture.mv_default6",
+            "Texture.mv_default7",
+            "Texture.mv_default8",
+            "Texture.mv_default9"
+          ]
+        }
+      }
+    },
+    "controller.render.mv.zombie_villager_v2_masked": {
+      "arrays": {
+        "textures": {
+          "Array.biomes": [
+            "Texture.mv_plains",
+            "Texture.mv_desert",
+            "Texture.mv_jungle",
+            "Texture.mv_savanna",
+            "Texture.mv_snow",
+            "Texture.mv_swamp",
+            "Texture.mv_taiga"
+          ],
+          "Array.professions": [
+            "Texture.mv_farmer",
+            "Texture.mv_fisherman",
+            "Texture.mv_shepherd",
+            "Texture.mv_fletcher",
+            "Texture.mv_librarian",
+            "Texture.mv_cartographer",
+            "Texture.mv_cleric",
+            "Texture.mv_armorer",
+            "Texture.mv_weapon_smith",
+            "Texture.mv_tool_smith",
+            "Texture.mv_butcher",
+            "Texture.mv_leatherworker",
+            "Texture.mv_stonemason",
+            "Texture.mv_nitwit"
+          ]
+        }
+      },
+      "geometry": "Geometry.mv_default",
+      "materials": [
+        {
+          "*": "q.is_baby ? Material.mv_default : Material.mv_masked"
+        }
+      ],
+      "textures": ["Array.biomes[q.mark_variant]", "Array.professions[variable.profession_index]"]
+    }
+  }
+}
