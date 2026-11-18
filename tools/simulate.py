@@ -1,92 +1,143 @@
-"""Simulate every mob's addon render controllers over all rolls; report distinct skins/models per mode."""
-import sys, os, json, re; import os
+"""Simulate every mob's render controllers over all rolls (no BP) and all BP spawn results.
+
+    python -I tools/simulate.py [mob ...] [--detail]
+
+Per mob: how many distinct (geometry, textures) each add-on render controller produces without BP
+and with BP. 1 means that layer never changes (its variants do not work). Also reports:
+- mv_* textures/geometries of the entity that no state ever draws;
+- layers that, with BP, still depend on the local roll (each player would see something different);
+- Molang errors.
+--detail prints the probability of each result (BP: weights of the minecraft:entity_spawned randomize).
+"""
+from __future__ import annotations
+
+import json
+import os
+import re
+import sys
+from collections import defaultdict
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from mvlib import *
-from molang import evaluate, truthy
-RP = find_pack("RP"); BP = find_pack("BP")
-rcs = {}
-for f in files(RP, "render_controllers"):
-    for k, v in load(f)[0]["render_controllers"].items(): rcs[k] = v
-def bp_values(ident):
-    for f in files(BP, "entities"):
-        d = load(f)[0]["minecraft:entity"]
-        if d["description"]["identifier"] == ident:
-            s = json.dumps(d.get("events", {}))
-            return ({int(x) for x in re.findall(r'"mv:variant": (\d+)', s)}, {int(x) for x in re.findall(r'"mv:mark_variant": (\d+)', s)})
-    return set(), set()
-only = sys.argv[1:]
-for f in sorted(files(RP, "entity")):
-    mob = os.path.basename(f).split(".")[0]
-    if only and mob not in only: continue
-    desc = load(f)[0]["minecraft:client_entity"]["description"]
-    keys = {s: {k.lower(): v for k, v in (desc.get(s) or {}).items()} for s in ("textures", "geometry", "materials")}
-    pre = desc.get("scripts", {}).get("pre_animation", []); init = desc.get("scripts", {}).get("initialize", [])
-    mvlines = [l for l in init + pre if re.match(r"\s*v(ariable)?\.(mv_\w+|[xyzX]?var)\s*=", l, re.I)]
-    variants, marks = bp_values(desc["identifier"])
-    results = {}
-    errors = set()
-    def run(mode, rolls, bpv, bpm):
-        V = {"is_baby": 0.0, "variant": 0.0, "mark_variant": 0.0, "is_tamed": 0.0, "is_saddled": 0.0, "is_angry": 0.0}
-        vars_ = {}
-        def lookup(name, args):
-            n = name.split(".", 1)
-            if n[0] in ("v", "variable", "t", "temp"): return vars_.get(n[1].lower(), 0.0)
-            if n[0] in ("q", "query"):
-                if n[1] == "has_property": return 1.0 if bpv is not None else 0.0
-                if n[1] == "property":
-                    if args and args[0] == "mv:variant": return float(bpv or 0)
-                    if args and args[0] == "mv:mark_variant": return float(bpm or 0)
-                    if args and args[0] == "minecraft:climate_variant": return "temperate"
-                    return 0.0
-                if n[1] == "position": return 64.0
-                return V.get(n[1], 0.0)
-            if n[0] in ("math",):
-                fn = n[1]; a = [float(x) if not isinstance(x, str) else 0 for x in (args or [])]
-                return {"random": lambda: rolls.get("_r", 50.0), "floor": lambda: float(int(a[0] // 1)), "mod": lambda: a[0] % a[1] if a[1] else 0.0,
-                        "random_integer": lambda: float(int(a[0])), "clamp": lambda: min(max(a[0], a[1]), a[2]), "abs": lambda: abs(a[0])}.get(fn, lambda: 0.0)()
-            if n[0] in ("texture", "geometry", "material"): return f"{n[0]}.{n[1]}"
-            if n[0] == "array": raise KeyError("array without index " + name)
-            return 0.0
-        for l in mvlines:
-            m = re.match(r"\s*v(?:ariable)?\.(\w+)\s*=\s*(.*?);?\s*$", l)
-            name = m.group(1).lower()
-            if name in ("xvar", "yvar", "zvar"): vars_[name] = rolls[name]; continue
-            try: vars_[name] = evaluate(m.group(2), {"arrays": {}, "resolve": lambda x: x, "lookup": lookup})
-            except Exception as e: errors.add(f"pre: {l[:60]} -> {e}")
-        out = []
-        for r in desc.get("render_controllers", []):
-            name = r if isinstance(r, str) else next(iter(r))
-            if not name.startswith("controller.render.mv."): continue
-            if not isinstance(r, str):
-                try:
-                    if not truthy(evaluate(next(iter(r.values())), {"arrays": {}, "resolve": lambda x: x, "lookup": lookup})): continue
-                except Exception as e: errors.add(f"cond {name}: {e}"); continue
-            rc = rcs.get(name)
-            arrays = {}
-            for kind, arrs in (rc.get("arrays") or {}).items():
-                for an, av in arrs.items(): arrays[an.lower()] = av
-            env = {"arrays": arrays, "resolve": lambda x: lookup(x.lower(), None), "lookup": lookup}
-            try:
-                g = evaluate(rc["geometry"], env)
-                t = [evaluate(x, env) for x in rc.get("textures", [])]
-                out.append((name.split(".")[-1], g, tuple(t)))
-            except Exception as e: errors.add(f"{name}: {e}")
-        return tuple(out)
-    combos = set()
-    for x in range(0, 100):
-        for y in (0, 10, 30, 60, 99):
-            combos.add(("no BP", run("noBP", {"xvar": x + 0.5, "yvar": y + 0.5, "zvar": (x * 7 % 100) + 0.5}, None, None)))
-    for v in sorted(variants or {0}):
-        for m in sorted(marks or {0}):
-            combos.add(("BP", run("BP", {"xvar": 50.5, "yvar": 50.5, "zvar": 50.5}, v, m)))
-    base_tex = {"no BP": set(), "BP": set()}
-    for mode, o in combos:
-        for rcname, g, t in o:
-            if g and "empty" not in str(g):
-                base_tex[mode].add((rcname, g, t))
-    def summarize(mode):
-        s = base_tex[mode]
-        by = {}
-        for rc, g, t in s: by.setdefault(rc, set()).add((g, t))
-        return {rc: len(v) for rc, v in by.items()}
-    print(f"{mob:22} noBP={summarize('no BP')}  BP={summarize('BP')}" + (f"  ERRORS={sorted(errors)[:3]}" if errors else ""))
+from mvlib import files, find_pack, rc_list, require_vanilla  # noqa: E402
+from mvsim import Layer, Mob, State, bp_entity, spawn_distribution  # noqa: E402
+
+_SKIP_Q = {"property", "has_property", "position", "life_time", "anim_time", "modified_move_speed", "target_x_rotation",
+           "target_y_rotation", "head_x_rotation", "head_y_rotation", "body_y_rotation", "time_stamp", "delta_time"}
+
+
+def explored_queries(mob: Mob) -> dict[str, list[float | str]]:
+    """Queries the entity and its render controllers read, with the values worth trying."""
+    text = json.dumps(mob.desc.get("scripts")) + json.dumps([mob.render_controllers().get(n) for n, _ in rc_list(mob.desc)])
+    out: dict[str, list[float | str]] = {}
+    for q in set(re.findall(r"\b(?:q|query)\.(\w+)", text, re.I)):
+        q = q.lower()
+        if q in _SKIP_Q:
+            continue
+        out[q] = [float(i) for i in range(1, 16)] if q in ("variant", "mark_variant", "skin_id") else [1.0, 2.0, 3.0, 4.0]
+    for p in set(re.findall(r"property\('(minecraft:\w+)'\)", text)):  # vanilla properties (has_nectar…)
+        if p != "minecraft:climate_variant":
+            out["property:" + p] = [1.0, 2.0]
+    assigned = {m.lower() for m in re.findall(r"\b(?:v|variable)\.(\w+)\s*=[^=]", text, re.I)}
+    for v in set(re.findall(r"\b(?:v|variable)\.(\w+)", text, re.I)):  # engine-set variables (ischarging…)
+        if v.lower() not in assigned and v.lower() not in ("xvar", "yvar", "zvar"):
+            out["v." + v.lower()] = [1.0]
+    return out
+
+Result = tuple[str | None, tuple[str, ...]]
+
+
+def short(r: Result) -> str:
+    g, t = r
+    return f"{(g or '-').replace('geometry.', '')} + {', '.join(os.path.basename(x) for x in t)}"
+
+
+def drawn(layers: list[Layer]) -> dict[str, Result]:
+    return {lay.rc: (lay.geometry, tuple(lay.textures)) for lay in layers
+            if lay.rc.startswith("controller.render.mv.") and lay.geometry and "empty" not in lay.geometry}
+
+
+def simulate_mob(f: str, name: str, detail: bool) -> bool:
+    """Print the report of one entity; True if it has Molang errors."""
+    failed = False
+    mob = Mob(f)
+    errors: set[str] = set()
+    used_tex: set[str] = set()
+    used_geo: set[str] = set()
+    nobp: dict[str, dict[Result, float]] = defaultdict(lambda: defaultdict(float))
+    bp: dict[str, dict[Result, float]] = defaultdict(lambda: defaultdict(float))
+    roll_dependent: set[str] = set()
+
+    def record(st: State, into: dict[str, dict[Result, float]], weight: float) -> dict[str, Result]:
+        _, layers, errs = mob.run(st)
+        errors.update(errs)
+        out = drawn(layers)
+        for lay in layers:
+            used_tex.update(lay.textures)
+            if lay.geometry:
+                used_geo.add(lay.geometry)
+        for rc, r in out.items():
+            into[rc][r] += weight
+        return out
+
+    ys = (0.5, 10.5, 30.5, 60.5, 99.5)
+    for x in range(100):
+        for y in ys:
+            record(State(None, {"xvar": x + 0.5, "yvar": y, "zvar": (x * 7 % 100) + 0.5}), nobp, 1 / (100 * len(ys)))
+    ent = bp_entity(mob.ident)
+    dist = spawn_distribution(ent) if ent else []
+    for p, props in dist or [(1.0, {})]:
+        bpv = props if ent else None
+        res = record(State(bpv, {"xvar": 50.5, "yvar": 50.5, "zvar": 50.5}), bp, p)
+        if ent:
+            for x in (0.5, 99.5):
+                other = mob.run(State(bpv, {"xvar": x, "yvar": x, "zvar": x}))[1]
+                for rc, r in drawn(other).items():
+                    if res.get(rc) != r:
+                        roll_dependent.add(rc.removeprefix("controller.render.mv."))
+
+    # other states (angry, saddled, tamed, profession…), only to find what is never drawn
+    sink: dict[str, dict[Result, float]] = defaultdict(lambda: defaultdict(float))
+    for q, values in explored_queries(mob).items():
+        for val in values:
+            for x in range(0, 100, 3):
+                record(State(None, {"xvar": x + 0.5, "yvar": 50.5, "zvar": 50.5}, queries={q: val}), sink, 0)
+            for _, props in dist[:50]:
+                record(State(props, queries={q: val}), sink, 0)
+    for climate in ("warm", "cold"):
+        record(State(None, climate=climate), sink, 0)
+
+    summary = lambda d: {rc.removeprefix("controller.render.mv."): len(v) for rc, v in d.items()}  # noqa: E731
+    line = f"{name:22} noBP={summary(nobp)}  BP={summary(bp) if ent else '(sin BP)'}"
+    print(line)
+    unused_t = sorted(k for k, v in mob.keys["textures"].items() if k.startswith("mv_") and v not in used_tex)
+    unused_g = sorted(k for k, v in mob.keys["geometry"].items()
+                      if k.startswith("mv_") and v not in used_geo and "empty" not in v)
+    for label, items in (("textures never drawn", unused_t), ("geometries never drawn", unused_g),
+                         ("BP result depends on local roll", sorted(roll_dependent)), ("ERRORS", sorted(errors))):
+        if items:
+            print(f"    {label}: {items}")
+            failed = failed or label == "ERRORS"
+    if detail:
+        for title, d in (("no BP", nobp), ("BP", bp if ent else {})):
+            for rc, results in d.items():
+                print(f"    [{title}] {rc.removeprefix('controller.render.mv.')}")
+                for r, p in sorted(results.items(), key=lambda kv: -kv[1]):
+                    print(f"        {p:7.2%}  {short(r)}")
+    return failed
+
+
+def main() -> int:
+    require_vanilla()
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    detail = "--detail" in sys.argv
+    problems = 0
+    for f in files(find_pack("RP"), "entity"):
+        name = os.path.basename(f).split(".")[0]
+        if args and name not in args:
+            continue
+        problems += simulate_mob(f, name, detail)
+    return 1 if problems else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
