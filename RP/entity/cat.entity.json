@@ -74,43 +74,34 @@
         "walk": "animation.cat.walk",
         "sprint": "animation.cat.sprint",
         "sit": "animation.cat.sit",
-        "look_at_target": "controller.animation.cat.look_at_target",
+        "look_at_target": "animation.common.look_at_target",
         "baby_transform": "animation.cat.baby_transform",
         "lie_down": "animation.cat.lie_down",
         "baby_lie_down": "animation.cat.baby_lie_down",
         "baby_sit": "animation.cat.baby_sit",
         "baby_walk": "animation.cat.baby_walk",
         "baby_sprint": "animation.cat.baby_sprint",
-        "baby_sneak": "animation.cat.baby_sneak",
-        "move": "controller.animation.cat.move",
-        "idle": "animation.cat.idle",
-        "blink": "animation.cat.blink",
-        "death": "animation.cat.death",
-        "general": "controller.animation.cat.general",
-        "mv_look_at_target": "animation.common.look_at_target"
+        "baby_sneak": "animation.cat.baby_sneak"
       },
-      "scripts": {
-        "initialize": ["v.xvar = Math.random(0,99);"],
-        "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 20 ? 1 + math.mod(math.floor(v.xvar), 4) : 0);",
-          "v.mv_active = !q.is_baby && q.variant == 0;"
-        ],
-        "scale": "v.mv_active ? 1.0 : (query.is_baby ? (1 / 0.4) : 1.0)",
-        "animate": [
-          { "look_at_target": "!v.mv_active" },
-          { "move": "!v.mv_active" },
-          { "general": "v.mv_active && (query.is_alive)" },
-          { "mv_look_at_target": "v.mv_active && (query.is_alive)" },
-          { "blink": "v.mv_active && (query.is_alive)" },
-          { "death": "v.mv_active && (!query.is_alive)" },
-          { "baby_transform": "v.mv_active && (query.is_baby)" }
-        ]
-      },
+      "animation_controllers": [
+        {
+          "look_at_target": "controller.animation.cat.look_at_target"
+        },
+        { "move": "controller.animation.cat.move" }
+      ],
       "render_controllers": [
         { "controller.render.cat.v2": "!v.mv_active" },
         { "controller.render.mv.cat": "v.mv_active" }
       ],
-      "spawn_egg": { "texture": "spawn_egg_cat" }
+      "spawn_egg": { "texture": "spawn_egg_cat" },
+      "scripts": {
+        "scale": "query.is_baby ? (1 / 0.4) : 1.0",
+        "initialize": ["v.xvar = Math.random(0,99);"],
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 20 ? 1 + math.mod(math.floor(v.xvar), 4) : 0);",
+          "v.mv_active = !q.is_baby && q.variant == 0;"
+        ]
+      }
     }
   }
 }

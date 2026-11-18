@@ -46,17 +46,15 @@
       },
       "particle_effects": { "nectar_dripping": "minecraft:nectar_drip_particle" },
       "scripts": {
+        "animate": [
+          "bee_root_controller",
+          { "bee_no_stinger": "query.mark_variant == 1" }
+        ],
+        "scale": "query.is_baby ? 2.0 : 1.0",
         "initialize": ["v.xvar = Math.random(0,99);"],
         "pre_animation": [
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
           "v.mv_active = !q.is_baby;"
-        ],
-        "scale": "v.mv_active ? 1.0 : (query.is_baby ? 2.0 : 1.0)",
-        "animate": [
-          "bee_root_controller",
-          {
-            "bee_no_stinger": "query.mark_variant == 1"
-          }
         ]
       },
       "render_controllers": [

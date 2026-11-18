@@ -4,8 +4,13 @@
     "description": {
       "identifier": "minecraft:spider",
       "min_engine_version": "1.8.0",
-      "materials": { "mv_default": "enderman" },
+      "materials": {
+        "default": "spider",
+        "invisible": "spider_invisible",
+        "mv_default": "enderman"
+      },
       "textures": {
+        "default": "textures/entity/spider/spider",
         "mv_default": "textures/entity/spider/spider",
         "mv_default2": "textures/entity/spider/spider2",
         "mv_default3": "textures/entity/spider/spider3",
@@ -34,45 +39,27 @@
         "mv_default26": "textures/entity/spider/spider26"
       },
       "geometry": {
+        "default": "geometry.spider.v1.8",
         "mv_default": "geometry.mv.spider",
         "mv_giant_spider": "geometry.mv.giant_spider"
       },
       "animations": {
+        "default_leg_pose": "animation.spider.default_leg_pose",
         "look_at_target": "animation.spider.look_at_target",
-        "fangs": "animation.spider.fangs",
-        "walking": "animation.spider.walking",
-        "wall_climbing": "animation.spider.wall_climbing",
-        "attack": "animation.spider.attack",
-        "upside_down": "animation.spider.upside_down",
-        "look_at_target_upside_down": "animation.spider.look_at_target_upside_down",
-        "death": "animation.spider.death",
-        "general": "controller.animation.spider.general",
-        "orientation_controller": "controller.animation.spider.orientation_controller"
+        "walk": "animation.spider.walk"
       },
+      "animation_controllers": [
+        { "move": "controller.animation.spider.move" }
+      ],
+      "render_controllers": ["controller.render.mv.spider"],
+      "spawn_egg": { "texture": "spawn_egg_spider" },
       "scripts": {
         "initialize": ["v.xvar = math.random(0,99);"],
         "pre_animation": [
-          "variable.wobble = Math.sin(query.swell_amount * 5730) * query.swell_amount * 0.01 + 1.0;",
-          "variable.swelling_scale1 = (Math.pow(Math.clamp(query.swell_amount, 0.0, 1.0), 4.0) * 0.4 + 1.0) * variable.wobble;",
-          "variable.swelling_scale2 = (Math.pow(Math.clamp(query.swell_amount, 0.0, 1.0), 4.0) * 0.1 + 1.0) / variable.wobble;",
-          "variable.leg_rot = Math.cos(query.modified_distance_moved * 38.17326) * 80.22 * query.modified_move_speed;",
-          "variable.flash = Math.mod(Math.Round(query.swell_amount * 10.0), 2.0);",
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
           "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
-        ],
-        "animate": [
-          "look_at_target",
-          "general",
-          "orientation_controller",
-          "fangs",
-          {
-            "look_at_target_upside_down": "query.is_wall_climbing && query.ground_speed > 0.2"
-          },
-          { "death": "!query.is_alive" }
         ]
-      },
-      "render_controllers": ["controller.render.mv.spider"],
-      "spawn_egg": { "texture": "spawn_egg_spider" }
+      }
     }
   }
 }

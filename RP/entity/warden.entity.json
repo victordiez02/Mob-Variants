@@ -4,10 +4,18 @@
     "description": {
       "identifier": "minecraft:warden",
       "materials": {
+        "default": "warden",
+        "bioluminescent_layer": "warden_bioluminescent_layer",
         "mv_default": "warden",
         "mv_bioluminescent_layer": "warden_bioluminescent_layer"
       },
       "textures": {
+        "default": "textures/entity/warden/warden",
+        "bioluminescent_layer": "textures/entity/warden/warden_bioluminescent_layer",
+        "spots_1": "textures/entity/warden/warden_pulsating_spots_1",
+        "spots_2": "textures/entity/warden/warden_pulsating_spots_2",
+        "tendrils": "textures/entity/warden/warden_tendrils",
+        "heart": "textures/entity/warden/warden_heart",
         "mv_default": "textures/entity/warden/warden",
         "mv_default2": "textures/entity/warden/warden2",
         "mv_default3": "textures/entity/warden/warden3",
@@ -20,36 +28,11 @@
         "mv_tendrils": "textures/entity/warden/warden_tendrils",
         "mv_heart": "textures/entity/warden/warden_heart"
       },
-      "geometry": { "mv_default": "geometry.warden" },
-      "animations": {
-        "emerge": "animation.warden.emerge",
-        "sniff": "animation.warden.sniff",
-        "sniff_controller": "controller.animation.warden.sniff",
-        "dig": "animation.warden.dig",
-        "roar": "animation.warden.roar",
-        "roar_controller": "controller.animation.warden.roar",
-        "shiver": "animation.warden.shiver",
-        "shiver_controller": "controller.animation.warden.shiver",
-        "base_pose": "animation.humanoid.base_pose.v1.0",
-        "look_at_target": "animation.warden.look_at_target.default",
-        "move": "animation.warden.move",
-        "melee_attack": "animation.warden.attack",
-        "melee_attack_controller": "controller.animation.warden.melee_attacking",
-        "bob": "animation.warden.bob",
-        "swimming": "animation.humanoid.swimming.v1.0",
-        "sonic_boom": "animation.warden.sonic_boom",
-        "sonic_boom_controller": "controller.animation.warden.sonic_boom"
-      },
-      "particle_effects": { "digging": "minecraft:warden_dig" },
-      "sound_effects": {
-        "emerge": "mob.warden.emerge",
-        "sniff": "mob.warden.sniff",
-        "dig": "mob.warden.dig",
-        "roar": "mob.warden.roar",
-        "clicking": "mob.warden.clicking"
+      "geometry": {
+        "default": "geometry.warden",
+        "mv_default": "geometry.warden"
       },
       "scripts": {
-        "initialize": ["v.xvar = Math.random(0,99);"],
         "pre_animation": [
           "variable.animation_speed = Math.min(0.5, 3.0 * query.modified_move_speed);",
           "variable.anim_pos_mod = 49.388962;",
@@ -93,7 +76,30 @@
           "melee_attack_controller",
           { "swimming": "query.swim_amount > 0.0" },
           "sonic_boom_controller"
-        ]
+        ],
+        "should_update_effects_offscreen": "1.0",
+        "initialize": ["v.xvar = Math.random(0,99);"]
+      },
+      "animations": {
+        "emerge": "animation.warden.emerge",
+        "sniff": "animation.warden.sniff",
+        "sniff_controller": "controller.animation.warden.sniff",
+        "dig": "animation.warden.dig",
+        "roar": "animation.warden.roar",
+        "roar_controller": "controller.animation.warden.roar",
+        "shiver": "animation.warden.shiver",
+        "shiver_controller": "controller.animation.warden.shiver",
+        "base_pose": "animation.humanoid.base_pose.v1.0",
+        "look_at_target": "animation.warden.look_at_target.default",
+        "move": "animation.warden.move",
+        "melee_attack": "animation.warden.attack",
+        "melee_attack_controller": "controller.animation.warden.melee_attacking",
+        "bob": "animation.warden.bob",
+        "swimming": "animation.humanoid.swimming.v1.0",
+        "hurt": "animation.warden.hurt",
+        "hurt_controller": "controller.animation.warden.hurt",
+        "sonic_boom": "animation.warden.sonic_boom",
+        "sonic_boom_controller": "controller.animation.warden.sonic_boom"
       },
       "render_controllers": [
         "controller.render.mv.warden",
@@ -103,8 +109,16 @@
         "controller.render.mv.warden_tendrils",
         "controller.render.mv.warden_heart"
       ],
+      "enable_attachables": true,
       "spawn_egg": { "texture": "spawn_egg_warden" },
-      "enable_attachables": true
+      "sound_effects": {
+        "emerge": "mob.warden.emerge",
+        "sniff": "mob.warden.sniff",
+        "dig": "mob.warden.dig",
+        "roar": "mob.warden.roar",
+        "clicking": "mob.warden.clicking"
+      },
+      "particle_effects": { "digging": "minecraft:warden_dig" }
     }
   }
 }

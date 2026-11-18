@@ -17,27 +17,52 @@
         "mv_default8": "textures/entity/sniffer/sniffer8",
         "mv_default9": "textures/entity/sniffer/sniffer9"
       },
+      "scripts": {
+        "pre_animation": [
+          "variable.moving = math.min(1.0, query.modified_move_speed * 10);",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
+          "v.mv_active = !q.is_baby;"
+        ],
+        "scale": "query.is_baby ? (1 / 0.45) : 1.0",
+        "initialize": ["v.xvar = math.random(0,99);"]
+      },
       "geometry": {
         "default": "geometry.sniffer",
         "baby": "geometry.sniffer.baby",
-        "mv_default": "geometry.mv.sniffer",
+        "mv_default": "geometry.sniffer",
         "mv_torchflower": "geometry.mv.sniffer_torchflower",
         "mv_pitchflower": "geometry.mv.sniffer_pitchflower"
       },
       "animations": {
         "baby_transform": "animation.sniffer.baby_transform",
-        "walk": "controller.animation.sniffer.walk",
+        "walk": "animation.sniffer.walk",
         "look_at_target": "animation.common.look_at_target",
-        "sniffsniff": "controller.animation.sniffer.sniffsniff",
-        "long_sniff": "controller.animation.sniffer.long_sniff",
-        "search": "controller.animation.sniffer.search",
-        "dig": "controller.animation.sniffer.dig",
-        "stand_up": "controller.animation.sniffer.stand_up",
-        "feeling_happy": "controller.animation.sniffer.feeling_happy",
-        "general": "controller.animation.sniffer.general",
-        "blink": "animation.wolf.blink",
-        "baby": "controller.animation.sniffer.baby"
+        "sniffsniff": "animation.sniffer.sniffsniff",
+        "long_sniff": "animation.sniffer.longsniff",
+        "search": "animation.sniffer.search",
+        "dig": "animation.sniffer.dig",
+        "stand_up": "animation.sniffer.stand_up",
+        "feeling_happy": "animation.sniffer.feeling_happy"
       },
+      "animation_controllers": [
+        { "general": "controller.animation.sniffer.general" },
+        { "walk": "controller.animation.sniffer.walk" },
+        { "sniffsniff": "controller.animation.sniffer.sniffsniff" },
+        { "long_sniff": "controller.animation.sniffer.long_sniff" },
+        { "search": "controller.animation.sniffer.search" },
+        { "dig": "controller.animation.sniffer.dig" },
+        { "stand_up": "controller.animation.sniffer.stand_up" },
+        {
+          "feeling_happy": "controller.animation.sniffer.feeling_happy"
+        }
+      ],
+      "render_controllers": [
+        { "controller.render.sniffer.v2": "!v.mv_active" },
+        { "controller.render.mv.sniffer": "v.mv_active" },
+        { "controller.render.mv.sniffer_flower": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_sniffer" },
       "sound_effects": {
         "drop_seed": "mob.sniffer.drop_seed",
         "sniffsniff": "mob.sniffer.sniffsniff",
@@ -46,34 +71,7 @@
         "digging": "mob.sniffer.digging",
         "stand_up": "mob.sniffer.stand_up",
         "happy": "mob.sniffer.happy"
-      },
-      "scripts": {
-        "initialize": ["v.xvar = math.random(0,99);"],
-        "pre_animation": [
-          "variable.moving = math.min(1.0, query.modified_move_speed * 10);",
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "v.mv_active = !q.is_baby;"
-        ],
-        "scale": "v.mv_active ? 1.0 : (query.is_baby ? (1 / 0.45) : 1.0)",
-        "animate": [
-          "general",
-          "walk",
-          "sniffsniff",
-          "long_sniff",
-          "search",
-          "dig",
-          "stand_up",
-          "feeling_happy",
-          { "baby": "v.mv_active" }
-        ]
-      },
-      "render_controllers": [
-        { "controller.render.sniffer.v2": "!v.mv_active" },
-        { "controller.render.mv.sniffer": "v.mv_active" },
-        { "controller.render.mv.sniffer_flower": "v.mv_active" }
-      ],
-      "spawn_egg": { "texture": "spawn_egg_sniffer" }
+      }
     }
   }
 }

@@ -3,8 +3,13 @@
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:pillager",
-      "materials": { "mv_default": "enderman", "mv_helmet": "enderman" },
+      "materials": {
+        "default": "pillager",
+        "mv_default": "enderman",
+        "mv_helmet": "enderman"
+      },
       "textures": {
+        "default": "textures/entity/pillager",
         "mv_default": "textures/entity/pillager",
         "mv_default2": "textures/entity/pillager/pillager2",
         "mv_default3": "textures/entity/pillager/pillager3",
@@ -33,46 +38,49 @@
         "mv_helmet3": "textures/entity/pillager/helmet_g"
       },
       "geometry": {
-        "mv_default": "geometry.mv.pillager",
+        "default": "geometry.pillager",
+        "mv_default": "geometry.pillager",
         "mv_empty": "geometry.mv.zombie_empty",
         "mv_helmet": "geometry.mv.pillager_helmet"
       },
-      "animations": {
-        "root": "controller.animation.pillager.root",
-        "attack": "controller.animation.pillager.attack",
-        "look_at_target": "animation.common.look_at_target",
-        "base_pose": "animation.pillager.base_pose",
-        "base_pose_sus": "animation.pillager.base_pose_sus",
-        "riding.legs": "animation.humanoid.riding.legs",
-        "idle1": "animation.pillager.idle1",
-        "idle2": "animation.pillager.idle2",
-        "idle3": "animation.pillager.idle3",
-        "move_upper_body": "animation.pillager.move_upper_body",
-        "move_lower_body": "animation.pillager.move_lower_body",
-        "crossbow_hold": "animation.pillager.crossbow_hold",
-        "crossbow_charge": "animation.pillager.crossbow_charge",
-        "celebrate": "animation.pillager.celebrate",
-        "dead1": "animation.pillager.dead1",
-        "dead2": "animation.pillager.dead2",
-        "dead3": "animation.pillager.dead3",
-        "dead4": "animation.pillager.dead4"
-      },
+      "spawn_egg": { "texture": "spawn_egg_pillager" },
       "scripts": {
-        "initialize": ["v.xvar = Math.random(0,99);", "v.roll = math.random_integer(1, 5);"],
         "pre_animation": [
-          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 25.44666) * query.modified_move_speed) * 57.3;",
-          "variable.tcos1 = (Math.cos(query.modified_distance_moved * 50.89333) * query.modified_move_speed) * 57.3;",
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.riding_y_offset_with_respect_to_player = 1.25;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;",
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
           "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
         ],
-        "animate": [
-          "root",
-          "attack",
-          { "look_at_target": "query.is_alive" }
-        ]
+        "animate": ["pillager_root_controller"],
+        "initialize": ["v.xvar = Math.random(0,99);"]
+      },
+      "animations": {
+        "humanoid_base_pose": "animation.humanoid.base_pose",
+        "look_at_target_default": "animation.humanoid.look_at_target.default",
+        "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
+        "look_at_target_swimming": "animation.humanoid.look_at_target.swimming",
+        "move": "animation.humanoid.move",
+        "riding.arms": "animation.humanoid.riding.arms",
+        "riding.legs": "animation.humanoid.riding.legs",
+        "holding": "animation.humanoid.holding",
+        "attack.rotations": "animation.humanoid.attack.rotations",
+        "bob": "animation.humanoid.bob",
+        "crossbow_hold": "animation.pillager.crossbow.hold",
+        "crossbow_charge": "animation.pillager.crossbow.charge",
+        "celebrating": "animation.humanoid.celebrating",
+        "controller_humanoid_base_pose": "controller.animation.humanoid.base_pose",
+        "controller_look_at_target": "controller.animation.humanoid.look_at_target",
+        "controller_move": "controller.animation.humanoid.move",
+        "controller_riding": "controller.animation.humanoid.riding",
+        "controller_attack": "controller.animation.humanoid.attack",
+        "controller_bob": "controller.animation.humanoid.bob",
+        "controller_pillager_attack": "controller.animation.pillager.attack",
+        "pillager_root_controller": "controller.animation.pillager.root",
+        "riding.body": "animation.humanoid.riding.body"
       },
       "render_controllers": ["controller.render.mv.pillager", "controller.render.mv.pillager_helmet"],
-      "spawn_egg": { "texture": "spawn_egg_pillager" },
       "enable_attachables": true,
       "hide_armor": true
     }

@@ -36,6 +36,16 @@
         "mv_crown": "geometry.mv.frog_crown",
         "mv_empty": "geometry.mv.zombie_empty"
       },
+      "spawn_egg": { "texture": "spawn_egg_frog" },
+      "scripts": {
+        "pre_animation": [
+          "variable.moving = query.ground_speed > 0 || query.vertical_speed > 0;",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 15 ? 11 : 1) + math.mod(math.floor(v.xvar), 10);",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : (v.yvar < 20 ? 2 : 1);",
+          "v.mv_active = q.variant == 0;"
+        ],
+        "initialize": ["v.xvar = math.random(0,99);", "v.yvar = math.random(0, 99);"]
+      },
       "animations": {
         "croak": "animation.frog.croak",
         "jump": "animation.frog.jump",
@@ -43,27 +53,18 @@
         "walk": "animation.frog.walk",
         "swim": "animation.frog.swim",
         "idle_water": "animation.frog.idle.water",
-        "look_at_target": "animation.common.look_at_target",
-        "general": "controller.animation.frog.general",
-        "croaking": "controller.animation.frog.croaking",
-        "eat_mob": "controller.animation.frog.eat_mob"
+        "look_at_target": "animation.common.look_at_target"
       },
-      "scripts": {
-        "initialize": ["v.xvar = math.random(0,99);", "v.yvar = math.random(0, 99);"],
-        "pre_animation": [
-          "variable.moving = query.ground_speed > 0 || query.vertical_speed > 0;",
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 15 ? 11 : 1) + math.mod(math.floor(v.xvar), 10);",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : (v.yvar < 20 ? 2 : 1);",
-          "v.mv_active = q.variant == 0;"
-        ],
-        "animate": ["general", "croaking", "eat_mob"]
-      },
+      "animation_controllers": [
+        { "general": "controller.animation.frog.general" },
+        { "croaking": "controller.animation.frog.croaking" },
+        { "eat_mob": "controller.animation.frog.eat_mob" }
+      ],
       "render_controllers": [
         { "controller.render.frog": "!v.mv_active" },
         { "controller.render.mv.frog": "v.mv_active" },
         { "controller.render.mv.frog_crown": "v.mv_active" }
-      ],
-      "spawn_egg": { "texture": "spawn_egg_frog" }
+      ]
     }
   }
 }

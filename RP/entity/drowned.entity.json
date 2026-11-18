@@ -22,61 +22,7 @@
         "mv_trident": "geometry.mv.drowned_trident",
         "mv_empty": "geometry.mv.zombie_empty"
       },
-      "animations": {
-        "humanoid_big_head": "animation.humanoid.big_head",
-        "look_at_target_default": "animation.humanoid.look_at_target.default",
-        "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
-        "look_at_target_swimming": "animation.humanoid.look_at_target.swimming",
-        "move": "animation.humanoid.move",
-        "riding.arms": "animation.humanoid.riding.arms",
-        "riding.legs": "animation.humanoid.riding.legs",
-        "charging": "animation.humanoid.charging",
-        "bob": "animation.humanoid.bob",
-        "use_item_progress": "animation.humanoid.use_item_progress",
-        "zombie_attack_bare_hand": "animation.zombie.attack_bare_hand",
-        "attack_rotations": "animation.drowned.attack.rotations",
-        "swimming": "animation.zombie.swimming",
-        "riding.body": "animation.humanoid.riding.body",
-        "baby_zombie_attack_bare_hand": "animation.zombie.baby_attack_bare_hand",
-        "baby_attack_rotations": "animation.drowned.attack.baby_rotations",
-        "vanilla_attack_controller": "controller.animation.drowned.attack.rotations",
-        "vanilla_brandish_spear": "animation.humanoid.brandish_spear",
-        "vanilla_damage_nearby_mobs": "animation.humanoid.damage_nearby_mobs",
-        "vanilla_holding": "animation.humanoid.holding",
-        "vanilla_look_at_target": "controller.animation.humanoid.look_at_target",
-        "zombie_big_head": "animation.humanoid.big_head",
-        "holding": "animation.zombie.holding",
-        "head_idle": "animation.zombie.head_idle",
-        "torso_idle": "animation.zombie.torso_idle",
-        "arms_idle": "animation.zombie.arms_idle",
-        "arms_walk": "animation.zombie.arms_walking",
-        "leg_walk": "animation.zombie.legs_walking",
-        "leg_idle": "animation.zombie.legs_idle",
-        "riding_arms": "animation.zombie.riding_arms",
-        "riding_legs": "animation.zombie.riding_legs",
-        "adult_attack": "animation.zombie.attack.adult",
-        "baby_attack": "animation.zombie.attack.baby",
-        "baby_idle": "animation.zombie_baby.idle",
-        "baby_moving": "animation.zombie_baby.running",
-        "swimming_full": "animation.zombie.swimming_full",
-        "swimming_head": "animation.zombie.head_swimming",
-        "swimming_torso": "animation.zombie.torso_swimming",
-        "swimming_legs": "animation.zombie.legs_swimming",
-        "swimming_arms": "animation.zombie.arms_swimming",
-        "head_controller": "controller.animation.zombie.head",
-        "torso_controller": "controller.animation.zombie.torso",
-        "arms_controller": "controller.animation.zombie.arms",
-        "legs_controller": "controller.animation.zombie.legs",
-        "baby_controller": "controller.animation.zombie.baby",
-        "attack_controller": "controller.animation.zombie.attack",
-        "look_at_target": "animation.common.look_at_target",
-        "damage_nearby_mobs": "animation.zombie.damage_nearby_mobs",
-        "brandish_spear": "animation.zombie.brandish_spear",
-        "death": "animation.zombie.death",
-        "blink": "animation.zombie.blink"
-      },
       "scripts": {
-        "initialize": ["v.xvar = Math.random(0,99);", "v.yvar = Math.random(0,99);"],
         "pre_animation": [
           "v.use_dedicated_baby_armor = true;",
           "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
@@ -85,61 +31,62 @@
           "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
           "variable.unscaled_riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;",
           "variable.riding_y_offset = variable.riding_y_offset_baby_scaling * math.abs(variable.unscaled_riding_y_offset) + variable.unscaled_riding_y_offset + variable.riding_y_offset_baby_scaling * 0.2f;",
-          "variable.zombie.attack = variable.attack_time > 0 && query.has_target;",
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
           "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
           "v.mv_active = !q.is_baby;"
         ],
-        "scale": "v.mv_active ? 1.0 : (query.is_baby ? 2.0 : 1.0)",
-        "should_update_effects_offscreen": "1.0",
-        "variables": { "variable.use_dedicated_baby_armor": "public" },
         "animate": [
-          { "vanilla_look_at_target": "!v.mv_active" },
-          { "move": "!v.mv_active" },
-          { "riding.body": "!v.mv_active && (query.is_riding)" },
-          { "riding.arms": "!v.mv_active && (query.is_riding)" },
-          { "riding.legs": "!v.mv_active && (query.is_riding)" },
-          { "vanilla_holding": "!v.mv_active" },
-          { "charging": "!v.mv_active && (query.is_charging)" },
-          { "vanilla_attack_controller": "!v.mv_active" },
+          "look_at_target",
+          "move",
+          { "riding.body": "query.is_riding" },
+          { "riding.arms": "query.is_riding" },
+          { "riding.legs": "query.is_riding" },
+          "holding",
+          { "charging": "query.is_charging" },
+          "attack_controller",
+          { "brandish_spear": "variable.is_brandishing_spear" },
+          "bob",
+          { "damage_nearby_mobs": "variable.damage_nearby_mobs" },
           {
-            "vanilla_brandish_spear": "!v.mv_active && (variable.is_brandishing_spear)"
+            "use_item_progress": "( variable.use_item_interval_progress > 0.0 ) || ( variable.use_item_startup_progress > 0.0 )"
           },
-          { "bob": "!v.mv_active" },
-          {
-            "vanilla_damage_nearby_mobs": "!v.mv_active && (variable.damage_nearby_mobs)"
-          },
-          {
-            "use_item_progress": "!v.mv_active && (( variable.use_item_interval_progress > 0.0 ) || ( variable.use_item_startup_progress > 0.0 ))"
-          },
-          { "swimming": "!v.mv_active && (variable.swim_amount > 0.0)" },
-          { "blink": "v.mv_active" },
-          { "zombie_big_head": "v.mv_active && (query.is_baby)" },
-          {
-            "baby_controller": "v.mv_active && (query.is_baby && query.health > 0)"
-          },
-          { "attack_controller": "v.mv_active && (query.has_target)" },
-          { "head_controller": "v.mv_active && (query.health > 0)" },
-          { "torso_controller": "v.mv_active && (query.health > 0)" },
-          { "arms_controller": "v.mv_active && (query.health > 0)" },
-          { "legs_controller": "v.mv_active && (query.health > 0)" },
-          { "look_at_target": "v.mv_active && (query.health > 0)" },
-          {
-            "damage_nearby_mobs": "v.mv_active && (variable.damage_nearby_mobs)"
-          },
-          {
-            "brandish_spear": "v.mv_active && (variable.is_brandishing_spear)"
-          },
-          { "death": "v.mv_active && (!query.is_alive)" }
-        ]
+          { "swimming": "variable.swim_amount > 0.0" }
+        ],
+        "should_update_effects_offscreen": "1.0",
+        "scale": "query.is_baby ? 2.0 : 1.0",
+        "variables": { "variable.use_dedicated_baby_armor": "public" },
+        "initialize": ["v.xvar = Math.random(0,99);", "v.yvar = Math.random(0,99);"]
+      },
+      "animations": {
+        "humanoid_big_head": "animation.humanoid.big_head",
+        "look_at_target": "controller.animation.humanoid.look_at_target",
+        "look_at_target_default": "animation.humanoid.look_at_target.default",
+        "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
+        "look_at_target_swimming": "animation.humanoid.look_at_target.swimming",
+        "move": "animation.humanoid.move",
+        "riding.arms": "animation.humanoid.riding.arms",
+        "riding.legs": "animation.humanoid.riding.legs",
+        "holding": "animation.humanoid.holding",
+        "brandish_spear": "animation.humanoid.brandish_spear",
+        "charging": "animation.humanoid.charging",
+        "bob": "animation.humanoid.bob",
+        "damage_nearby_mobs": "animation.humanoid.damage_nearby_mobs",
+        "use_item_progress": "animation.humanoid.use_item_progress",
+        "attack_controller": "controller.animation.drowned.attack.rotations",
+        "zombie_attack_bare_hand": "animation.zombie.attack_bare_hand",
+        "attack_rotations": "animation.drowned.attack.rotations",
+        "swimming": "animation.zombie.swimming",
+        "riding.body": "animation.humanoid.riding.body",
+        "baby_zombie_attack_bare_hand": "animation.zombie.baby_attack_bare_hand",
+        "baby_attack_rotations": "animation.drowned.attack.baby_rotations"
       },
       "render_controllers": [
         { "controller.render.zombie.v2": "!v.mv_active" },
         { "controller.render.mv.drowned": "v.mv_active" },
         { "controller.render.mv.drowned_trident": "v.mv_active" }
       ],
-      "spawn_egg": { "texture": "spawn_egg_drowned" },
-      "enable_attachables": true
+      "enable_attachables": true,
+      "spawn_egg": { "texture": "spawn_egg_drowned" }
     }
   }
 }

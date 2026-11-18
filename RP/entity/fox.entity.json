@@ -24,6 +24,7 @@
       "animations": {
         "walk": "animation.quadruped.walk",
         "look_at_target": "animation.common.look_at_target",
+        "baby_transform": "animation.fox.baby_transform",
         "crouch": "animation.fox.crouch",
         "sleep": "animation.fox.sleep",
         "setup": "animation.fox.setup",
@@ -36,28 +37,15 @@
         "baby_pounce": "animation.fox.baby_pounce",
         "baby_sit": "animation.fox.baby_sit",
         "baby_sleep": "animation.fox.baby_sleep",
-        "baby_wiggle": "animation.fox.baby_wiggle",
-        "blink": "animation.fox.blink",
-        "idle": "animation.fox.idle",
-        "general": "controller.animation.mv.fox.general",
-        "mv_pounce": "animation.fox_bma.pounce",
-        "mv_sleep": "animation.fox_bma.sleeping",
-        "mv_walk": "animation.fox.walk",
-        "mv_wiggle": "animation.fox_bma.wiggle"
+        "baby_wiggle": "animation.fox.baby_wiggle"
       },
       "scripts": {
+        "animate": ["setup", "move"],
+        "scale": "query.is_baby ? 2.0 : 1.0",
         "initialize": ["v.xvar = Math.random(0,99);"],
         "pre_animation": [
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 5 ? 2 : (v.xvar < 20 ? 1 : 0));",
           "v.mv_active = !q.is_baby && q.variant == 0;"
-        ],
-        "scale": "v.mv_active ? 1.0 : (query.is_baby ? 2.0 : 1.0)",
-        "animate": [
-          { "setup": "!v.mv_active" },
-          { "move": "!v.mv_active" },
-          { "blink": "v.mv_active && (!query.is_sleeping)" },
-          { "look_at_target": "v.mv_active && (!query.is_sleeping)" },
-          { "general": "v.mv_active" }
         ]
       },
       "render_controllers": [

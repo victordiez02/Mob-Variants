@@ -4,13 +4,19 @@
     "description": {
       "identifier": "minecraft:ender_dragon",
       "materials": {
+        "default": "ender_dragon",
+        "beam_material": "entity_beam",
+        "death_material": "entity_beam_additive",
+        "dissolve_0": "entity_dissolve_layer0.skinning",
+        "dissolve_1": "entity_dissolve_layer1.skinning",
         "mv_default": "enderman",
         "mv_dissolve_0": "entity_dissolve_layer0.skinning",
-        "mv_dissolve_1": "entity_dissolve_layer1.skinning",
-        "beam_material": "entity_beam",
-        "death_material": "entity_beam_additive"
+        "mv_dissolve_1": "entity_dissolve_layer1.skinning"
       },
       "textures": {
+        "default": "textures/entity/dragon/dragon",
+        "exploding": "textures/entity/dragon/dragon_exploding",
+        "beam": "textures/entity/endercrystal/endercrystal_beam",
         "mv_default": "textures/entity/dragon/dragon",
         "mv_default2": "textures/entity/dragon/dragon2",
         "mv_default3": "textures/entity/dragon/dragon3",
@@ -18,19 +24,13 @@
         "mv_default5": "textures/entity/dragon/dragon5",
         "mv_default6": "textures/entity/dragon/dragon6",
         "mv_default7": "textures/entity/dragon/dragon7",
-        "mv_exploding": "textures/entity/dragon/dragon_exploding",
-        "beam": "textures/entity/endercrystal/endercrystal_beam"
+        "mv_exploding": "textures/entity/dragon/dragon_exploding"
       },
-      "geometry": { "mv_default": "geometry.dragon" },
-      "animations": {
-        "setup": "animation.ender_dragon.setup",
-        "jaw_movement": "animation.ender_dragon.jaw_movement",
-        "neck_head_movement": "animation.ender_dragon.neck_head_movement",
-        "wings_limbs_movement": "animation.ender_dragon.wings_limbs_movement",
-        "tail_movement": "animation.ender_dragon.tail_movement"
+      "geometry": {
+        "default": "geometry.dragon",
+        "mv_default": "geometry.dragon"
       },
       "scripts": {
-        "initialize": ["v.xvar = Math.random(0,99);"],
         "pre_animation": [
           "variable.flap_time = query.wing_flap_position * 360.0;",
           "variable.base_rotation = Math.sin(variable.flap_time - 57.3) + 57.3;",
@@ -210,7 +210,15 @@
           "variable.tail_12_position_z = variable.tail_11_position_z - Math.cos(variable.tail_11_rotation_y) * Math.cos(variable.tail_11_rotation_x) * 10.0;",
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"
         ],
-        "animate": ["setup", "jaw_movement", "neck_head_movement", "wings_limbs_movement", "tail_movement"]
+        "animate": ["setup", "jaw_movement", "neck_head_movement", "wings_limbs_movement", "tail_movement"],
+        "initialize": ["v.xvar = Math.random(0,99);"]
+      },
+      "animations": {
+        "setup": "animation.ender_dragon.setup",
+        "jaw_movement": "animation.ender_dragon.jaw_movement",
+        "neck_head_movement": "animation.ender_dragon.neck_head_movement",
+        "wings_limbs_movement": "animation.ender_dragon.wings_limbs_movement",
+        "tail_movement": "animation.ender_dragon.tail_movement"
       },
       "render_controllers": [
         {

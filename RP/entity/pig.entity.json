@@ -49,17 +49,16 @@
       },
       "animations": {
         "setup": "animation.pig.setup",
+        "walk": "animation.quadruped.walk",
         "look_at_target": "animation.common.look_at_target",
-        "baby_transform": "animation.pig.baby_transform",
-        "vanilla_walk": "animation.quadruped.walk",
-        "walk": "animation.pig.walk",
-        "idle": "animation.pig.idle",
-        "blink": "animation.pig.blink",
-        "death": "animation.pig.death",
-        "general": "controller.animation.pig.general"
+        "baby_transform": "animation.pig.baby_transform"
       },
       "scripts": {
-        "initialize": ["v.xvar = Math.random(0,99);"],
+        "animate": [
+          "setup",
+          { "walk": "query.modified_move_speed" },
+          "look_at_target"
+        ],
         "pre_animation": [
           "t.variant = query.property('minecraft:climate_variant');",
           "v.index = (t.variant == 'temperate') ? 0 : ((t.variant == 'warm') ? 1 : 2);",
@@ -67,19 +66,8 @@
           "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
           "v.mv_active = !q.is_baby && q.property('minecraft:climate_variant') == 'temperate';"
         ],
-        "scale": "v.mv_active ? 1.0 : (query.is_baby ? 2.0 : 1.0)",
-        "animate": [
-          { "setup": "!v.mv_active" },
-          {
-            "vanilla_walk": "!v.mv_active && (query.modified_move_speed)"
-          },
-          {
-            "look_at_target": "!v.mv_active || query.is_alive"
-          },
-          { "general": "v.mv_active" },
-          { "blink": "v.mv_active" },
-          { "baby_transform": "v.mv_active && (query.is_baby)" }
-        ]
+        "scale": "query.is_baby ? 2.0 : 1.0",
+        "initialize": ["v.xvar = Math.random(0,99);"]
       },
       "render_controllers": [
         { "controller.render.saddle": "!v.mv_active" },

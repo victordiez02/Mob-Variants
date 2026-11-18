@@ -4,8 +4,13 @@
     "description": {
       "identifier": "minecraft:evocation_illager",
       "min_engine_version": "1.8.0",
-      "materials": { "mv_default": "evoker", "mv_glow": "enderman" },
+      "materials": {
+        "default": "evoker",
+        "mv_default": "evoker",
+        "mv_glow": "enderman"
+      },
       "textures": {
+        "default": "textures/entity/illager/evoker",
         "mv_default": "textures/entity/illager/evoker",
         "mv_default2": "textures/entity/illager/evoker2",
         "mv_default3": "textures/entity/illager/evoker3",
@@ -49,7 +54,8 @@
         "mv_chef": "textures/entity/illager/evoker_chef"
       },
       "geometry": {
-        "mv_default": "geometry.mv.evoker",
+        "default": "geometry.evoker.v1.8",
+        "mv_default": "geometry.evoker.v1.8",
         "mv_hat": "geometry.mv.evoker_hat",
         "mv_wizard": "geometry.mv.evoker_wizard",
         "mv_windcaller": "geometry.mv.evoker_windcaller",
@@ -57,45 +63,31 @@
         "mv_geomancer": "geometry.mv.evoker_geomancer",
         "mv_chef": "geometry.mv.evoker_chef"
       },
-      "animations": {
-        "root": "controller.animation.evoker.root",
-        "look_at_target": "animation.common.look_at_target",
-        "base_pose": "animation.evoker.base_pose",
-        "base_pose_sus": "animation.evoker.base_pose_sus",
-        "riding.legs": "animation.humanoid.riding.legs",
-        "idle1": "animation.evoker.idle1",
-        "idle2": "animation.evoker.idle2",
-        "idle3": "animation.evoker.idle3",
-        "move_upper_body": "animation.evoker.move_upper_body",
-        "move_lower_body": "animation.evoker.move_lower_body",
-        "casting1": "animation.evoker.spell1",
-        "casting2": "animation.evoker.spell2",
-        "default_trans1": "animation.evoker.default_trans1",
-        "default_trans2": "animation.evoker.default_trans2",
-        "celebrate": "animation.evoker.celebrate",
-        "dead1": "animation.evoker.dead1",
-        "dead2": "animation.evoker.dead2",
-        "dead3": "animation.evoker.dead3",
-        "dead4": "animation.evoker.dead4"
-      },
-      "particle_effects": {
-        "spell": "minecraft:evoker_spell",
-        "spell2a": "coptaine:evoker_spell2a",
-        "spell2b": "coptaine:evoker_spell2b"
-      },
       "scripts": {
-        "initialize": ["v.xvar = Math.random(0,99);", "v.roll = math.random_integer(1, 5);"],
+        "scale": "0.9375",
+        "animate": ["controller_general", "controller_move"],
         "pre_animation": [
-          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 25.44666) * query.modified_move_speed) * 57.3;",
-          "variable.tcos1 = (Math.cos(query.modified_distance_moved * 50.89333) * query.modified_move_speed) * 57.3;",
+          "variable.riding_y_offset_with_respect_to_player = 1.25;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;",
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
           "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
         ],
-        "animate": [
-          "root",
-          { "look_at_target": "query.is_alive" }
-        ]
+        "initialize": ["v.xvar = Math.random(0,99);"]
       },
+      "animations": {
+        "general": "animation.evoker.general",
+        "casting": "animation.evoker.casting",
+        "look_at_target": "animation.common.look_at_target",
+        "move": "animation.evoker.move",
+        "celebrating": "animation.humanoid.celebrating",
+        "controller_general": "controller.animation.evoker.general",
+        "controller_move": "controller.animation.villager.move",
+        "riding.legs": "animation.humanoid.riding.legs",
+        "controller_riding": "controller.animation.humanoid.riding_legs_only",
+        "riding.body": "animation.humanoid.riding.body"
+      },
+      "particle_effects": { "spell": "minecraft:evoker_spell" },
       "render_controllers": ["controller.render.mv.evoker", "controller.render.mv.evoker_hat"],
       "spawn_egg": { "texture": "spawn_egg_evoker" }
     }

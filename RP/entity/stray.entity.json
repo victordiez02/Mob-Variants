@@ -4,35 +4,77 @@
     "description": {
       "identifier": "minecraft:stray",
       "min_engine_version": "1.8.0",
-      "materials": { "mv_default": "entity_alphatest" },
-      "textures": { "mv_default": "textures/entity/skeleton/stray" },
-      "geometry": { "mv_default": "geometry.mv.stray" },
-      "animations": {
-        "look_at_target": "animation.common.look_at_target",
-        "idle": "animation.skeleton.idle",
-        "walking": "animation.skeleton.walking",
-        "riding": "animation.skeleton.riding",
-        "death": "animation.skeleton.death",
-        "riding_arms_idle": "animation.skeleton.riding_idle_arms",
-        "riding_charging_bow": "animation.skeleton.charging_bow_riding",
-        "has_target": "animation.skeleton.has_target",
-        "general": "controller.animation.skeleton.general",
-        "arms_controller": "controller.animation.arms_controller"
+      "materials": {
+        "default": "stray",
+        "overlay": "stray_clothes",
+        "mv_default": "entity_alphatest"
       },
+      "textures": {
+        "default": "textures/entity/skeleton/stray",
+        "overlay": "textures/entity/skeleton/stray_overlay",
+        "mv_default": "textures/entity/skeleton/stray"
+      },
+      "geometry": {
+        "default": "geometry.skeleton.stray.v1.8",
+        "overlay": "geometry.stray.armor.v1.8",
+        "mv_default": "geometry.mv.stray"
+      },
+      "spawn_egg": { "texture": "spawn_egg_stray" },
       "scripts": {
         "pre_animation": [
-          "variable.riding_arms_charging = query.is_riding && query.item_is_charged;",
-          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;"
-        ],
-        "animate": [
-          { "look_at_target": "query.is_alive" },
-          { "death": "!query.is_alive" },
-          "arms_controller",
-          "general"
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.riding_y_offset_with_respect_to_player = 0.5;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
         ]
       },
+      "animations": {
+        "look_at_target_default": "animation.humanoid.look_at_target.default",
+        "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
+        "look_at_target_swimming": "animation.humanoid.look_at_target.swimming",
+        "move": "animation.humanoid.move",
+        "riding.arms": "animation.humanoid.riding.arms",
+        "riding.legs": "animation.humanoid.riding.legs",
+        "holding": "animation.humanoid.holding",
+        "brandish_spear": "animation.humanoid.brandish_spear",
+        "charging": "animation.humanoid.charging",
+        "attack.rotations": "animation.humanoid.attack.rotations",
+        "sneaking": "animation.humanoid.sneaking",
+        "bob": "animation.humanoid.bob",
+        "damage_nearby_mobs": "animation.humanoid.damage_nearby_mobs",
+        "bow_and_arrow": "animation.humanoid.bow_and_arrow",
+        "swimming": "animation.zombie.swimming",
+        "use_item_progress": "animation.humanoid.use_item_progress",
+        "skeleton_attack": "animation.skeleton.attack",
+        "riding.body": "animation.humanoid.riding.body"
+      },
+      "animation_controllers": [
+        {
+          "look_at_target": "controller.animation.humanoid.look_at_target"
+        },
+        { "move": "controller.animation.humanoid.move" },
+        { "riding": "controller.animation.humanoid.riding" },
+        { "holding": "controller.animation.humanoid.holding" },
+        {
+          "brandish_spear": "controller.animation.humanoid.brandish_spear"
+        },
+        { "charging": "controller.animation.humanoid.charging" },
+        { "attack": "controller.animation.humanoid.attack" },
+        { "sneaking": "controller.animation.humanoid.sneaking" },
+        { "bob": "controller.animation.humanoid.bob" },
+        {
+          "damage_nearby_mobs": "controller.animation.humanoid.damage_nearby_mobs"
+        },
+        {
+          "bow_and_arrow": "controller.animation.humanoid.bow_and_arrow"
+        },
+        { "swimming": "controller.animation.zombie.swimming" },
+        {
+          "use_item_progress": "controller.animation.humanoid.use_item_progress"
+        },
+        { "skeleton_attack": "controller.animation.skeleton.attack" }
+      ],
       "render_controllers": ["controller.render.mv.stray"],
-      "spawn_egg": { "texture": "spawn_egg_stray" },
       "enable_attachables": true
     }
   }
