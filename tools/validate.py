@@ -11,12 +11,13 @@ from __future__ import annotations
 import json
 import os
 import re
-import struct
+import hashlib
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from mvlib import (VRP, Json, client_entities, files, find_pack, geo_index, keyed_ids, load_ex, rc_list,  # noqa: E402
-                   rel, require_vanilla, resolve_geo, texture_file, vanilla_client_entity)
+                   png_size, rel, require_vanilla, resolve_geo, texture_file,
+                   vanilla_client_entity)
 
 # Animations the game has but bedrock-samples lacks (see CLAUDE.md).
 EXPECTED_MISSING = {"animation.ghast.scale", "controller.animation.ghast.scale", "animation.warden.hurt",
@@ -36,15 +37,6 @@ def _ver(s: object) -> tuple[int, ...]:
         return tuple(int(x) for x in str(s).split("."))
     except ValueError:
         return (0,)
-
-
-def png_size(path: str) -> tuple[int, int] | None:
-    with open(path, "rb") as f:
-        head = f.read(24)
-    if head[:8] != b"\x89PNG\r\n\x1a\n":
-        return None
-    w, h = struct.unpack(">II", head[16:24])
-    return int(w), int(h)
 
 
 def main() -> int:
@@ -159,6 +151,14 @@ def main() -> int:
         if p.endswith(".json") or stem in used_tex or texture_file(os.path.splitext(p)[0], [VRP]):
             continue
         unused.append(p)
+    # identical texture files (often a copy that should reuse the same path)
+    by_hash: dict[str, list[str]] = {}
+    for f in files(rp, "textures", "**/*.png"):
+        with open(f, "rb") as fh:
+            by_hash.setdefault(hashlib.sha1(fh.read()).hexdigest(), []).append(os.path.relpath(f, rp).replace("\\", "/"))
+    for same in by_hash.values():
+        if len(same) > 1:
+            info.append("identical textures: " + ", ".join(sorted(same)))
     unused_geo = sorted(g for g in geos_a if g not in used_geo and not any(
         x.parent == g for x in geos_a.values()))
     unused_rc = sorted(x for x in rcs_a if x not in used_rc)

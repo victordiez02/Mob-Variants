@@ -18,7 +18,7 @@ import sys
 from collections import defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from mvlib import files, find_pack, rc_list, require_vanilla  # noqa: E402
+from mvlib import VRP, Geo, files, find_pack, geo_index, png_size, rc_list, require_vanilla, resolve_geo, texture_file  # noqa: E402
 from mvsim import Layer, Mob, State, bp_entity, spawn_distribution  # noqa: E402
 
 _SKIP_Q = {"property", "has_property", "position", "life_time", "anim_time", "modified_move_speed", "target_x_rotation",
@@ -46,6 +46,28 @@ def explored_queries(mob: Mob) -> dict[str, list[float | str]]:
 Result = tuple[str | None, tuple[str, ...]]
 
 
+_GEOS: tuple[dict[str, Geo], dict[str, Geo]] | None = None
+
+
+def ratio_problems(pairs: set[tuple[str, str]]) -> list[str]:
+    """Textures whose aspect ratio differs from texture_width/height of the geometry they are drawn with."""
+    global _GEOS
+    if _GEOS is None:
+        _GEOS = (geo_index(find_pack("RP")), geo_index(VRP))
+    out: list[str] = []
+    for geo, tex in sorted(pairs):
+        try:
+            desc, _ = resolve_geo(geo, *_GEOS)
+        except KeyError:
+            continue
+        f = texture_file(tex, [find_pack("RP"), VRP])
+        size = png_size(f) if f and f.endswith(".png") else None
+        tw, th = float(desc.get("texture_width", 64)), float(desc.get("texture_height", 64))
+        if size and "empty" not in tex and abs(size[0] / size[1] - tw / th) > 1e-3:
+            out.append(f"{os.path.basename(tex)} {size[0]}x{size[1]} on {geo} ({tw:g}x{th:g})")
+    return out
+
+
 def short(r: Result) -> str:
     g, t = r
     return f"{(g or '-').replace('geometry.', '')} + {', '.join(os.path.basename(x) for x in t)}"
@@ -67,6 +89,8 @@ def simulate_mob(f: str, name: str, detail: bool) -> bool:
     bp: dict[str, dict[Result, float]] = defaultdict(lambda: defaultdict(float))
     roll_dependent: set[str] = set()
 
+    pairs: set[tuple[str, str]] = set()
+
     def record(st: State, into: dict[str, dict[Result, float]], weight: float) -> dict[str, Result]:
         _, layers, errs = mob.run(st)
         errors.update(errs)
@@ -75,6 +99,8 @@ def simulate_mob(f: str, name: str, detail: bool) -> bool:
             used_tex.update(lay.textures)
             if lay.geometry:
                 used_geo.add(lay.geometry)
+                if "empty" not in lay.geometry:
+                    pairs.update((lay.geometry, t) for t in lay.textures)
         for rc, r in out.items():
             into[rc][r] += weight
         return out
@@ -113,7 +139,8 @@ def simulate_mob(f: str, name: str, detail: bool) -> bool:
     unused_g = sorted(k for k, v in mob.keys["geometry"].items()
                       if k.startswith("mv_") and v not in used_geo and "empty" not in v)
     for label, items in (("textures never drawn", unused_t), ("geometries never drawn", unused_g),
-                         ("BP result depends on local roll", sorted(roll_dependent)), ("ERRORS", sorted(errors))):
+                         ("BP result depends on local roll", sorted(roll_dependent)),
+                         ("texture size does not match the geometry UV", ratio_problems(pairs)), ("ERRORS", sorted(errors))):
         if items:
             print(f"    {label}: {items}")
             failed = failed or label == "ERRORS"

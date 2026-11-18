@@ -9,6 +9,7 @@ import glob
 import json
 import os
 import re
+import struct
 import sys
 import time
 from typing import Any
@@ -91,6 +92,23 @@ def load(path: str) -> Json:
     return load_ex(path)[0]
 
 
+def load_for_edit(path: str) -> tuple[Json, str | None]:
+    """(data, header) for files that will be re-saved with save(path, data, header).
+
+    The header is the block of leading `//` lines. Comments anywhere else would be lost: refuse them.
+    """
+    with open(path, encoding="utf-8-sig") as f:
+        lines = f.read().split("\n")
+    head: list[str] = []
+    while lines and lines[0].lstrip().startswith("//"):
+        head.append(lines.pop(0).rstrip("\r"))
+    try:
+        data = json.loads("\n".join(lines))
+    except json.JSONDecodeError as e:
+        raise SystemExit(f"{rel(path)}: comments or trailing commas inside the JSON; edit it by hand ({e})") from e
+    return data, "\n".join(head) or None
+
+
 def files(base: str, sub: str, pattern: str = "**/*.json") -> list[str]:
     return sorted(glob.glob(os.path.join(glob.escape(base), sub, pattern), recursive=True))
 
@@ -164,6 +182,16 @@ def texture_file(path: str, bases: list[str]) -> str | None:
             if os.path.exists(p):
                 return p
     return None
+
+
+def png_size(path: str) -> tuple[int, int] | None:
+    """(width, height) of a PNG without Pillow; None for other formats."""
+    with open(path, "rb") as f:
+        head = f.read(24)
+    if head[:8] != bytes([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]):  # PNG signature
+        return None
+    w, h = struct.unpack(">II", head[16:24])
+    return int(w), int(h)
 
 
 def client_entities(base: str) -> dict[str, tuple[str, Json]]:
