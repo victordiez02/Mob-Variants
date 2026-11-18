@@ -41,8 +41,9 @@
       },
       "geometry": {
         "default": "geometry.enderman.v1.8",
-        "mv_default": "geometry.mv.enderman",
-        "mv_jaw": "geometry.mv.enderman.jaw"
+        "mv_default": "geometry.enderman.v1.8",
+        "mv_open_mouth": "geometry.mv.enderman_open_mouth",
+        "mv_mouth_inside": "geometry.mv.enderman_mouth_inside"
       },
       "scripts": {
         "pre_animation": [
@@ -74,7 +75,11 @@
         { "carrying": "controller.animation.enderman.carrying" },
         { "scary_face": "controller.animation.enderman.scary_face" }
       ],
-      "render_controllers": ["controller.render.mv.enderman", "controller.render.mv.enderman_jaw"],
+      "render_controllers": [
+        "controller.render.mv.enderman",
+        { "controller.render.mv.enderman_open_mouth": "q.is_angry" },
+        { "controller.render.mv.enderman_mouth_inside": "q.is_angry" }
+      ],
       "spawn_egg": { "texture": "spawn_egg_enderman" }
     }
   }
