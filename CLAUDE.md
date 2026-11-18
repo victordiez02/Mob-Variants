@@ -58,6 +58,24 @@ Están en `.claude/skills/`. Si al usarlas ves que falta algo, sobra algo o un p
 puedes **sugerir** al usuario el cambio en la skill (solo si de verdad hace falta; no es obligatorio).
 Referencia completa de las herramientas: docs/TOOLS.md.
 
+### Las herramientas son nuevas: pueden tener fallos
+
+Casi todo `tools/` y las skills se escribieron en noviembre de 2026 y se han usado poco; al usarlas de
+verdad ya aparecieron varios fallos (filtros que ocultaban avisos, nombres de huesos mal emparejados…).
+- No te fíes a ciegas de un resultado raro: contrástalo con otra herramienta o con los datos
+  (p. ej. una separación de `bbcheck --measure` con los avisos de pivote de `validate.py`).
+- Si crees que una herramienta falla, **demuéstralo antes** (caso mínimo que lo reproduzca, o la causa
+  exacta en el código) y entonces **propón** la corrección al usuario explicando la prueba. Si no estás
+  seguro, dilo como sospecha, no como fallo.
+- Las salidas deben dar la información necesaria y no más (cada línea son tokens en cada uso). Si al
+  usarla ves que en algún caso sobra o falta información, propón la opción (`--verbose`, un filtro…)
+  explicando qué ahorra o qué aporta.
+
+### Imágenes en el resumen
+
+Si generas imágenes (render.py, bbcheck.py, texuv.py…), enséñaselas al usuario en el resumen final
+con enlaces markdown (`![descripción](tools/out/...png)`), las relevantes, para que vea lo que has hecho.
+
 ## Blockbench (MCP)
 
 Hay un servidor MCP `blockbench` (86 herramientas: `new_project`, `add_cubes`, `paint_texture`,
