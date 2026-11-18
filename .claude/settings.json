@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(*Blockbench.exe*)",
+      "Bash(*start*lockbench*)",
+      "Bash(*blockbench-mcp*)",
+      "PowerShell(*Blockbench.exe*)",
+      "PowerShell(*Start-Process*lockbench*)",
+      "PowerShell(*blockbench-mcp*)",
+      "mcp__blockbench__install_plugin",
+      "mcp__blockbench__uninstall_plugin"
+    ]
+  }
+}
