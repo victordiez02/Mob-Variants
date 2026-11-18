@@ -75,7 +75,7 @@
       "geometry": {
         "default": "geometry.zombie.villager_v2",
         "baby": "geometry.villagerzombie.baby",
-        "mv_default": "geometry.mv.zombie.villager_v2"
+        "mv_default": "geometry.zombie.villager_v2"
       },
       "scripts": {
         "pre_animation": [
