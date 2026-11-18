@@ -1,0 +1,16 @@
+#!/bin/sh
+# Fast checks before each commit (validate + bpcheck, ~3 s). Install once with:
+#   git config core.hooksPath tools/hooks
+# Skip once with: git commit --no-verify
+changed=$(git diff --cached --name-only)
+case "$changed" in
+  *RP/*|*BP/*|*tools/*) ;;
+  *) exit 0 ;;
+esac
+py=python
+command -v "$py" >/dev/null 2>&1 || py=python3
+"$py" -I tools/validate.py > /dev/null || { echo "pre-commit: validate.py found errors (python -I tools/validate.py)"; exit 1; }
+"$py" -I tools/bpcheck.py > /dev/null || { echo "pre-commit: bpcheck.py found errors (python -I tools/bpcheck.py)"; exit 1; }
+if echo "$changed" | grep -q '^tools/.*\.py$' && "$py" -m ruff --version >/dev/null 2>&1; then
+  "$py" -m ruff check tools || exit 1
+fi
