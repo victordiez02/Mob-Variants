@@ -68,7 +68,7 @@ clima `temperate` en pollo/cerdo). Lista completa en STATUS.md.
 - **Capas**: huesos raíz con nombre, pivote y padre del hueso vanilla; hijos `mv_*` con las piezas.
   Ejemplos: `witch_extras.geo.json` (sombrero, escoba…), `spider_fangs.geo.json`,
   `spider_giant_legs.geo.json` (prolonga `legN`), `pig_extras.geo.json` (orejas y cola).
-  `tools/overlay.py` genera estas capas a partir de un modelo antiguo.
+  `build_overlay()` de `tools/geotool.py` genera estas capas a partir de un modelo antiguo.
 - `geometry.mv.zombie_empty` es una geometría vacía para "no dibujar nada" en un render controller.
 - Las geometrías de variante completa (capibara, caracol, pato, oca, ornitorrinco, gatos especiales,
   zombis caídos…) se mantienen de momento; revisar con el usuario si chocan con la regla de "no
@@ -78,7 +78,7 @@ clima `temperate` en pollo/cerdo). Lista completa en STATUS.md.
 
 - Skins del addon en `RP/textures/entity/<mob>/`. Algunas están en rutas vanilla a propósito
   (retexturas: caballos, panda, slime, wither, stray, `cow`…); no las borres sin preguntar.
-- Si una skin se pintó para un modelo re-rigueado con extremidades partidas, `tools/limbmerge.py`
+- Si una skin se pintó para un modelo re-rigueado con extremidades partidas, `tools/geotool.py limbmerge`
   recoloca los píxeles en el layout de la extremidad vanilla (se usó en el cerdo).
 
 ### Modelos antiguos vanilla
@@ -109,7 +109,7 @@ condición `v.mv_active`; la actual queda con `!v.mv_active`.
 1. Textura en `RP/textures/entity/<mob>/`.
 2. Clave `mv_<nombre>` en `textures` de la entidad y entrada al final del array del render controller.
 3. Si el mob tiene BP: ampliar `range` de la propiedad y añadir el `set_property` al `randomize`.
-4. `tools/validate.py`, `tools/bpcheck.py`, `tools/simulate.py <mob>`.
+4. `tools/check.py <mob>` y `tools/render.py <mob>`.
 
 ## Cómo añadir un mob nuevo
 

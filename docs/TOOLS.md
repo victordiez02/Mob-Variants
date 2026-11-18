@@ -1,22 +1,63 @@
 # Herramientas (`tools/`)
 
-Scripts Python 3 sin dependencias salvo **Pillow** (`pip install pillow`) para los que tocan imágenes.
-Leen el repo y la plantilla `vanilla/`; ejecútalos desde cualquier carpeta. `-I` aísla Python de
-módulos externos (no lo uses con los que necesitan Pillow si está instalado en el usuario).
+Scripts Python ≥ 3.12. Solo `render.py` y `geotool.py limbmerge` necesitan **Pillow**
+(`pip install pillow`); el resto no tiene dependencias. Leen el repo y la plantilla `vanilla/`, y se
+pueden ejecutar desde cualquier carpeta. `-I` aísla Python de módulos externos; no lo uses con los
+scripts que necesitan Pillow si está instalado en el usuario.
 
-| Script | Uso | Para qué |
-|---|---|---|
-| `validate.py` | `python -I tools/validate.py` | Referencias del RP: texturas, geometrías, animaciones y render controllers que no existen; claves `Texture./Geometry./Material.` usadas sin definir; archivos sin usar. |
-| `bpcheck.py` | `python -I tools/bpcheck.py` | BP: grupos y eventos referenciados que no existen, propiedades `mv:*` sin declarar o fuera de rango. |
-| `simulate.py` | `python -I tools/simulate.py [mob ...]` | Evalúa los render controllers con un intérprete de Molang (`molang.py`) para los 100 valores del sorteo y para cada valor del BP; lista cuántas skins/modelos distintos salen por capa. Si un mob da 1, sus variantes no funcionan. |
-| `fit.py` | `python tools/fit.py` | Para cada entidad con modelo propio, qué porcentaje de las caras de su UV cae dentro del UV de cada modelo vanilla (¿encajan las skins en el modelo vanilla?). |
-| `facecheck.py` | `python -I tools/facecheck.py <geo addon> <geo vanilla> [hueso=huesoVanilla ...]` | Lo mismo, cara a cara, indicando qué caras quedan fuera. |
-| `limbmerge.py` | `python tools/limbmerge.py <geo addon> <geo vanilla> <textura sin extensión> ...` | Recoloca en el layout vanilla los píxeles de extremidades partidas (pierna + rodilla con UV de caja). Modifica las texturas: haz commit antes. |
-| `overlay.py` | (módulo) `build(src_bones, plan, ident, desc)` | Genera una geometría de capa a partir de huesos de un modelo antiguo, colgándolos de huesos con nombre vanilla. Ver ejemplos en el historial (`refactor(witch)`, `refactor(spider)`, `refactor(pig)`). |
-| `mvlib.py`, `geo.py` | (módulos) | Carga de JSON con comentarios, índices de geometrías, resolución de herencia 1.8, `save()` con formato compacto y reintentos ante bloqueos de archivo. |
+## Uso diario
 
-Notas:
+```bash
+python -I tools/check.py [mob ...]      # todo lo estático: validate + bpcheck + simulate (resumen)
+python tools/render.py <mob>            # imágenes de las variantes -> tools/out/<mob>.png
+python -I tools/contentlog.py --since 20:10   # errores del Content Log del juego, agrupados
+```
+
+Todos devuelven código 1 si hay errores.
+
+| Script | Para qué |
+|---|---|
+| `check.py [mob ...]` | Lanza `validate`, `bpcheck` y `simulate` (este último solo para los mobs indicados, o todos) y muestra errores y avisos. |
+| `validate.py [--all]` | RP: referencias rotas (texturas, geometrías, animaciones, render controllers, `Texture./Geometry./Material.` sin definir) y las **trampas de CLAUDE.md**: `format_version` menor que la vanilla, lista `animation_controllers`, materiales que no son vanilla, `q.property('mv:…')` sin `q.has_property`, IDs vanilla redefinidos o fuera del namespace `mv`, **huesos de capas con pivote o padre distintos del modelo base** (regla 2) y `pack_icon` que no es potencia de 2. `--all` lista además los archivos sin usar (las texturas en rutas vanilla cuentan como retexturas). |
+| `bpcheck.py` | BP: grupos y eventos que no existen, propiedades `mv:*` sin declarar, fuera de rango o sin `client_sync`, lógica en `minecraft:add_attributes` y **regla 5**: componentes, grupos, eventos y propiedades vanilla idénticos al archivo vanilla actual (solo se permiten añadidos `mv:` y eventos del motor como `minecraft:entity_spawned`). Las desviaciones documentadas están en `ALLOWED_DIFFS`. |
+| `simulate.py [mob ...] [--detail]` | Ejecuta los scripts de la entidad y evalúa los render controllers (intérprete de Molang propio) para los 100 valores del sorteo sin BP y para cada resultado del `randomize` de `minecraft:entity_spawned` con BP. Por capa, cuántas combinaciones (geometría, texturas) distintas salen (1 = no varía). Avisa de **claves `mv_*` que nunca se dibujan** (probando también enfadado, ensillado, domesticado, profesiones, clima…), de capas que **con BP siguen dependiendo del sorteo local** y de errores de Molang. `--detail` da la probabilidad de cada resultado con los pesos reales del BP. |
+| `render.py <mob> [opciones]` | Renderizador por software: dibuja cada combinación distinta (de más a menos probable) con todas sus capas, `part_visibility` y la pose estática de las animaciones de la entidad. Opciones: `--nobp`, `--bp mv:variant=3`, `--q is_angry=1`, `--q climate=warm`, `--view front\|back\|side\|top\|all`, `--max N`, `--size PX`, `--nopose`, `--out`. Ver detalles en la cabecera del script. |
+| `contentlog.py [--since HH:MM] [--all] [--list] [--file F]` | Lee el Content Log más reciente de `%APPDATA%\Minecraft Bedrock\logs`, solo errores y avisos, agrupando los repetidos. |
+| `geotool.py fit \| faces \| limbmerge` | Pasar skins de modelos re-rigueados al modelo vanilla: `fit` (qué % del UV del modelo propio cae dentro de cada modelo vanilla), `faces <geo addon> <geo vanilla> [hueso=huesoVanilla …]` (cara a cara), `limbmerge <geo addon> <geo vanilla> <texturas…>` (recoloca extremidades partidas; **modifica las texturas**). Como módulo, `build_overlay()` genera capas a partir de huesos de un modelo antiguo (ver `refactor(witch)`, `refactor(spider)`, `refactor(pig)` en git). |
+| `getvanilla.py [--force \| --version]` | Descarga la plantilla `vanilla/` (bedrock-samples) de la versión fijada en `VERSION`. |
+| `mvlib.py`, `molang.py`, `mvsim.py` | Módulos: JSON con comentarios, índices de packs, geometrías (herencia 1.8, UV de caras), `save()` con formato compacto; intérprete de Molang (perezoso en `?:`, `&&`, `||`, como el juego); simulación de una entidad en un estado dado. |
+
+## Límites conocidos
+
+- **Molang**: no se ejecutan los bloques multilínea `{ … }` de las entidades 1.26 (solo contienen lógica
+  vanilla). `math.random` devuelve el punto medio. Las queries valen 0 salvo que se fijen.
+- **render.py**: los materiales se dibujan como alpha-test (sin transparencias parciales, brillo ni
+  `uv_anim`); la pose es la del instante 0 con todo quieto. Los huesos `"reset": true` de geometrías
+  1.8 antiguas (enderman) no tienen semántica documentada: su pose sale aproximada y el script lo avisa
+  (prueba `--nopose`). Las partes que dibuja el motor fuera de los render controllers (objetos en la
+  mano, armaduras, sillas de vanilla…) no salen.
+- **simulate/render con BP** ignoran los `filters` de los eventos (bioma, bebé…): las probabilidades
+  son las del `randomize` sin condiciones.
+
+## Validador oficial de Mojang (opcional)
+
+[Minecraft Creator Tools](https://github.com/Mojang/minecraft-creator-tools) (`mct`) valida
+manifiestos, iconos, esquemas JSON y tamaños. No hace falta instalarlo:
+
+```bash
+npx -y @minecraft/creator-tools@0.20.0 validate all -i <copia con RP/ y BP/> --single -o <carpeta de salida> --json --warn-only
+```
+
+Ejecútalo sobre una **copia** de `RP/` y `BP/` (escribe informes y lee todo lo que hay en la carpeta).
+Avisos que son ruido en este proyecto: `uv_anim ... required` (esquema de render controllers),
+`JSONF` sobre archivos vanilla del BP, `STRICT` (redefinimos entidades `minecraft:` a propósito) y
+`UNLINK` de texturas/sonidos en rutas vanilla. Lo útil: `CPACKICON`, `CHKMANIF` y errores de manifiesto.
+
+## Notas
+
 - `save()` escribe JSON con listas cortas en una línea y acepta un `header` de comentarios `//`.
 - Los modelos/entidades antiguos de vanilla para comparar se pueden descargar de
   `https://raw.githubusercontent.com/Mojang/bedrock-samples/<tag>/resource_pack/...` (tags estables:
-  `v1.19.30` … `v1.26.60.5`). Se usó para distinguir qué cambió el addon respecto a vanilla.
+  `v1.19.30` … `v1.26.60.5`).
+- Pylance/pyright usan `pyrightconfig.json` (raíz) y ruff `tools/ruff.toml`; ambos deben quedar a 0:
+  `npx -y pyright@1.1.400 -p pyrightconfig.json` y `python -m ruff check tools`.

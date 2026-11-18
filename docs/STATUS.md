@@ -79,6 +79,19 @@ ocelote, husk.
    semilla derivada de la posición (no es persistente, pero sería más estable).
 10. Revisar si las geometrías de variante completa (zombis caídos, capibara, caracol…) se mantienen
     según la regla de "no sustituir el modelo".
+11. **Hallazgos de las herramientas (2026-11-18)**, sin corregir:
+    - **Delfín**: `controller.render.mv.dolphin` usa `array.xskins[0]`: siempre sale la primera skin;
+      `mv_default2`…`mv_default7` nunca se dibujan (`simulate.py`). No tiene BP.
+    - **`pack_icon.png`** de RP y BP miden 274×274; deben ser cuadrados y potencia de 2 (256×256).
+    - **Capas con pivote/padre distintos del modelo base** (regla 2): `validate.py` lista ~39. Las
+      relevantes: araña (`spider_fangs` y `spider_giant_legs` cuelgan de la raíz en vez de `body0`; en
+      reposo se ven bien con `render.py`, pero no seguirían una animación de `body0`, p. ej. de A&S), hoglin (`hoglin_piglinhead*` con pivotes de
+      `head`/`body` desplazados), rana (`frog_crown`: `root`/`body` con pivote distinto), sniffer
+      (`sniffer_torchflower` desplazado 1,75 en Z), evocador y vindicador (`body` con pivote 12 en vez
+      de 24 y padre `waist`), y casi todas las capas del zombi (cuelgan de `spine`, que no existe en
+      vanilla). Las de padre `root` cuando vanilla no tiene padre son inofensivas mientras nada anime `root`.
+    - Inofensivo: `mv_default2` del pollo (rama de bebé inalcanzable), `mv_empty` del esqueleto wither,
+      `mv_ghost` del guardián y `mv_exploding` del dragón no se usan.
 
 ## Historial de decisiones
 

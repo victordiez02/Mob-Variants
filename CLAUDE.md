@@ -46,19 +46,18 @@ No hay que copiar nada: guardar y volver a entrar al mundo basta.
 ## Flujo de trabajo
 
 1. Antes de tocar un mob, mira su fila en docs/STATUS.md.
-2. Después de cualquier cambio ejecuta:
+2. Después de cualquier cambio ejecuta (detalles en docs/TOOLS.md):
    ```bash
-   python -I tools/validate.py     # referencias del RP (texturas, geometrías, animaciones, render controllers)
-   python -I tools/bpcheck.py      # grupos, eventos y propiedades del BP
-   python -I tools/simulate.py     # qué skins/modelos salen realmente por mob, con y sin BP
+   python -I tools/check.py <mob>     # validate + bpcheck + simulate: debe acabar en "RESULT: OK"
+   python tools/render.py <mob>       # mira tú mismo el PNG (tools/out/<mob>.png) antes de pedir pruebas
    ```
-   Errores esperados (son de la propia vanilla; existen en el juego aunque falten en bedrock-samples):
-   8 animaciones en validate (`ghast.scale`, `warden.hurt`, `sheep.setup.v2`, `cat/fox/sheep.baby_transform`,
-   `villager.get_in_bed_baby`) y 3 archivos en bpcheck (bee, sniffer, zombie).
-3. **Pruebas en el juego: las hace el usuario.** Pide capturas y el Content Log:
-   `%APPDATA%\Minecraft Bedrock\logs\ContentLog<fecha>_<n>.txt`. El juego **añade al mismo archivo**
-   mientras no se reinicie: filtra por hora (`awk '/^20:1[0-9]/{p=1} p'`). Recuerda al usuario
-   probar con mobs **recién aparecidos** (los antiguos no tienen la propiedad del BP guardada).
+   Los huecos de bedrock-samples (8 animaciones vanilla que existen en el juego) salen como EXPECTED,
+   no como errores. Los avisos de capas de validate son la deuda de la regla 2 (ver STATUS.md).
+3. **Pruebas en el juego: las hace el usuario**, solo para lo que no cubren las herramientas
+   (animaciones en movimiento, materiales, comportamiento del BP). Pide capturas; el Content Log lo
+   lees tú: `python -I tools/contentlog.py --since HH:MM` (el juego añade al mismo archivo hasta que se
+   reinicia). Recuerda al usuario probar con mobs **recién aparecidos** (los antiguos no tienen la
+   propiedad del BP guardada).
 4. Commits en español, estilo conventional (`fix:`, `refactor(<mob>):`, `chore:`), uno por mob cuando
    el cambio requiera cuidado. Termina con la línea `Co-Authored-By` que indique el sistema.
 
@@ -84,7 +83,13 @@ No hay que copiar nada: guardar y volver a entrar al mundo basta.
 
 ## Plantilla vanilla
 
-`vanilla/` no está en git. Para regenerarla: descarga `bedrock-samples-<versión>-full.zip` de la
-[última release estable](https://github.com/Mojang/bedrock-samples/releases/latest) y descomprímela en
-`vanilla/` (debe contener `behavior_pack/`, `resource_pack/`, `documentation/`, `metadata/`).
-Versión usada: ver `vanilla/VERSION.txt` si existe (1.26.60.5 al escribir esto).
+`vanilla/` no está en git. Para regenerarla: `python -I tools/getvanilla.py` (descarga
+`bedrock-samples-<versión>-full.zip` de [Mojang/bedrock-samples](https://github.com/Mojang/bedrock-samples/releases)).
+La versión está en la constante `VERSION` de ese script (v1.26.60.5); para pasar a otra versión de
+Minecraft, cámbiala y ejecuta `--force`. La CI usa el mismo script y cachea por versión.
+
+## CI
+
+`.github/workflows/checks.yml` se ejecuta en cada push a `main` y en cada PR: ruff + pyright sobre
+`tools/`, y `validate`, `bpcheck`, `simulate` y `render` (de todos los mobs) sobre los packs. Los
+renders quedan como artefacto `renders` del run (14 días): sirven para revisar visualmente un cambio.
