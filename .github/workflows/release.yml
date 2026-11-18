@@ -1,0 +1,42 @@
+name: release
+
+# Push a tag like v5.0.1 (same version as the manifests) to publish a GitHub release with the packages.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Vanilla version
+        id: vanilla
+        run: echo "version=$(python -I tools/getvanilla.py --version)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v4
+        with:
+          path: vanilla
+          key: bedrock-samples-${{ steps.vanilla.outputs.version }}
+      - run: python -I tools/getvanilla.py
+
+      - name: Checks
+        run: |
+          python -I tools/validate.py
+          python -I tools/bpcheck.py
+      - name: Tag matches the manifest version
+        run: |
+          v=$(python -I -c "import json;print('.'.join(map(str,json.load(open('RP/manifest.json',encoding='utf-8-sig'))['header']['version'])))")
+          test "v$v" = "$GITHUB_REF_NAME" || { echo "tag $GITHUB_REF_NAME != manifest v$v"; exit 1; }
+      - name: Package
+        run: python -I tools/package.py
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --title "Mob Variants $GITHUB_REF_NAME" --generate-notes

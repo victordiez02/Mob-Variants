@@ -59,6 +59,9 @@ jobs:
       - name: simulate (variants per mob, with and without BP)
         run: python -I tools/simulate.py
 
+      - name: package (manifests + .mcpack/.mcaddon)
+        run: python -I tools/package.py
+
       - name: render every mob
         run: |
           status=0
