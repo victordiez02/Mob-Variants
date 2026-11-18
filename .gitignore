@@ -1,8 +1,49 @@
-# Ignore system files
-desktop.ini
+# --- Vanilla reference packs (Mojang/bedrock-samples): regenerate them, see CLAUDE.md
+vanilla/
 
-# Vanilla reference packs (Mojang/bedrock-samples) - not part of the add-on
-vanilla
+# --- Tool output (render.py, Minecraft Creator Tools reports)
+tools/out/
+out/
 
-# Python caches of tools/
+# --- Built packages: publish them as release assets, not in git
+*.mcpack
+*.mcaddon
+*.mcworld
+*.mctemplate
+dist/
+build/
+
+# --- Python
 __pycache__/
+*.py[cod]
+.venv/
+venv/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
+# --- Node (npx tools, if ever installed locally)
+node_modules/
+npm-debug.log*
+
+# --- Logs and temporary files
+*.log
+ContentLog*.txt
+*.tmp
+*.bak
+*.orig
+~$*
+
+# --- Local settings and secrets
+.env
+.env.*
+.claude/settings.local.json
+.vscode/
+.idea/
+*.swp
+
+# --- Operating system
+desktop.ini
+Thumbs.db
+ehthumbs.db
+.DS_Store
