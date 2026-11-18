@@ -16,7 +16,6 @@
         "mv_default7": "textures/entity/skeleton/wither_skeleton7",
         "mv_default8": "textures/entity/skeleton/wither_skeleton8",
         "mv_default9": "textures/entity/skeleton/wither_skeleton9",
-        "mv_skeleton_king": "textures/entity/skeleton/skeleton_king",
         "mv_cape": "textures/entity/skeleton/wither_skeleton_cape",
         "mv_backpack": "textures/entity/skeleton/backpack",
         "mv_piglin_heads": "textures/entity/skeleton/piglin_heads",
@@ -25,7 +24,6 @@
       "geometry": {
         "default": "geometry.skeleton.wither.v1.8",
         "mv_default": "geometry.skeleton.wither.v1.8",
-        "mv_skeleton_king": "geometry.mv.skeleton_king",
         "mv_empty": "geometry.mv.zombie_empty",
         "mv_cape": "geometry.mv.wither_skeleton_cape",
         "mv_backpack": "geometry.mv.backpack",
