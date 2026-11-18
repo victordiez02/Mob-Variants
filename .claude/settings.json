@@ -7,6 +7,8 @@
       "PowerShell(*Blockbench.exe*)",
       "PowerShell(*Start-Process*lockbench*)",
       "PowerShell(*blockbench-mcp*)",
+      "mcp__blockbench__find_references",
+      "mcp__blockbench__load_reference",
       "mcp__blockbench__install_plugin",
       "mcp__blockbench__uninstall_plugin"
     ]
