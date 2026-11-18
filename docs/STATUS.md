@@ -93,6 +93,10 @@ ocelote, husk.
     - **Vindicador**: `vindicator9.png` y `vindicator12.png` son idénticas (una variante repetida).
     - **Wither**: `wither_armor_blue.png` mide 64×32 y `geometry.mv.wither_boss_armor` declara 64×64
       (la textura se estira al doble en vertical).
+    - **Capas que se separan al animarse** (`bbcheck.py --measure`, 66 capas medidas): frog_crown 2,5 px al
+      saltar, irongolem_rose 1,9 px, sniffer_pitchflower 1,1 px y sniffer_torchflower 1,2 px al excavar.
+      El resto de capas sigue a sus huesos (0 px), incluidas las del zombi pese a los avisos de validate.
+    - `texuv.py lint`: `zombie-villager7.png` tiene 1104 px fuera del UV (¿pintada para otro modelo?).
     - Inofensivo: `mv_default2` del pollo (rama de bebé inalcanzable), `mv_empty` del esqueleto wither,
       `mv_ghost` del guardián y `mv_exploding` del dragón no se usan.
 
