@@ -33,9 +33,16 @@ con mobs **recién aparecidos** y dime la hora; luego lee tú el log:
 
 ## Comportamiento real del BP (Bedrock Dedicated Server)
 
-`python -I tools/bdstest.py [mob ...] --count 200` (carpeta del servidor en `MV_BDS` o `--bds`).
-Compara el % de cada `mv:*` al aparecer con el esperado del `randomize`; las desviaciones pueden venir
-de `filters` (bioma, bebé). Si `MV_BDS` no existe, el usuario aún no ha instalado BDS: no lo instales tú.
+`python -I tools/bdstest.py [mob ...] --count 200` (~30 s todos los mobs). Servidor en
+`C:/Users/victo/Documents/minecraft_server` (variable `MV_BDS` en `.claude/settings.local.json`; si no
+está, pásalo con `--bds`). Úsalo después de tocar cualquier `BP/entities/*.json`.
+- Compara el % de cada `mv:*` al aparecer con el esperado del `randomize` y lista errores del servidor
+  (carga de packs, JSON, scripts). Debe acabar en `RESULT: OK`.
+- Los mobs aparecen a y=64 (superficie): ramas con `filters` de altura/bioma/bebé distintas no se
+  prueban y pueden salir como `CHECK`; mira el `filters` del evento antes de tocar nada.
+- Solo toca la carpeta del servidor (mundo `mv_test`, packs de desarrollo, `server.properties` con
+  copia de seguridad restaurada al final). No lo arranques para otra cosa ni cambies su versión.
+- Visual con animaciones en movimiento: skill **mv-blockbench**.
 
 ## CI
 
