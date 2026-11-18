@@ -7,7 +7,7 @@
       "materials": {
         "default": "zombie",
         "mv_default": "enderman",
-        "mv_overlay": "zombie_sword_chest"
+        "mv_overlay": "entity_alphatest"
       },
       "textures": {
         "default": "textures/entity/zombie/zombie",

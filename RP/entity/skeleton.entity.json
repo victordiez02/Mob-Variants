@@ -7,7 +7,7 @@
       "materials": {
         "default": "skeleton",
         "mv_default": "enderman",
-        "mv_overlay": "skeleton_clothes"
+        "mv_overlay": "stray_clothes"
       },
       "textures": {
         "default": "textures/entity/skeleton/skeleton",

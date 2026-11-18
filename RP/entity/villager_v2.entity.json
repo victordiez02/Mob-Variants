@@ -8,7 +8,7 @@
         "masked": "villager_v2_masked",
         "mv_default": "villager_v2",
         "mv_masked": "villager_v2_masked",
-        "mv_overlay": "villager_overlay"
+        "mv_overlay": "entity_alphatest"
       },
       "textures": {
         "base": "textures/entity/villager2/villager",
