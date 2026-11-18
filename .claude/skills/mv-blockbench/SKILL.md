@@ -10,8 +10,9 @@ Para qué SÍ: (1) ver una variante como en el juego **con animaciones vanilla e
 `render.py` no hace) y comprobar que las capas siguen al cuerpo (regla 2, compatibilidad A&S);
 (2) ajustar pivotes/padres o crear piezas de una **capa** `geometry.mv.*`; (3) pintar/corregir texturas.
 Para qué NO: modelar mobs nuevos, crear animaciones o rigs (regla 1: modelo y animaciones vanilla),
-`find_references`/paletas/`detail_cubes`/generadores (engranajes, pelo, alas…), `pack_uv` (rompe el UV
-vanilla de las skins), `install_plugin`/`uninstall_plugin` (denegados), exportar a glTF.
+`find_references`/`load_reference`/`install_plugin`/`uninstall_plugin` (denegados), generadores de
+modelado (engranajes, pelo, alas, tubos), `compare_reference`, `audit_complexity`, exportar a glTF.
+Las herramientas de pintura y `pack_uv` solo según la skill mv-texture.
 
 ## 0. ¿Está levantado? (no lo arranques tú: está prohibido)
 
@@ -54,11 +55,8 @@ Es un proyecto temporal: **nunca** `save_project`/`export_project` sobre archivo
 
 ## 3. Texturas
 
-Las texturas cargadas **son los PNG del repo**: `paint_texture`/`paint_faces` + guardar la textura
-(`execute_script` `Texture.all.find(t=>t.name=='x.png').save()`) los modifica. Haz commit antes y
-revisa con `get_texture`. No cambies el tamaño de una skin sin mirar el `texture_width/height` de su
-geometría (simulate avisa si no encaja). Para la boca del enderman o repintar el ahogado (STATUS),
-pinta sobre las zonas UV de la textura vanilla (`paint_faces` usa coordenadas de cada cara).
+Todo lo de texturas (pintar sobre caras, guardar PNG, cosméticos con textura propia): skill
+**mv-texture**. Recuerda `mvPose(null, 0)` antes de cada `screenshot`: la captura vuelve al modo edición.
 
 ## 4. Revisión del usuario
 
