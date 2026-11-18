@@ -40,8 +40,9 @@
       },
       "geometry": {
         "default": "geometry.spider.v1.8",
-        "mv_default": "geometry.mv.spider",
-        "mv_giant_spider": "geometry.mv.giant_spider"
+        "mv_default": "geometry.spider.v1.8",
+        "mv_fangs": "geometry.mv.spider_fangs",
+        "mv_giant_legs": "geometry.mv.spider_giant_legs"
       },
       "animations": {
         "default_leg_pose": "animation.spider.default_leg_pose",
@@ -51,13 +52,18 @@
       "animation_controllers": [
         { "move": "controller.animation.spider.move" }
       ],
-      "render_controllers": ["controller.render.mv.spider"],
+      "render_controllers": [
+        "controller.render.mv.spider",
+        "controller.render.mv.spider_fangs",
+        { "controller.render.mv.spider_giant_legs": "v.mv_giant" }
+      ],
       "spawn_egg": { "texture": "spawn_egg_spider" },
       "scripts": {
         "initialize": ["v.xvar = math.random(0,99);"],
         "pre_animation": [
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
+          "v.mv_giant = q.has_property('mv:mark_variant') ? v.mv_mark == 1 : v.xvar >= 85;"
         ]
       }
     }
