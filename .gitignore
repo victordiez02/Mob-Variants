@@ -3,3 +3,6 @@ desktop.ini
 
 # Vanilla reference packs (Mojang/bedrock-samples) - not part of the add-on
 vanilla
+
+# Python caches of tools/
+__pycache__/
