@@ -7,7 +7,7 @@
       "materials": {
         "default": "sheep",
         "mv_default": "sheep",
-        "mv_horns": "horns"
+        "mv_horns": "sheep"
       },
       "textures": {
         "default": "textures/entity/sheep/sheep",

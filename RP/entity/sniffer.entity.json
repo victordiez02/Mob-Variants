@@ -25,7 +25,17 @@
           "v.mv_active = !q.is_baby;"
         ],
         "scale": "query.is_baby ? (1 / 0.45) : 1.0",
-        "initialize": ["v.xvar = math.random(0,99);"]
+        "initialize": ["v.xvar = math.random(0,99);"],
+        "animate": [
+          "general",
+          "walk_controller",
+          "sniffsniff_controller",
+          "long_sniff_controller",
+          "search_controller",
+          "dig_controller",
+          "stand_up_controller",
+          "feeling_happy_controller"
+        ]
       },
       "geometry": {
         "default": "geometry.sniffer",
@@ -43,20 +53,16 @@
         "search": "animation.sniffer.search",
         "dig": "animation.sniffer.dig",
         "stand_up": "animation.sniffer.stand_up",
-        "feeling_happy": "animation.sniffer.feeling_happy"
+        "feeling_happy": "animation.sniffer.feeling_happy",
+        "general": "controller.animation.sniffer.general",
+        "walk_controller": "controller.animation.sniffer.walk",
+        "sniffsniff_controller": "controller.animation.sniffer.sniffsniff",
+        "long_sniff_controller": "controller.animation.sniffer.long_sniff",
+        "search_controller": "controller.animation.sniffer.search",
+        "dig_controller": "controller.animation.sniffer.dig",
+        "stand_up_controller": "controller.animation.sniffer.stand_up",
+        "feeling_happy_controller": "controller.animation.sniffer.feeling_happy"
       },
-      "animation_controllers": [
-        { "general": "controller.animation.sniffer.general" },
-        { "walk": "controller.animation.sniffer.walk" },
-        { "sniffsniff": "controller.animation.sniffer.sniffsniff" },
-        { "long_sniff": "controller.animation.sniffer.long_sniff" },
-        { "search": "controller.animation.sniffer.search" },
-        { "dig": "controller.animation.sniffer.dig" },
-        { "stand_up": "controller.animation.sniffer.stand_up" },
-        {
-          "feeling_happy": "controller.animation.sniffer.feeling_happy"
-        }
-      ],
       "render_controllers": [
         { "controller.render.sniffer.v2": "!v.mv_active" },
         { "controller.render.mv.sniffer": "v.mv_active" },

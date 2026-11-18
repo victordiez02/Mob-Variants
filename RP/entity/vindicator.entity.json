@@ -40,7 +40,7 @@
       },
       "geometry": {
         "default": "geometry.vindicator.v1.8",
-        "mv_default": "geometry.mv.vindicator",
+        "mv_default": "geometry.vindicator.v1.8",
         "mv_empty": "geometry.mv.zombie_empty",
         "mv_armor": "geometry.mv.vindicator_armor",
         "mv_armor2": "geometry.mv.vindicator_armor2"

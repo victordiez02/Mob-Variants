@@ -25,18 +25,17 @@
       "scripts": {
         "scale": "0.9375",
         "initialize": ["v.xvar = Math.random(0,99);"],
-        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"]
+        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"],
+        "animate": ["general_controller", "move_controller"]
       },
       "animations": {
         "villager_general": "animation.villager.general",
         "look_at_target": "animation.common.look_at_target",
         "move": "animation.villager.move",
-        "general": "animation.witch.general"
+        "general": "animation.witch.general",
+        "general_controller": "controller.animation.witch.general",
+        "move_controller": "controller.animation.villager.move"
       },
-      "animation_controllers": [
-        { "general": "controller.animation.witch.general" },
-        { "move": "controller.animation.villager.move" }
-      ],
       "render_controllers": ["controller.render.mv.witch", "controller.render.mv.witch_extras"],
       "spawn_egg": { "texture": "spawn_egg_witch" }
     }

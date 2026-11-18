@@ -1,5 +1,5 @@
 {
-  "format_version": "1.10.0",
+  "format_version": "1.26.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:zombie",
@@ -60,7 +60,7 @@
       "geometry": {
         "default": "geometry.zombie.v1.8",
         "baby": "geometry.zombie.baby",
-        "mv_default": "geometry.mv.zombiev1",
+        "mv_default": "geometry.zombie.v1.8",
         "mv_default2": "geometry.mv.zombie2",
         "mv_default3": "geometry.mv.zombie3",
         "mv_default4": "geometry.mv.zombie4",
@@ -150,7 +150,11 @@
             "zombie_attack_bare_hand_controller": "!v.melee_spear_equipped"
           },
           "swimming_controller",
-          { "melee_spear_controller": "v.melee_spear_equipped" }
+          { "melee_spear_controller": "v.melee_spear_equipped" },
+          "humanoid_baby_big_head",
+          "look_at_target",
+          "riding",
+          "attack"
         ],
         "should_update_effects_offscreen": "1.0",
         "scale": "query.is_baby ? 2.0 : 1.0"
@@ -193,39 +197,12 @@
         "melee_spear_use": "animation.zombie.melee_spear_use",
         "melee_spear_hold": "animation.zombie.melee_spear_hold",
         "melee_spear_controller": "controller.animation.humanoid.melee_spear",
-        "baby_zombie_attack_bare_hand": "animation.zombie.baby_attack_bare_hand"
+        "baby_zombie_attack_bare_hand": "animation.zombie.baby_attack_bare_hand",
+        "humanoid_baby_big_head": "controller.animation.humanoid.baby_big_head",
+        "look_at_target": "controller.animation.humanoid.look_at_target",
+        "riding": "controller.animation.humanoid.riding",
+        "attack": "controller.animation.humanoid.attack"
       },
-      "animation_controllers": [
-        {
-          "humanoid_baby_big_head": "controller.animation.humanoid.baby_big_head"
-        },
-        {
-          "look_at_target": "controller.animation.humanoid.look_at_target"
-        },
-        { "move": "controller.animation.humanoid.move" },
-        { "riding": "controller.animation.humanoid.riding" },
-        { "holding": "controller.animation.humanoid.holding" },
-        {
-          "brandish_spear": "controller.animation.humanoid.brandish_spear"
-        },
-        { "charging": "controller.animation.humanoid.charging" },
-        { "attack": "controller.animation.humanoid.attack" },
-        { "sneaking": "controller.animation.humanoid.sneaking" },
-        { "bob": "controller.animation.humanoid.bob" },
-        {
-          "damage_nearby_mobs": "controller.animation.humanoid.damage_nearby_mobs"
-        },
-        {
-          "bow_and_arrow": "controller.animation.humanoid.bow_and_arrow"
-        },
-        {
-          "use_item_progress": "controller.animation.humanoid.use_item_progress"
-        },
-        {
-          "zombie_attack_bare_hand": "controller.animation.zombie.attack_bare_hand"
-        },
-        { "swimming": "controller.animation.zombie.swimming" }
-      ],
       "render_controllers": [
         { "controller.render.zombie.v2": "!v.mv_active" },
         { "controller.render.mv.zombie": "v.mv_active" },

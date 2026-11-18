@@ -29,19 +29,18 @@
           "v.mv_active = !q.is_baby;"
         ],
         "scale": "query.is_baby ? (1 / 0.16) : 1.0",
-        "initialize": ["v.xvar = Math.random(0,99);"]
+        "initialize": ["v.xvar = Math.random(0,99);"],
+        "animate": ["general_controller", "move_controller"]
       },
       "animations": {
         "general": "animation.turtle.general",
         "move": "animation.turtle.move",
         "ground_move": "animation.turtle.ground_move",
         "look_at_target": "animation.common.look_at_target",
-        "move_baby": "animation.turtle.baby_move"
+        "move_baby": "animation.turtle.baby_move",
+        "general_controller": "controller.animation.turtle.general",
+        "move_controller": "controller.animation.turtle.move"
       },
-      "animation_controllers": [
-        { "general": "controller.animation.turtle.general" },
-        { "move": "controller.animation.turtle.move" }
-      ],
       "render_controllers": [
         { "controller.render.turtle.v2": "!v.mv_active" },
         { "controller.render.mv.turtle": "v.mv_active" }

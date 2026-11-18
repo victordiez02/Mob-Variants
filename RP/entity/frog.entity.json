@@ -44,7 +44,8 @@
           "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : (v.yvar < 20 ? 2 : 1);",
           "v.mv_active = q.variant == 0;"
         ],
-        "initialize": ["v.xvar = math.random(0,99);", "v.yvar = math.random(0, 99);"]
+        "initialize": ["v.xvar = math.random(0,99);", "v.yvar = math.random(0, 99);"],
+        "animate": ["general", "croaking", "eat_mob"]
       },
       "animations": {
         "croak": "animation.frog.croak",
@@ -53,13 +54,11 @@
         "walk": "animation.frog.walk",
         "swim": "animation.frog.swim",
         "idle_water": "animation.frog.idle.water",
-        "look_at_target": "animation.common.look_at_target"
+        "look_at_target": "animation.common.look_at_target",
+        "general": "controller.animation.frog.general",
+        "croaking": "controller.animation.frog.croaking",
+        "eat_mob": "controller.animation.frog.eat_mob"
       },
-      "animation_controllers": [
-        { "general": "controller.animation.frog.general" },
-        { "croaking": "controller.animation.frog.croaking" },
-        { "eat_mob": "controller.animation.frog.eat_mob" }
-      ],
       "render_controllers": [
         { "controller.render.frog": "!v.mv_active" },
         { "controller.render.mv.frog": "v.mv_active" },

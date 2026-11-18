@@ -38,7 +38,22 @@
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
           "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
         ],
-        "initialize": ["v.xvar = Math.random(0,99);"]
+        "initialize": ["v.xvar = Math.random(0,99);"],
+        "animate": [
+          "look_at_target",
+          "move_controller",
+          "riding",
+          "holding_controller",
+          "brandish_spear_controller",
+          "charging_controller",
+          "attack",
+          "sneaking_controller",
+          "damage_nearby_mobs_controller",
+          "bow_and_arrow_controller",
+          "use_item_progress_controller",
+          "wither_skeleton_attack_controller",
+          "swimming_controller"
+        ]
       },
       "animations": {
         "look_at_target_default": "animation.humanoid.look_at_target.default",
@@ -58,35 +73,21 @@
         "use_item_progress": "animation.humanoid.use_item_progress",
         "wither_skeleton_attack": "animation.wither_skeleton.attack",
         "swimming": "animation.zombie.swimming",
-        "riding.body": "animation.humanoid.riding.body"
+        "riding.body": "animation.humanoid.riding.body",
+        "look_at_target": "controller.animation.humanoid.look_at_target",
+        "move_controller": "controller.animation.humanoid.move",
+        "riding": "controller.animation.humanoid.riding",
+        "holding_controller": "controller.animation.humanoid.holding",
+        "brandish_spear_controller": "controller.animation.humanoid.brandish_spear",
+        "charging_controller": "controller.animation.humanoid.charging",
+        "attack": "controller.animation.humanoid.attack",
+        "sneaking_controller": "controller.animation.humanoid.sneaking",
+        "damage_nearby_mobs_controller": "controller.animation.humanoid.damage_nearby_mobs",
+        "bow_and_arrow_controller": "controller.animation.humanoid.bow_and_arrow",
+        "use_item_progress_controller": "controller.animation.humanoid.use_item_progress",
+        "wither_skeleton_attack_controller": "controller.animation.wither_skeleton.attack",
+        "swimming_controller": "controller.animation.zombie.swimming"
       },
-      "animation_controllers": [
-        {
-          "look_at_target": "controller.animation.humanoid.look_at_target"
-        },
-        { "move": "controller.animation.humanoid.move" },
-        { "riding": "controller.animation.humanoid.riding" },
-        { "holding": "controller.animation.humanoid.holding" },
-        {
-          "brandish_spear": "controller.animation.humanoid.brandish_spear"
-        },
-        { "charging": "controller.animation.humanoid.charging" },
-        { "attack": "controller.animation.humanoid.attack" },
-        { "sneaking": "controller.animation.humanoid.sneaking" },
-        {
-          "damage_nearby_mobs": "controller.animation.humanoid.damage_nearby_mobs"
-        },
-        {
-          "bow_and_arrow": "controller.animation.humanoid.bow_and_arrow"
-        },
-        {
-          "use_item_progress": "controller.animation.humanoid.use_item_progress"
-        },
-        {
-          "wither_skeleton_attack": "controller.animation.wither_skeleton.attack"
-        },
-        { "swimming": "controller.animation.zombie.swimming" }
-      ],
       "render_controllers": [
         "controller.render.mv.wither_skeleton",
         "controller.render.mv.wither_skeleton_cape",

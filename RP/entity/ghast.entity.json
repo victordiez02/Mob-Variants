@@ -41,15 +41,14 @@
       "spawn_egg": { "texture": "spawn_egg_ghast" },
       "animations": {
         "move": "animation.ghast.move",
-        "scale": "animation.ghast.scale"
+        "scale": "animation.ghast.scale",
+        "move_controller": "controller.animation.ghast.move"
       },
-      "animation_controllers": [
-        { "move": "controller.animation.ghast.move" }
-      ],
       "render_controllers": ["controller.render.mv.ghast"],
       "scripts": {
         "initialize": ["v.xvar = Math.random(0,99);"],
-        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"]
+        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"],
+        "animate": ["move_controller"]
       }
     }
   }

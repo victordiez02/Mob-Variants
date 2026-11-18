@@ -17,7 +17,7 @@
       "geometry": {
         "default": "geometry.fox",
         "baby": "geometry.fox.baby",
-        "mv_default": "geometry.mv.fox_bma",
+        "mv_default": "geometry.fox",
         "mv_platypus": "geometry.mv.platypus",
         "mv_perry": "geometry.mv.platypus_perry"
       },

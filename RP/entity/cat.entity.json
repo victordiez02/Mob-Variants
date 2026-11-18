@@ -63,7 +63,7 @@
       "geometry": {
         "default": "geometry.cat",
         "baby": "geometry.cat.baby",
-        "mv_default": "geometry.mv.catNew",
+        "mv_default": "geometry.cat",
         "mv_garfield": "geometry.mv.cat_garfield",
         "mv_pussinboots": "geometry.mv.cat_pussinboots",
         "mv_nyan": "geometry.mv.cat_nyan",
@@ -81,14 +81,10 @@
         "baby_sit": "animation.cat.baby_sit",
         "baby_walk": "animation.cat.baby_walk",
         "baby_sprint": "animation.cat.baby_sprint",
-        "baby_sneak": "animation.cat.baby_sneak"
+        "baby_sneak": "animation.cat.baby_sneak",
+        "look_at_target_controller": "controller.animation.cat.look_at_target",
+        "move": "controller.animation.cat.move"
       },
-      "animation_controllers": [
-        {
-          "look_at_target": "controller.animation.cat.look_at_target"
-        },
-        { "move": "controller.animation.cat.move" }
-      ],
       "render_controllers": [
         { "controller.render.cat.v2": "!v.mv_active" },
         { "controller.render.mv.cat": "v.mv_active" }
@@ -100,7 +96,8 @@
         "pre_animation": [
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 20 ? 1 + math.mod(math.floor(v.xvar), 4) : 0);",
           "v.mv_active = !q.is_baby && q.variant == 0;"
-        ]
+        ],
+        "animate": ["look_at_target_controller", "move"]
       }
     }
   }
