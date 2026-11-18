@@ -15,7 +15,7 @@ Lee también:
 | `RP/` | Resource pack. **Debe funcionar solo** (las skins se sortean en el cliente). |
 | `BP/` | Behavior pack opcional. Solo guarda la variante elegida en propiedades de entidad. Depende del RP. |
 | `vanilla/` | Packs vanilla de referencia ([Mojang/bedrock-samples](https://github.com/Mojang/bedrock-samples), release estable). **Gitignored**; ver "Plantilla vanilla". |
-| `tools/` | Herramientas Python (ver docs/TOOLS.md) y el BP de pruebas para BDS (`tools/bds/`). |
+| `tools/` | Herramientas Python (ver docs/TOOLS.md), el BP de pruebas para BDS (`tools/bds/`) y el cargador de escenas de Blockbench (`tools/bb/`). |
 | `.claude/skills/` | Skills de Claude para este proyecto (ver "Skills"). |
 | `docs/` | Documentación y `Probabilities.pdf` (fuera de los packs para que no se empaquete). |
 
@@ -49,10 +49,27 @@ No hay que copiar nada: guardar y volver a entrar al mundo basta.
 - **mv-verify**: comprobar cualquier cambio (check, render, Content Log, BDS, CI).
 - **mv-skin**: skins nuevas (`addskin.py`), cosméticos como capa y mobs nuevos.
 - **mv-release**: commits, versiones, paquetes, releases y Minecraft nuevo.
+- **mv-blockbench**: Blockbench por MCP: variantes con animaciones en movimiento, editar capas, texturas.
+  No arranques Blockbench ni el MCP tú (está denegado en `.claude/settings.json`): pídeselo al usuario.
 
 Están en `.claude/skills/`. Si al usarlas ves que falta algo, sobra algo o un paso ya no es cierto,
 puedes **sugerir** al usuario el cambio en la skill (solo si de verdad hace falta; no es obligatorio).
 Referencia completa de las herramientas: docs/TOOLS.md.
+
+## Blockbench (MCP)
+
+Hay un servidor MCP `blockbench` (86 herramientas: `new_project`, `add_cubes`, `paint_texture`,
+`screenshot_views`, `check_model`, `export_model`, `execute_script`…) configurado en el scope local
+de este proyecto (`~/.claude.json`), no en el repo. Código en `C:\Users\victo\Desktop\projects\blockbench-mcp`
+(`node dist/index.js`).
+
+- Requiere **Blockbench abierto** con el plugin del MCP instalado; el servidor habla con él por
+  `http://127.0.0.1:8787` (`curl` a esa URL devuelve `{"ok":true,...}` si está vivo).
+- Las herramientas solo aparecen al **iniciar una sesión nueva** de Claude Code tras añadir el MCP.
+- Úsalo para crear/ajustar **capas cosméticas** (regla 2): huesos con nombre vanilla, mismo pivote y
+  padre, piezas propias como hijas `mv_*`. Exporta como Bedrock entity (`geometry.mv.*`) y pasa luego
+  por la skill **mv-verify**. No lo uses para modificar el modelo base vanilla (regla 1).
+- Empieza con `get_guide` (topics `modeling`, `texturing`, `inspection`…) antes de construir.
 
 ## Flujo de trabajo
 
