@@ -58,6 +58,10 @@ avisos del BP son idénticos en el archivo vanilla. Lo que esos códigos comprob
 `validate.py` (variables `v.mv_*`/`xvar` asignadas, claves `Texture./Geometry.`, animaciones) y
 `bpcheck.py`. Tras cambiar estos archivos: *Developer: Reload Window*.
 
+Ortografía (Code Spell Checker + diccionario español): `cspell.json` activa inglés y español, ignora
+`vanilla/`, `dist/` y `tools/out/`, y lista el vocabulario del proyecto (nombres de mobs, de huesos,
+identificadores). Si sale una palabra nueva correcta, añádela a `words`.
+
 ## Validador oficial de Mojang (opcional)
 
 [Minecraft Creator Tools](https://github.com/Mojang/minecraft-creator-tools) (`mct`) valida

@@ -70,7 +70,7 @@ _MATH: dict[str, Callable[[list[float]], float]] = {
     "min": lambda a: min(a[0], a[1]), "max": lambda a: max(a[0], a[1]), "sqrt": lambda a: math.sqrt(max(a[0], 0)),
     "sin": lambda a: math.sin(math.radians(a[0])), "cos": lambda a: math.cos(math.radians(a[0])),
     "lerp": lambda a: a[0] + (a[1] - a[0]) * a[2], "pow": lambda a: a[0] ** a[1], "exp": lambda a: math.exp(a[0]),
-    "pi": lambda a: math.pi, "sign": lambda a: math.copysign(1.0, a[0]),
+    "pi": lambda _: math.pi, "sign": lambda a: math.copysign(1.0, a[0]),
 }
 
 
@@ -147,15 +147,15 @@ class _Parser:
         return a
 
     def orr(self) -> Value:
-        a = self.andd()
+        a = self.and_expr()
         while self.peek() == "||":
             self.eat()
             first = truthy(a)
-            b = self.lazy(first, self.andd)
+            b = self.lazy(first, self.and_expr)
             a = 1.0 if first or truthy(b) else 0.0
         return a
 
-    def andd(self) -> Value:
+    def and_expr(self) -> Value:
         a = self.cmp()
         while self.peek() == "&&":
             self.eat()
