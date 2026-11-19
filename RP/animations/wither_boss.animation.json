@@ -34,9 +34,6 @@
           "rotation": [0, "math.trunc(q.life_time*180)*1", 0],
           "position": [0, "math.sin(q.life_time*280)*10", 0]
         },
-        "bone69": {
-          "rotation": [0, "math.round(q.life_time*180)", "math.trunc(q.life_time*180)*-1"]
-        },
         "bone2": {
           "rotation": [0, "math.round(q.life_time*180)", "math.trunc(q.life_time*180)*-1"]
         }

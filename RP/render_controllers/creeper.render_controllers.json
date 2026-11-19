@@ -103,14 +103,14 @@
       "textures": ["v.mv_variant ? array.hatskinsq[v.mv_mark] : array.hatskins[variable.xvar]"],
       "arrays": {
         "textures": {
-          "array.hatskins": ["Texture.mv_TnT", "Texture.mv_cactus", "Texture.mv_stone", "Texture.mv_shells"],
-          "array.hatskinsq": ["Texture.mv_TnT", "Texture.mv_TnT", "Texture.mv_cactus", "Texture.mv_stone", "Texture.mv_shells"]
+          "array.hatskins": ["Texture.mv_tnt", "Texture.mv_cactus", "Texture.mv_stone", "Texture.mv_shells"],
+          "array.hatskinsq": ["Texture.mv_tnt", "Texture.mv_tnt", "Texture.mv_cactus", "Texture.mv_stone", "Texture.mv_shells"]
         },
         "geometries": {
-          "array.hatgeos": ["Geometry.mv_TnT", "Geometry.mv_cactus", "Geometry.mv_stone", "Geometry.mv_shells"],
+          "array.hatgeos": ["Geometry.mv_tnt", "Geometry.mv_cactus", "Geometry.mv_stone", "Geometry.mv_shells"],
           "array.hatgeosq": [
             "Geometry.mv_empty",
-            "Geometry.mv_TnT",
+            "Geometry.mv_tnt",
             "Geometry.mv_cactus",
             "Geometry.mv_stone",
             "Geometry.mv_shells"
@@ -124,10 +124,10 @@
       "materials": [
         { "*": "Material.mv_default" }
       ],
-      "textures": ["Texture.mv_TnT"],
+      "textures": ["Texture.mv_tnt"],
       "arrays": {
         "geometries": {
-          "array.tntgeos": ["Geometry.mv_ribs_TnT", "Geometry.mv_TnT_s"]
+          "array.tntgeos": ["Geometry.mv_ribs_tnt", "Geometry.mv_tnt_s"]
         }
       }
     }

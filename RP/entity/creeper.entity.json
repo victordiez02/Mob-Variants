@@ -46,7 +46,7 @@
         "mv_skeleton13": "textures/entity/skeleton/skeleton13",
         "mv_skeleton14": "textures/entity/skeleton/skeleton14",
         "mv_skeleton15": "textures/entity/skeleton/skeleton15",
-        "mv_TnT": "textures/entity/creeper/creeper_TnT",
+        "mv_tnt": "textures/entity/creeper/creeper_TnT",
         "mv_cactus": "textures/entity/creeper/creeper_cactus",
         "mv_stone": "textures/entity/creeper/creeper_stone",
         "mv_shells": "textures/entity/creeper/creeper_shells"
@@ -57,9 +57,9 @@
         "mv_default": "geometry.mv.creeper",
         "mv_empty": "geometry.mv.zombie_empty",
         "mv_skeleton": "geometry.mv.creeper_s",
-        "mv_TnT": "geometry.mv.creeper_TnT",
-        "mv_ribs_TnT": "geometry.mv.creeper_ribs_TnT",
-        "mv_TnT_s": "geometry.mv.creeper_TnT_s",
+        "mv_tnt": "geometry.mv.creeper_TnT",
+        "mv_ribs_tnt": "geometry.mv.creeper_ribs_TnT",
+        "mv_tnt_s": "geometry.mv.creeper_TnT_s",
         "mv_cactus": "geometry.mv.creeper_cactus",
         "mv_stone": "geometry.mv.creeper_stone",
         "mv_shells": "geometry.mv.creeper_shells"
