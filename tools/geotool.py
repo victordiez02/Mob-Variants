@@ -8,6 +8,10 @@
     python tools/geotool.py limbmerge <addon geo> <vanilla geo> <texture without extension> ...
         Repaint split limbs (upper + knee, box UV) into the single vanilla limb layout.
         MODIFIES the textures (commit first). Needs Pillow.
+    python tools/geotool.py relayer <layer geo> <base geo> [--write]
+        Rule 2 on an existing layer: vanilla-named bones get the base pivot/parent/rotation (cubes move to
+        an mv_<bone> child if needed), missing vanilla ancestors are added empty, other bones get mv_ (same
+        parent). Refuses if the rest pose changes. Needs Pillow.
 
 As a module: build_overlay(src_bones, plan, ident, desc) builds a layer geometry from bones of an old
 model hung from vanilla-named bones (used for witch, spider, pig; see git log).
@@ -181,6 +185,173 @@ def build_overlay(src_bones: list[Bone], plan: dict[str, Json], ident: str, desc
     return {"format_version": "1.12.0", "minecraft:geometry": [{"description": {"identifier": ident, **desc}, "bones": out}]}
 
 
+def _world(bones: list[Bone]) -> dict[str, list[list[float]]]:
+    """Rest matrix of every bone (rotations about pivots, inherited from parents). Needs render.py (Pillow)."""
+    from render import about, bb, mat_mul, rot_bb, translate
+    by = {b["name"].lower(): b for b in bones}
+    out: dict[str, list[list[float]]] = {}
+
+    def m(n: str, depth: int = 0) -> list[list[float]]:
+        if n not in out:
+            b = by[n]
+            p = (b.get("parent") or "").lower()
+            pm = m(p, depth + 1) if p in by and depth < 64 else translate(0, 0, 0)
+            rot = [float(x) for x in b.get("rotation", [0, 0, 0])]
+            out[n] = mat_mul(pm, about(bb(b.get("pivot", [0, 0, 0])), rot_bb(*rot)))
+        return out[n]
+    for n in by:
+        m(n)
+    return out
+
+
+def relayer(layer_id: str, base_id: str, write: bool) -> int:
+    """Rule 2 for an existing layer: vanilla-named bones get the base pivot, parent and rotation (and the
+    missing vanilla ancestors are added, empty); their cubes move to an `mv_<name>` child when needed so
+    that nothing moves at rest; other bones get the `mv_` prefix and hang from their nearest vanilla-named
+    ancestor. Refuses if the rest pose would change."""
+    from mvlib import load_for_edit, save
+    geos_a, geos_v = geo_index(find_pack("RP")), geo_index(VRP)
+    g = geos_a[layer_id]
+    if g.parent:
+        print(f"{layer_id}: 1.8 inheritance not supported")
+        return 1
+    _, base = resolve_geo(base_id, geos_a, geos_v)
+    vb = {b["name"].lower(): b for b in base}
+    old = copy.deepcopy(g.bones)
+    by = {b["name"].lower(): b for b in old}
+    zero = [0.0, 0.0, 0.0]
+
+    def fl(v: Any) -> list[float]:
+        return [round(float(x), 4) for x in (v or zero)]
+
+    new: list[Bone] = []
+    names: dict[str, str] = {}  # old lower name -> new name
+    holder: dict[str, str] = {}  # vanilla-named bone -> bone that receives its cubes and custom children
+    customs: list[tuple[Bone, Bone]] = []  # (new, old) for bones that are not vanilla-named
+    for b in old:
+        n = b["name"].lower()
+        names[n] = vb[n]["name"] if n in vb else (b["name"] if n.startswith("mv_") else "mv_" + b["name"])
+    has_child = {(b.get("parent") or "").lower() for b in old if (b.get("name") or "").lower() not in vb}
+    changes: list[str] = []
+    for b in old:
+        n = b["name"].lower()
+        if n in vb:
+            v = vb[n]
+            nb: Bone = {"name": v["name"]}
+            if v.get("parent"):
+                nb["parent"] = v["parent"]
+            nb["pivot"] = v.get("pivot", zero)
+            if v.get("rotation"):
+                nb["rotation"] = v["rotation"]
+            r_old, vr = fl(b.get("rotation")), fl(v.get("rotation") or v.get("bind_pose_rotation"))
+            if r_old != vr:  # animations with `this` (pig.setup.v1.0: "90.0 - this") override it: decide by hand
+                print(f"{layer_id}: {b['name']} rotation {b.get('rotation')} ≠ vanilla {v.get('rotation')}: fix by hand")
+                return 1
+            # rotated custom ancestors (old roots/spines) also place the bone at rest: keep them as frames
+            frames: list[Bone] = []
+            p = (b.get("parent") or "").lower()
+            while p in by and p not in vb and len(frames) < 64:
+                if fl(by[p].get("rotation")) != fl(zero):
+                    frames.insert(0, by[p])
+                p = (by[p].get("parent") or "").lower()
+            # the bone's frame only matters at rest if something rotates
+            same = not frames and ((r_old == vr == fl(zero)) or (fl(b.get("pivot")) == fl(v.get("pivot")) and r_old == vr))
+            extra = {k: x for k, x in b.items() if k not in ("name", "pivot", "parent", "rotation", "cubes")}
+            holder[n] = v["name"]
+            new.append(nb)
+            if same:
+                nb.update(extra)
+                if b.get("cubes"):
+                    nb["cubes"] = b["cubes"]
+            elif b.get("cubes") or n in has_child:
+                attach = v["name"]
+                if vr != fl(zero):  # undo the vanilla rest rotation (exact for single-axis rotations)
+                    attach = f"mv_{b['name']}_rest"
+                    new.append({"name": attach, "parent": v["name"], "pivot": v.get("pivot", zero),
+                                "rotation": [-x for x in vr]})
+                for fr in frames:
+                    name = f"mv_{fr['name']}_frame"
+                    new.append({"name": name, "parent": attach, "pivot": fr.get("pivot", zero), "rotation": fr["rotation"]})
+                    attach = name
+                child: Bone = {"name": "mv_" + b["name"], "parent": attach, "pivot": b.get("pivot", zero)}
+                if r_old != fl(zero):
+                    child["rotation"] = b["rotation"]
+                child.update(extra)
+                if b.get("cubes"):
+                    child["cubes"] = b["cubes"]
+                new.append(child)
+                holder[n] = child["name"]
+                changes.append(f"{b['name']}: own frame kept in {child['name']}")
+            if (b.get("parent") or "").lower() != (v.get("parent") or "").lower() or fl(b.get("pivot")) != fl(v.get("pivot")) \
+                    or r_old != vr:
+                changes.append(f"{b['name']}: parent {b.get('parent')!r}->{v.get('parent')!r}, pivot {b.get('pivot')}->{v.get('pivot')}"
+                               + (f", rotation {b.get('rotation')}->{v.get('rotation')}" if r_old != vr else ""))
+        else:
+            nb = dict(b)
+            nb["name"] = names[n]
+            new.append(nb)
+            customs.append((nb, b))
+    for nb, src in customs:  # custom bones: same parent, renamed (or the holder of a vanilla parent)
+        p = (src.get("parent") or "").lower()
+        if p in by:
+            nb["parent"] = holder.get(p, names[p])
+        if nb["name"] != src["name"] or nb.get("parent") != src.get("parent"):
+            changes.append(f"{src['name']} -> {nb['name']} (parent {src.get('parent')!r}->{nb.get('parent')!r})")
+    # drop custom bones left without cubes or children (old roots/spines)
+    while True:
+        parents = {(b.get("parent") or "").lower() for b in new}
+        drop = [b for b in new if b["name"].lower() not in vb and not b.get("cubes") and b["name"].lower() not in parents]
+        if not drop:
+            break
+        for b in drop:
+            new.remove(b)
+            changes.append(f"- {b['name']} (empty)")
+    # empty vanilla ancestors so the layer inherits the same rest pose / animations
+    have = {b["name"].lower() for b in new}
+    for b in list(new):
+        p = (b.get("parent") or "").lower()
+        while p and p in vb and p not in have:
+            v = vb[p]
+            anc: Bone = {"name": v["name"]}
+            if v.get("parent"):
+                anc["parent"] = v["parent"]
+            anc["pivot"] = v.get("pivot", zero)
+            if v.get("rotation"):
+                anc["rotation"] = v["rotation"]
+            new.insert(0, anc)
+            have.add(p)
+            changes.append(f"+ {v['name']} (empty vanilla ancestor)")
+            p = (v.get("parent") or "").lower()
+    # rest pose must not change for any bone with cubes
+    w_old, w_new = _world(old), _world(new)
+    bad = []
+    for b in old:
+        if not b.get("cubes"):
+            continue
+        n = b["name"].lower()
+        nn = holder[n].lower() if n in vb else names[n].lower()
+        a, c = w_old[n], w_new[nn]
+        if max(abs(a[i][j] - c[i][j]) for i in range(3) for j in range(4)) > 1e-3:
+            bad.append(b["name"])
+    print(f"{layer_id} vs {base_id}:")
+    for c in changes:
+        print("   ", c)
+    if bad:
+        print("    REFUSED: rest pose would change for", bad)
+        return 1
+    if not changes:
+        print("    nothing to do")
+        return 0
+    if write:
+        data, header = load_for_edit(g.file)
+        for geo in data["minecraft:geometry"]:
+            if geo["description"]["identifier"] == layer_id:
+                geo["bones"] = new
+        save(g.file, data, header)
+        print("    written", os.path.relpath(g.file))
+    return 0
+
+
 def main() -> int:
     args = sys.argv[1:]
     if not args:
@@ -193,6 +364,8 @@ def main() -> int:
         faces(rest[0], rest[1], dict(m.split("=", 1) for m in rest[2:]))
     elif cmd == "limbmerge" and len(rest) >= 3:
         limbmerge(rest[0], rest[1], rest[2:])
+    elif cmd == "relayer" and len(rest) >= 2:
+        return relayer(rest[0], rest[1], "--write" in rest)
     else:
         print(__doc__)
         return 2

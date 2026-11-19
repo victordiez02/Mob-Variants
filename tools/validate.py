@@ -212,6 +212,10 @@ def layer_check(r: str, desc: Json, geos_a: dict, geos_v: dict) -> None:  # type
                 bad.append(f"{b['name']} pivot {piv}≠{vpiv}")
             if par != vpar:
                 bad.append(f"{b['name']} parent '{par}'≠'{vpar}'")
+            rot = [round(float(x), 2) for x in b.get("rotation") or [0, 0, 0]]
+            vrot = [round(float(x), 2) for x in v.get("rotation") or v.get("bind_pose_rotation") or [0, 0, 0]]
+            if rot != vrot:
+                bad.append(f"{b['name']} rotation {rot}≠{vrot}")
         if bad:
             warnings.append(f"{r}: layer {gid} vs {base_id}: " + "; ".join(bad))
 

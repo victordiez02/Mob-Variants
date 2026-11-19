@@ -89,6 +89,7 @@ Animation.all.forEach((anim) => {
       .forEach((other) => {
         const copy = anim.getBoneAnimator(other);
         if (copy.keyframes.length) return;
+        copy.rotation_global = animator.rotation_global; // "relative_to": {"rotation": "entity"} (look_at_target)
         animator.keyframes.forEach((kf) => copy.addKeyframe(kf.getUndoCopy()));
         report.shared_bones++;
       });
