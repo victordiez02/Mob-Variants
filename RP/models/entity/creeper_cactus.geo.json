@@ -13,25 +13,15 @@
       "bones": [
         {
           "name": "body",
-          "pivot": [0, 0, 0]
-        },
-        {
-          "name": "joint",
-          "parent": "body",
-          "pivot": [0, 6, 0]
-        },
-        {
-          "name": "joint2",
-          "parent": "joint",
-          "pivot": [0, 12, 0]
+          "pivot": [0.0, 0.0, 0.0]
         },
         {
           "name": "head",
-          "parent": "joint2",
-          "pivot": [0, 18, 0]
+          "parent": "body",
+          "pivot": [0.0, 18.0, 0.0]
         },
         {
-          "name": "cactus",
+          "name": "mv_cactus",
           "parent": "head",
           "pivot": [-1, 0, 0],
           "cubes": [

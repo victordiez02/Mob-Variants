@@ -1,6 +1,8 @@
 // Render controller Creeper
 // v.mv_variant: skin del mob.
 // v.mv_mark: variante del gorro (1, 2, 3, 4) o sin gorro (0).
+// Creepers normales (1-19): modelo vanilla + capa creeper_extras (costillas, pieza del torso, calavera).
+// Creepers esqueleto (20-34): modelo propio creeper_s.
 {
   "format_version": "1.10.0",
   "render_controllers": {
@@ -91,6 +93,38 @@
         },
         "geometries": {
           "array.geos": ["Geometry.mv_default", "Geometry.mv_skeleton"]
+        }
+      }
+    },
+    "controller.render.mv.creeper_extras": {
+      "geometry": "Geometry.mv_extras",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
+      "arrays": {
+        "textures": {
+          "array.xskins": [
+            "Texture.mv_default",
+            "Texture.mv_default2",
+            "Texture.mv_default3",
+            "Texture.mv_default4",
+            "Texture.mv_default5",
+            "Texture.mv_default6",
+            "Texture.mv_default7",
+            "Texture.mv_default8",
+            "Texture.mv_default9",
+            "Texture.mv_default10",
+            "Texture.mv_default11",
+            "Texture.mv_default12",
+            "Texture.mv_default13",
+            "Texture.mv_default14",
+            "Texture.mv_default15",
+            "Texture.mv_default16",
+            "Texture.mv_default17",
+            "Texture.mv_default18",
+            "Texture.mv_default19"
+          ]
         }
       }
     },

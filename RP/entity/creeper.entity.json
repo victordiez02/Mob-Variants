@@ -54,7 +54,8 @@
       "geometry": {
         "default": "geometry.creeper.v1.8",
         "charged": "geometry.creeper.charged.v1.8",
-        "mv_default": "geometry.mv.creeper",
+        "mv_default": "geometry.creeper.v1.8",
+        "mv_extras": "geometry.mv.creeper_extras",
         "mv_empty": "geometry.mv.zombie_empty",
         "mv_skeleton": "geometry.mv.creeper_s",
         "mv_tnt": "geometry.mv.creeper_TnT",
@@ -73,6 +74,7 @@
           "variable.leg_rot = Math.cos(query.modified_distance_moved * 38.17326) * 80.22 * query.modified_move_speed;",
           "variable.flash = Math.mod(Math.Round(query.swell_amount * 10.0), 2.0);",
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_skeleton = v.mv_variant ? v.mv_variant >= 20 : v.xvar >= 75;",
           "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
         ],
         "animate": ["creeper_head_controller", "creeper_legs_controller", "creeper_swelling_controller"],
@@ -88,6 +90,7 @@
       },
       "render_controllers": [
         "controller.render.mv.creeper",
+        { "controller.render.mv.creeper_extras": "!v.mv_skeleton" },
         "controller.render.mv.creeper_hat",
         "controller.render.mv.creeper_TnT_s",
         { "controller.render.creeper_armor": "query.is_powered" }

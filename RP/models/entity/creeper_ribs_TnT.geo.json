@@ -13,21 +13,21 @@
       "bones": [
         {
           "name": "body",
-          "pivot": [0, 0, 0.75]
+          "pivot": [0.0, 0.0, 0.0]
         },
         {
-          "name": "joint",
+          "name": "mv_joint",
           "parent": "body",
           "pivot": [0, 6, 0.75]
         },
         {
-          "name": "joint2",
-          "parent": "joint",
+          "name": "mv_joint2",
+          "parent": "mv_joint",
           "pivot": [0, 12, 0.75]
         },
         {
-          "name": "top_ribs",
-          "parent": "joint2",
+          "name": "mv_top_ribs",
+          "parent": "mv_joint2",
           "pivot": [0, 19.75, 0.04545],
           "cubes": [
             {
