@@ -12,32 +12,27 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 12, 0]
+          "name": "waist",
+          "pivot": [0.0, 12.0, 0.0]
         },
         {
-          "name": "spine",
-          "parent": "root",
-          "pivot": [0, 12, 0]
+          "name": "body",
+          "parent": "waist",
+          "pivot": [0.0, 24.0, 0.0]
         },
         {
           "name": "leftArm",
-          "parent": "spine",
-          "pivot": [5, 22, 0],
+          "parent": "body",
+          "pivot": [5.0, 22.0, 0.0],
           "mirror": true
         },
         {
-          "name": "elbow",
-          "parent": "leftArm",
-          "pivot": [6, 18, 0]
-        },
-        {
           "name": "leftItem",
-          "parent": "elbow",
-          "pivot": [6, 15, 1]
+          "parent": "leftArm",
+          "pivot": [6.0, 15.0, 1.0]
         },
         {
-          "name": "pickaxe",
+          "name": "mv_pickaxe",
           "parent": "leftItem",
           "pivot": [6, 14, -8],
           "rotation": [40.78381, -1.61117, -150.74508],

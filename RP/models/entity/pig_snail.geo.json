@@ -12,21 +12,20 @@
       },
       "bones": [
         {
-          "name": "root",
+          "name": "mv_root",
           "pivot": [0, 0, 1]
         },
         {
-          "name": "root_snail",
-          "parent": "root",
+          "name": "mv_root_snail",
+          "parent": "mv_root",
           "pivot": [0, 0, 7]
         },
         {
           "name": "head",
-          "parent": "root_snail",
-          "pivot": [0, 0, -6]
+          "pivot": [0.0, 12.0, -6.0]
         },
         {
-          "name": "head_snail",
+          "name": "mv_head_snail",
           "parent": "head",
           "pivot": [0, 1, -6],
           "cubes": [
@@ -40,8 +39,8 @@
           ]
         },
         {
-          "name": "eyes",
-          "parent": "head_snail",
+          "name": "mv_eyes",
+          "parent": "mv_head_snail",
           "pivot": [0, 3.5, -9],
           "cubes": [
             {
@@ -61,8 +60,8 @@
           ]
         },
         {
-          "name": "nose",
-          "parent": "head_snail",
+          "name": "mv_nose",
+          "parent": "mv_head_snail",
           "pivot": [0, 2, -9],
           "cubes": [
             {
@@ -82,8 +81,8 @@
           ]
         },
         {
-          "name": "snail_body",
-          "parent": "root_snail",
+          "name": "mv_snail_body",
+          "parent": "mv_root_snail",
           "pivot": [0, 2, 1],
           "cubes": [
             {
@@ -121,8 +120,8 @@
           ]
         },
         {
-          "name": "shell",
-          "parent": "snail_body",
+          "name": "mv_shell",
+          "parent": "mv_snail_body",
           "pivot": [0, 0.5, 1],
           "cubes": [
             {

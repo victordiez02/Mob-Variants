@@ -12,17 +12,11 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 0, 0]
-        },
-        {
           "name": "body",
-          "parent": "root",
-          "pivot": [0, 13, 2],
-          "rotation": [90, 0, 0]
+          "pivot": [0.0, 13.0, 2.0]
         },
         {
-          "name": "chest",
+          "name": "mv_chest",
           "parent": "body",
           "pivot": [0, 22, 2],
           "rotation": [-90, 0, 0],
@@ -77,8 +71,8 @@
           ]
         },
         {
-          "name": "upper_part",
-          "parent": "chest",
+          "name": "mv_upper_part",
+          "parent": "mv_chest",
           "pivot": [0, 33, 18],
           "cubes": [
             {

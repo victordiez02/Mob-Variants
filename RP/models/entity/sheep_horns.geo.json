@@ -12,22 +12,17 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 0, 0]
-        },
-        {
           "name": "head",
-          "parent": "root",
-          "pivot": [0, 18, -8]
+          "pivot": [0.0, 18.0, -8.0]
         },
         {
-          "name": "horns",
+          "name": "mv_horns",
           "parent": "head",
           "pivot": [0, -1.25, -9]
         },
         {
-          "name": "right",
-          "parent": "horns",
+          "name": "mv_right",
+          "parent": "mv_horns",
           "pivot": [4, -1.25, -9],
           "cubes": [
             {
@@ -48,8 +43,8 @@
           ]
         },
         {
-          "name": "left",
-          "parent": "horns",
+          "name": "mv_left",
+          "parent": "mv_horns",
           "pivot": [-3, -1.25, -9],
           "cubes": [
             {

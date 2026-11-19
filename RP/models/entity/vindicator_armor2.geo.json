@@ -12,26 +12,16 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 0, 0]
-        },
-        {
-          "name": "waist",
-          "parent": "root",
-          "pivot": [0, 12, 0]
-        },
-        {
           "name": "body",
-          "parent": "waist",
-          "pivot": [0, 12, 0]
+          "pivot": [0.0, 24.0, 0.0]
         },
         {
           "name": "rightArm",
           "parent": "body",
-          "pivot": [-5, 22, 0]
+          "pivot": [-5.0, 22.0, 0.0]
         },
         {
-          "name": "RightArmArmor",
+          "name": "mv_RightArmArmor",
           "parent": "rightArm",
           "pivot": [-5, 22, 0],
           "cubes": [
@@ -92,11 +82,11 @@
         {
           "name": "leftArm",
           "parent": "body",
-          "pivot": [5, 22, 0],
+          "pivot": [5.0, 22.0, 0.0],
           "mirror": true
         },
         {
-          "name": "LeftArmArmor",
+          "name": "mv_LeftArmArmor",
           "parent": "leftArm",
           "pivot": [5, 22, 0],
           "cubes": [
@@ -158,7 +148,7 @@
           ]
         },
         {
-          "name": "BodyArmor",
+          "name": "mv_BodyArmor",
           "parent": "body",
           "pivot": [0, 24, 0],
           "cubes": [
@@ -182,8 +172,8 @@
           ]
         },
         {
-          "name": "cape",
-          "parent": "BodyArmor",
+          "name": "mv_cape",
+          "parent": "mv_BodyArmor",
           "pivot": [0, 22, 4],
           "cubes": [
             {
@@ -196,7 +186,7 @@
           ]
         },
         {
-          "name": "flagArmor",
+          "name": "mv_flagArmor",
           "parent": "body",
           "pivot": [0, 42, 43],
           "cubes": [
@@ -217,8 +207,8 @@
           ]
         },
         {
-          "name": "bone5",
-          "parent": "flagArmor",
+          "name": "mv_bone5",
+          "parent": "mv_flagArmor",
           "pivot": [0, 37.5, 16],
           "cubes": [
             {

@@ -12,21 +12,16 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 0, 0]
-        },
-        {
-          "name": "spine",
-          "parent": "root",
-          "pivot": [0, 12, 0]
+          "name": "waist",
+          "pivot": [0.0, 12.0, 0.0]
         },
         {
           "name": "body",
-          "parent": "spine",
-          "pivot": [0, 24, 0]
+          "parent": "waist",
+          "pivot": [0.0, 24.0, 0.0]
         },
         {
-          "name": "arrow",
+          "name": "mv_arrow",
           "parent": "body",
           "pivot": [-1, 21, 2],
           "rotation": [-140, 17.5, -47.5],
@@ -54,8 +49,8 @@
           ]
         },
         {
-          "name": "bone3",
-          "parent": "arrow",
+          "name": "mv_bone3",
+          "parent": "mv_arrow",
           "pivot": [-1, 21, 2],
           "rotation": [0, 0, 90],
           "cubes": [

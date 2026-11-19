@@ -12,21 +12,16 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 0, 0]
-        },
-        {
           "name": "waist",
-          "parent": "root",
-          "pivot": [0, 12, 0]
+          "pivot": [0.0, 12.0, 0.0]
         },
         {
           "name": "body",
           "parent": "waist",
-          "pivot": [0, 24, 0]
+          "pivot": [0.0, 24.0, 0.0]
         },
         {
-          "name": "piglin_head3",
+          "name": "mv_piglin_head3",
           "parent": "body",
           "pivot": [3.75, 25, 6],
           "rotation": [180, -22.5, -162.5],
@@ -55,8 +50,8 @@
           ]
         },
         {
-          "name": "leftear4",
-          "parent": "piglin_head3",
+          "name": "mv_leftear4",
+          "parent": "mv_piglin_head3",
           "pivot": [-22.80144, 19.49491, 12.41403],
           "rotation": [0, 0, -30],
           "cubes": [
@@ -68,8 +63,8 @@
           ]
         },
         {
-          "name": "rightear4",
-          "parent": "piglin_head3",
+          "name": "mv_rightear4",
+          "parent": "mv_piglin_head3",
           "pivot": [-32.80144, 19.49491, 12.41403],
           "rotation": [0, 0, 30],
           "cubes": [
@@ -81,12 +76,7 @@
           ]
         },
         {
-          "name": "hat4",
-          "parent": "piglin_head3",
-          "pivot": [-27.80144, 13.49491, 12.41403]
-        },
-        {
-          "name": "piglin_head4",
+          "name": "mv_piglin_head4",
           "parent": "body",
           "pivot": [-8.75, 15, 4],
           "rotation": [-147.5, 87.5, -172.5],
@@ -120,8 +110,8 @@
           ]
         },
         {
-          "name": "leftear5",
-          "parent": "piglin_head4",
+          "name": "mv_leftear5",
+          "parent": "mv_piglin_head4",
           "pivot": [-22.97322, 8.88196, 1.8504],
           "rotation": [0, 0, -30],
           "cubes": [
@@ -133,8 +123,8 @@
           ]
         },
         {
-          "name": "rightear5",
-          "parent": "piglin_head4",
+          "name": "mv_rightear5",
+          "parent": "mv_piglin_head4",
           "pivot": [-32.97322, 8.88196, 1.8504],
           "rotation": [0, 0, 30],
           "cubes": [
@@ -144,11 +134,6 @@
               "uv": [27, 15]
             }
           ]
-        },
-        {
-          "name": "hat5",
-          "parent": "piglin_head4",
-          "pivot": [-27.97322, 2.88196, 1.8504]
         }
       ]
     }

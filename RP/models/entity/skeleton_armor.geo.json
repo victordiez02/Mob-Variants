@@ -12,21 +12,12 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 0, 0]
-        },
-        {
-          "name": "spine",
-          "parent": "root",
-          "pivot": [0, 12, 0]
-        },
-        {
           "name": "body",
-          "parent": "spine",
-          "pivot": [0, 24, 0]
+          "parent": "waist",
+          "pivot": [0.0, 24.0, 0.0]
         },
         {
-          "name": "quiver",
+          "name": "mv_quiver",
           "parent": "body",
           "pivot": [0, 12, 2],
           "rotation": [7.5, 0, 20],
@@ -39,8 +30,8 @@
           ]
         },
         {
-          "name": "arrows",
-          "parent": "quiver",
+          "name": "mv_arrows",
+          "parent": "mv_quiver",
           "pivot": [0, 12, 2],
           "rotation": [0, 0, -42.5],
           "cubes": [
@@ -52,8 +43,8 @@
           ]
         },
         {
-          "name": "sticks",
-          "parent": "arrows",
+          "name": "mv_sticks",
+          "parent": "mv_arrows",
           "pivot": [11, 20, 2],
           "rotation": [0, 0, -45],
           "cubes": [
@@ -71,17 +62,16 @@
         },
         {
           "name": "waist",
-          "parent": "body",
-          "pivot": [0, 12, 0]
+          "pivot": [0.0, 12.0, 0.0]
         },
         {
-          "name": "body2",
+          "name": "mv_body2",
           "parent": "waist",
           "pivot": [0, 24, 0]
         },
         {
-          "name": "body3",
-          "parent": "body2",
+          "name": "mv_body3",
+          "parent": "mv_body2",
           "pivot": [0, 24, 3],
           "rotation": [7.5, 0, 0],
           "cubes": [
@@ -94,8 +84,8 @@
         },
         {
           "name": "rightArm",
-          "parent": "body2",
-          "pivot": [-5, 22, 0],
+          "parent": "body",
+          "pivot": [-5.0, 22.0, 0.0],
           "cubes": [
             {
               "origin": [-8, 12.1, -2],
@@ -111,8 +101,8 @@
         },
         {
           "name": "leftArm",
-          "parent": "body2",
-          "pivot": [5, 22, 0],
+          "parent": "body",
+          "pivot": [5.0, 22.0, 0.0],
           "mirror": true,
           "cubes": [
             {

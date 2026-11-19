@@ -12,21 +12,11 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 0, 0]
-        },
-        {
-          "name": "spine",
-          "parent": "root",
-          "pivot": [0, 12, 0]
-        },
-        {
           "name": "body",
-          "parent": "spine",
-          "pivot": [0, 0, 0]
+          "pivot": [0.0, 0.0, 0.0]
         },
         {
-          "name": "backpack",
+          "name": "mv_backpack",
           "parent": "body",
           "pivot": [0, 16, 2],
           "cubes": [
@@ -58,8 +48,8 @@
           ]
         },
         {
-          "name": "chain",
-          "parent": "backpack",
+          "name": "mv_chain",
+          "parent": "mv_backpack",
           "pivot": [3, 19, 6],
           "rotation": [0, 0, 25],
           "cubes": [
@@ -71,8 +61,8 @@
           ]
         },
         {
-          "name": "bone6",
-          "parent": "backpack",
+          "name": "mv_bone6",
+          "parent": "mv_backpack",
           "pivot": [-4.5, 13, 3.5],
           "cubes": [
             {
@@ -103,8 +93,8 @@
           ]
         },
         {
-          "name": "bone4",
-          "parent": "backpack",
+          "name": "mv_bone4",
+          "parent": "mv_backpack",
           "pivot": [6.5, 11.6, 5.5],
           "cubes": [
             {

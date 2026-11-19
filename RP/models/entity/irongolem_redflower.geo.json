@@ -12,27 +12,22 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 0, 0]
-        },
-        {
-          "name": "spine",
-          "parent": "root",
-          "pivot": [0, 16, 0]
+          "name": "body",
+          "pivot": [0.0, 31.0, 0.0]
         },
         {
           "name": "head",
-          "parent": "spine",
-          "pivot": [0, 31, -2]
+          "parent": "body",
+          "pivot": [0.0, 31.0, -2.0]
         },
         {
-          "name": "flower",
+          "name": "mv_flower",
           "parent": "head",
           "pivot": [0, 38, -4]
         },
         {
-          "name": "1",
-          "parent": "flower",
+          "name": "mv_1",
+          "parent": "mv_flower",
           "pivot": [0, 43, -4],
           "rotation": [0, -50, 0],
           "cubes": [
@@ -44,8 +39,8 @@
           ]
         },
         {
-          "name": "2",
-          "parent": "flower",
+          "name": "mv_2",
+          "parent": "mv_flower",
           "pivot": [0, 43, -4],
           "rotation": [0, 45, 0],
           "cubes": [

@@ -12,23 +12,13 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 0, 0]
-        },
-        {
-          "name": "leftLeg",
-          "parent": "root",
-          "pivot": [2, 12, 0],
-          "mirror": true
-        },
-        {
           "name": "leg1",
-          "parent": "leftLeg",
-          "pivot": [2, 12, 0],
+          "parent": "body",
+          "pivot": [2.0, 12.0, 0.0],
           "mirror": true
         },
         {
-          "name": "leg2",
+          "name": "mv_leg2",
           "parent": "leg1",
           "pivot": [2.125, 2.5, 0],
           "rotation": [180, 180, 0],
@@ -42,17 +32,12 @@
           ]
         },
         {
-          "name": "rightLeg",
-          "parent": "root",
-          "pivot": [-2, 12, 0]
-        },
-        {
           "name": "leg0",
-          "parent": "rightLeg",
-          "pivot": [-2, 12, 0]
+          "parent": "body",
+          "pivot": [-2.0, 12.0, 0.0]
         },
         {
-          "name": "leg3",
+          "name": "mv_leg3",
           "parent": "leg0",
           "pivot": [-2.125, 2.5, 0],
           "rotation": [0, 0, -180],
@@ -66,22 +51,16 @@
           ]
         },
         {
-          "name": "waist",
-          "parent": "root",
-          "pivot": [0, 12, 0]
-        },
-        {
           "name": "body",
-          "parent": "waist",
-          "pivot": [0, 12, 0]
+          "pivot": [0.0, 24.0, 0.0]
         },
         {
           "name": "head",
           "parent": "body",
-          "pivot": [0, 24, 0]
+          "pivot": [0.0, 24.0, 0.0]
         },
         {
-          "name": "head2",
+          "name": "mv_head2",
           "parent": "head",
           "pivot": [0, 24, 0],
           "cubes": [
@@ -122,10 +101,10 @@
         {
           "name": "rightArm",
           "parent": "body",
-          "pivot": [-5, 22, 0]
+          "pivot": [-5.0, 22.0, 0.0]
         },
         {
-          "name": "rightArm2",
+          "name": "mv_rightArm2",
           "parent": "rightArm",
           "pivot": [-5, 22, 0],
           "cubes": [
@@ -142,8 +121,8 @@
           ]
         },
         {
-          "name": "armorarm1",
-          "parent": "rightArm2",
+          "name": "mv_armorarm1",
+          "parent": "mv_rightArm2",
           "pivot": [-8.875, 16, 0.5],
           "rotation": [180, 90, -180],
           "cubes": [
@@ -155,8 +134,8 @@
           ]
         },
         {
-          "name": "armorarm2",
-          "parent": "rightArm2",
+          "name": "mv_armorarm2",
+          "parent": "mv_rightArm2",
           "pivot": [-8.875, 13, 0],
           "rotation": [90, 90, -180],
           "cubes": [
@@ -170,11 +149,11 @@
         {
           "name": "leftArm",
           "parent": "body",
-          "pivot": [5, 22, 0],
+          "pivot": [5.0, 22.0, 0.0],
           "mirror": true
         },
         {
-          "name": "leftArm2",
+          "name": "mv_leftArm2",
           "parent": "leftArm",
           "pivot": [5, 22, 0],
           "mirror": true,
@@ -192,8 +171,8 @@
           ]
         },
         {
-          "name": "armorarm3",
-          "parent": "leftArm2",
+          "name": "mv_armorarm3",
+          "parent": "mv_leftArm2",
           "pivot": [8.875, 16, 0.5],
           "rotation": [180, -90, 180],
           "cubes": [
@@ -206,8 +185,8 @@
           ]
         },
         {
-          "name": "armorarm4",
-          "parent": "leftArm2",
+          "name": "mv_armorarm4",
+          "parent": "mv_leftArm2",
           "pivot": [8.875, 13, 0],
           "rotation": [90, -90, 180],
           "cubes": [

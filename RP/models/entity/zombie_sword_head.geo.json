@@ -12,21 +12,21 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 12, 0]
+          "name": "waist",
+          "pivot": [0.0, 12.0, 0.0]
         },
         {
-          "name": "spine",
-          "parent": "root",
-          "pivot": [0, 12, 0]
+          "name": "body",
+          "parent": "waist",
+          "pivot": [0.0, 24.0, 0.0]
         },
         {
           "name": "head",
-          "parent": "spine",
-          "pivot": [0, 24, 0]
+          "parent": "body",
+          "pivot": [0.0, 24.0, 0.0]
         },
         {
-          "name": "sword",
+          "name": "mv_sword",
           "parent": "head",
           "pivot": [2.45588, 29.04785, 0.1361],
           "rotation": [97.63288, 60.49132, 47.13893],

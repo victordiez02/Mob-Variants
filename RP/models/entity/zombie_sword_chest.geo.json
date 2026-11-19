@@ -12,21 +12,16 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 12, 0]
-        },
-        {
-          "name": "spine",
-          "parent": "root",
-          "pivot": [0, 12, 0]
+          "name": "waist",
+          "pivot": [0.0, 12.0, 0.0]
         },
         {
           "name": "body",
-          "parent": "spine",
-          "pivot": [0, 24, 0]
+          "parent": "waist",
+          "pivot": [0.0, 24.0, 0.0]
         },
         {
-          "name": "sword",
+          "name": "mv_sword",
           "parent": "body",
           "pivot": [0, 18, -2],
           "rotation": [-157.7007, -13.99791, 156.737],
