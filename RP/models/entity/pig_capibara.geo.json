@@ -12,12 +12,7 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 0, 0]
-        },
-        {
           "name": "head",
-          "parent": "root",
           "pivot": [0, 12, -6],
           "cubes": [
             {
@@ -38,36 +33,7 @@
           ]
         },
         {
-          "name": "righteyelid",
-          "parent": "head",
-          "pivot": [-3, 15.05, -10],
-          "cubes": [
-            {
-              "origin": [-3.01, 13.95, -11.05],
-              "size": [1.1, 1.1, 2.1],
-              "pivot": [-3, 15, -10],
-              "rotation": [0, 0, 2.5],
-              "uv": [48, 19]
-            }
-          ]
-        },
-        {
-          "name": "lefteyelid",
-          "parent": "head",
-          "pivot": [3, 15.05, -10],
-          "cubes": [
-            {
-              "origin": [1.01, 13.95, -11.05],
-              "size": [2.1, 1.1, 2.1],
-              "pivot": [3, 15, -10],
-              "rotation": [0, 0, -2.5],
-              "uv": [46, 19]
-            }
-          ]
-        },
-        {
           "name": "body",
-          "parent": "root",
           "pivot": [0, 13, 2],
           "rotation": [90, 0, 0],
           "cubes": [
@@ -80,7 +46,6 @@
         },
         {
           "name": "leg0",
-          "parent": "root",
           "pivot": [-3, 6, 6],
           "cubes": [
             {
@@ -91,7 +56,7 @@
           ]
         },
         {
-          "name": "knee0",
+          "name": "mv_knee0",
           "parent": "leg0",
           "pivot": [-3, 3, 4],
           "cubes": [
@@ -129,7 +94,6 @@
         },
         {
           "name": "leg1",
-          "parent": "root",
           "pivot": [3, 6, 7],
           "cubes": [
             {
@@ -140,7 +104,7 @@
           ]
         },
         {
-          "name": "knee1",
+          "name": "mv_knee1",
           "parent": "leg1",
           "pivot": [3, 3, 4],
           "cubes": [
@@ -178,7 +142,6 @@
         },
         {
           "name": "leg2",
-          "parent": "root",
           "pivot": [-3, 6, -5],
           "cubes": [
             {
@@ -189,7 +152,7 @@
           ]
         },
         {
-          "name": "knee2",
+          "name": "mv_knee2",
           "parent": "leg2",
           "pivot": [-3, 3, -7],
           "cubes": [
@@ -227,7 +190,6 @@
         },
         {
           "name": "leg3",
-          "parent": "root",
           "pivot": [3, 6, -5],
           "cubes": [
             {
@@ -238,7 +200,7 @@
           ]
         },
         {
-          "name": "knee3",
+          "name": "mv_knee3",
           "parent": "leg3",
           "pivot": [3, 3, -7],
           "cubes": [

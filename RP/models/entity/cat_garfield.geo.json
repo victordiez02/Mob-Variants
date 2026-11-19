@@ -25,7 +25,7 @@
           ]
         },
         {
-          "name": "head_garfield",
+          "name": "head",
           "parent": "body",
           "pivot": [0, 10, -7],
           "cubes": [
@@ -53,23 +53,6 @@
           "locators": {
             "lead": [0, 9, -9]
           }
-        },
-        {
-          "name": "eyelids",
-          "parent": "head_garfield",
-          "pivot": [0, 10.25, -9],
-          "cubes": [
-            {
-              "origin": [-3.5, 9, -12.01],
-              "size": [3, 1.25, 0],
-              "uv": [5, 27]
-            },
-            {
-              "origin": [0.5, 9, -12.01],
-              "size": [3, 1.25, 0],
-              "uv": [5, 27]
-            }
-          ]
         },
         {
           "name": "frontLegL",
@@ -103,7 +86,7 @@
           "mirror": true
         },
         {
-          "name": "bone2",
+          "name": "mv_bone2",
           "parent": "backLegL",
           "pivot": [2, 6, 4],
           "cubes": [
@@ -121,7 +104,7 @@
           "pivot": [-1.1, 6, 5]
         },
         {
-          "name": "bone3",
+          "name": "mv_bone3",
           "parent": "backLegR",
           "pivot": [-2.21116, 5.54885, 4.16186],
           "cubes": [
@@ -139,7 +122,7 @@
           "rotation": [90, 0, 0]
         },
         {
-          "name": "bone",
+          "name": "mv_bone",
           "parent": "tail1",
           "pivot": [0, 10, 7],
           "cubes": [

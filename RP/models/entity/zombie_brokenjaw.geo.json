@@ -12,17 +12,8 @@
       },
       "bones": [
         {
-          "name": "root",
-          "pivot": [0, 12, 0]
-        },
-        {
-          "name": "spine",
-          "parent": "root",
-          "pivot": [0, 12, 0]
-        },
-        {
           "name": "head",
-          "parent": "spine",
+          "parent": "body",
           "pivot": [0, 24, 0],
           "cubes": [
             {
@@ -38,7 +29,7 @@
           ]
         },
         {
-          "name": "jaw",
+          "name": "mv_jaw",
           "parent": "head",
           "pivot": [0, 26, 0],
           "cubes": [
@@ -90,25 +81,8 @@
           ]
         },
         {
-          "name": "eyelid",
-          "parent": "head",
-          "pivot": [0, 28.05, -3],
-          "cubes": [
-            {
-              "origin": [0.95, 26.95, -3.03],
-              "size": [2.1, 1.1, 0.1],
-              "uv": [13, 11]
-            },
-            {
-              "origin": [-3.05, 26.95, -3.03],
-              "size": [2.1, 1.1, 0.1],
-              "uv": [7, 11]
-            }
-          ]
-        },
-        {
           "name": "rightArm",
-          "parent": "spine",
+          "parent": "body",
           "pivot": [-5, 22, 0],
           "cubes": [
             {
@@ -144,7 +118,7 @@
           ]
         },
         {
-          "name": "elbow2",
+          "name": "mv_elbow2",
           "parent": "rightArm",
           "pivot": [-6, 18, 0],
           "cubes": [
@@ -182,12 +156,12 @@
         },
         {
           "name": "rightItem",
-          "parent": "elbow2",
+          "parent": "rightArm",
           "pivot": [-6, 15, 1]
         },
         {
           "name": "leftArm",
-          "parent": "spine",
+          "parent": "body",
           "pivot": [5, 22, 0],
           "cubes": [
             {
@@ -199,7 +173,7 @@
           ]
         },
         {
-          "name": "elbow",
+          "name": "mv_elbow",
           "parent": "leftArm",
           "pivot": [6, 18, 0],
           "cubes": [
@@ -237,12 +211,12 @@
         },
         {
           "name": "leftItem",
-          "parent": "elbow",
+          "parent": "leftArm",
           "pivot": [6, 15, 1]
         },
         {
           "name": "body",
-          "parent": "spine",
+          "parent": "waist",
           "pivot": [0, 24, 0],
           "cubes": [
             {
@@ -254,12 +228,11 @@
         },
         {
           "name": "waist",
-          "parent": "root",
           "pivot": [0, 12, 0]
         },
         {
           "name": "leftLeg",
-          "parent": "waist",
+          "parent": "body",
           "pivot": [1.9, 12, 0],
           "cubes": [
             {
@@ -271,7 +244,7 @@
           ]
         },
         {
-          "name": "knee",
+          "name": "mv_knee",
           "parent": "leftLeg",
           "pivot": [1.9, 6, -2],
           "cubes": [
@@ -309,7 +282,7 @@
         },
         {
           "name": "rightLeg",
-          "parent": "waist",
+          "parent": "body",
           "pivot": [-1.9, 12, 0],
           "cubes": [
             {
@@ -320,7 +293,7 @@
           ]
         },
         {
-          "name": "knee2",
+          "name": "mv_knee2",
           "parent": "rightLeg",
           "pivot": [-1.9, 6, -2],
           "cubes": [

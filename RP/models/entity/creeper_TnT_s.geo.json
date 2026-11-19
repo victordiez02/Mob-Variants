@@ -12,42 +12,37 @@
       },
       "bones": [
         {
-          "name": "root_s",
-          "pivot": [0, 0, 0]
+          "name": "body",
+          "pivot": [0, 24, 0]
         },
         {
-          "name": "spine_s",
-          "parent": "root_s",
-          "pivot": [0, 12, 0]
-        },
-        {
-          "name": "rightArm_s",
-          "parent": "spine_s",
+          "name": "leg2",
+          "parent": "body",
           "pivot": [-5, 22, 0]
         },
         {
-          "name": "right_elbow_s",
-          "parent": "rightArm_s",
+          "name": "mv_right_elbow_s",
+          "parent": "leg2",
           "pivot": [-5, 18, 1]
         },
         {
-          "name": "body_s2",
-          "parent": "right_elbow_s",
+          "name": "mv_body_s2",
+          "parent": "mv_right_elbow_s",
           "pivot": [-2, 15, -3]
         },
         {
-          "name": "joint3_s2",
-          "parent": "body_s2",
+          "name": "mv_joint3_s2",
+          "parent": "mv_body_s2",
           "pivot": [-7.5, 6, 0]
         },
         {
-          "name": "joint4_s2",
-          "parent": "joint3_s2",
+          "name": "mv_joint4_s2",
+          "parent": "mv_joint3_s2",
           "pivot": [-6.5, 12, -2]
         },
         {
-          "name": "head3_s2",
-          "parent": "joint4_s2",
+          "name": "mv_head3_s2",
+          "parent": "mv_joint4_s2",
           "pivot": [-6.5, 18, -1],
           "cubes": [
             {
