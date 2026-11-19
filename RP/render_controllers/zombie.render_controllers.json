@@ -1,30 +1,16 @@
-// Render controller zombie
-// v.mv_variant estan dadas por un número de 3 cifras.
-// Primera cifra: Indica si tiene si tiene espada clavada o bien en el torso (1, 2), o bien en la cabeza (3) o bien no tiene espada clavada (0).
-// Segunda y tercera cifra: Indica la skin.
-// v.mv_mark viene dado por un número de 3 cifras.
-// Primera cifra: Indica si o bien el zombie camina de pie normal (0), o bien de pie con la mandibula rota (1, 2), o bien arrastrado (3, 4, 5, 6).
-// Segunda cifra: Indica si el zombie tiene casco minero (1) o no (0).
-// Tercera cifra: Indica el tipo de espada clavada (0, ..., 5)
+// Render controller zombie. Each feature is one property (BP) or one roll (RP alone), see zombie.entity.json:
+// v.mv_variant: skin 1-33, 34 = golden zombie.
+// v.mv_pose: 0 standing, 1-2 broken jaw, 3-6 crawling (zombie2-5, own animation; 4-6 lost legs).
+// v.mv_miner: miner helmet + pickaxe. v.mv_sword: stuck sword 0 none, 1-2 chest, 3 head.
+// v.mv_sword_type (sword and pickaxe): 0 wood, 1 stone, 2 gold, 3 iron, 4 diamond, 5 netherite.
+// v.mv_arrow, v.mv_arrow2: stuck arrow 0 none, 1-2 head, 3-4 chest, 5 knee.
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.zombie": {
-      "geometry": "Geometry.mv_default",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["Texture.mv_empty"]
-    },
-    "controller.render.mv.other_zombie": {
-      "geometry": "v.mv_variant ? (q.is_baby ? Geometry.mv_default : array.geosq[v.mv_mark / 100]) : (query.is_baby || variable.xvar < 50 || variable.yvar < 24 || variable.zvar < 20 || query.is_item_equipped(0) || query.equipment_count > 0 ? Array.geos[variable.xvar] : Array.geos_fallen[variable.xvar])",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
       "arrays": {
         "textures": {
-          "array.xskins": [
+          "array.skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",
@@ -62,16 +48,7 @@
           ]
         },
         "geometries": {
-          "Array.geos": [
-            "Geometry.mv_default",
-            "Geometry.mv_default",
-            "Geometry.mv_default",
-            "Geometry.mv_default",
-            "Geometry.mv_brokenjaw",
-            "Geometry.mv_brokenjaw2"
-          ],
-          "Array.geos_fallen": ["Geometry.mv_default2", "Geometry.mv_default3", "Geometry.mv_default4", "Geometry.mv_default5"],
-          "Array.geosq": [
+          "array.poses": [
             "Geometry.mv_default",
             "Geometry.mv_brokenjaw",
             "Geometry.mv_brokenjaw2",
@@ -81,140 +58,24 @@
             "Geometry.mv_default5"
           ]
         }
-      }
+      },
+      "geometry": "array.poses[v.mv_pose]",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["array.skins[v.mv_variant - 1]"]
     },
     "controller.render.mv.zombie_leg": {
-      "rebuild_animation_matrices": true,
-      "geometry": "v.mv_variant ? (v.mv_mark / 100 < 3 || q.is_baby ? Geometry.mv_empty: Geometry.mv_leg) : (query.is_baby || variable.xvar < 50 || variable.yvar < 24 || variable.zvar < 20 || query.is_item_equipped(0) || query.equipment_count > 0 ? Geometry.mv_empty : Geometry.mv_leg)",
+      "geometry": "v.mv_pose >= 3 ? Geometry.mv_leg : Geometry.mv_empty",
       "materials": [
-        { "*": "Material.mv_overlay" }
+        { "*": "Material.mv_default" }
       ],
-      "textures": ["Texture.mv_leg"],
-      "is_hurt_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
-      },
-      "on_fire_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
-      }
-    },
-    "controller.render.mv.zombie_arrows": {
-      "rebuild_animation_matrices": true,
-      "geometry": "v.mv_variant ? Geometry.mv_empty : (variable.xvar < 4 ? Geometry.mv_arrow_head_1 : (variable.xvar < 9 ? Geometry.mv_arrow_head_2 : (variable.xvar < 14 ? Geometry.mv_arrow_chest_1 :  (variable.xvar < 19 ? Geometry.mv_arrow_chest_2 : (variable.xvar < 24 ? Geometry.mv_arrow_knee : Geometry.mv_empty)))))",
-      "materials": [
-        { "*": "Material.mv_overlay" }
-      ],
-      "textures": ["Texture.mv_overlay7"],
-      "is_hurt_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
-      },
-      "on_fire_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
-      }
-    },
-    "controller.render.mv.zombie_arrows2": {
-      "rebuild_animation_matrices": true,
-      "geometry": "v.mv_variant ? Geometry.mv_empty : (variable.yvar < 4 ? Geometry.mv_arrow_head_1 : (variable.yvar < 9 ? Geometry.mv_arrow_head_2 : (variable.yvar < 14 ? Geometry.mv_arrow_chest_1 :  (variable.yvar < 19 ? Geometry.mv_arrow_chest_2 : (variable.yvar < 24 ? Geometry.mv_arrow_knee : Geometry.mv_empty)))))",
-      "materials": [
-        { "*": "Material.mv_overlay" }
-      ],
-      "textures": ["Texture.mv_overlay7"],
-      "is_hurt_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
-      },
-      "on_fire_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
-      }
-    },
-    "controller.render.mv.zombie_miner": {
-      "rebuild_animation_matrices": true,
-      "geometry": "q.is_baby ? Geometry.mv_empty : (v.mv_variant ? array.geosq[v.mv_mark / 100 < 3 ? v.mv_mark / 10 : 0] : (query.position(1) < 40 ? array.geos[variable.xvar / 30]))",
-      "materials": [
-        { "*": "Material.mv_overlay" }
-      ],
-      "textures": ["Texture.mv_miner"],
-      "arrays": {
-        "geometries": {
-          "array.geos": ["Geometry.mv_miner", "Geometry.mv_empty"],
-          "array.geosq": ["Geometry.mv_empty", "Geometry.mv_miner"]
-        }
-      },
-      "is_hurt_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
-      },
-      "on_fire_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
-      }
-    },
-    "controller.render.mv.zombie_miner_pickaxe": {
-      "rebuild_animation_matrices": true,
-      "geometry": "q.is_baby ? Geometry.mv_empty : (v.mv_variant ? array.geosq[v.mv_mark / 100 < 3 ? v.mv_mark / 10 : 0] : (query.position(1) < 40 ? array.geos[variable.xvar / 30]))",
-      "materials": [
-        { "*": "Material.mv_overlay" }
-      ],
-      "textures": ["array.yskins[variable.yvar]"],
-      "arrays": {
-        "textures": {
-          "array.yskins": [
-            "Texture.mv_overlay",
-            "Texture.mv_overlay2",
-            "Texture.mv_overlay3",
-            "Texture.mv_overlay4",
-            "Texture.mv_overlay5",
-            "Texture.mv_overlay6"
-          ]
-        },
-        "geometries": {
-          "array.geos": ["Geometry.mv_pickaxe", "Geometry.mv_empty"],
-          "array.geosq": ["Geometry.mv_empty", "Geometry.mv_pickaxe"]
-        }
-      },
-      "is_hurt_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
-      },
-      "on_fire_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
-      }
+      "textures": ["Texture.mv_leg"]
     },
     "controller.render.mv.zombie_sword": {
-      "rebuild_animation_matrices": true,
-      "geometry": "v.mv_variant ? (q.is_baby ? Geometry.mv_empty : Array.geosq[v.mv_mark / 100 < 3 ? (v.mv_variant - 1) / 10 : 0]) : (q.is_baby ? Geometry.mv_empty : (variable.zvar < 5 ? Geometry.mv_sword_head : (variable.zvar < 13 ? Geometry.mv_sword_chest : (variable.zvar < 20 ? Geometry.mv_sword_chest2 : Geometry.mv_empty))))",
-      "materials": [
-        { "*": "Material.mv_overlay" }
-      ],
-      "textures": ["v.mv_variant ? array.yskins[Math.mod(v.mv_mark, 10)] : array.yskins[variable.yvar]"],
       "arrays": {
         "textures": {
-          "array.yskins": [
+          "array.tools": [
             "Texture.mv_overlay",
             "Texture.mv_overlay2",
             "Texture.mv_overlay3",
@@ -224,7 +85,7 @@
           ]
         },
         "geometries": {
-          "Array.geosq": [
+          "array.swords": [
             "Geometry.mv_empty",
             "Geometry.mv_sword_chest",
             "Geometry.mv_sword_chest2",
@@ -232,18 +93,75 @@
           ]
         }
       },
-      "is_hurt_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
+      "geometry": "array.swords[v.mv_sword]",
+      "materials": [
+        { "*": "Material.mv_overlay" }
+      ],
+      "textures": ["array.tools[v.mv_sword_type]"]
+    },
+    "controller.render.mv.zombie_arrow": {
+      "arrays": {
+        "geometries": {
+          "array.arrows": [
+            "Geometry.mv_empty",
+            "Geometry.mv_arrow_head_1",
+            "Geometry.mv_arrow_head_2",
+            "Geometry.mv_arrow_chest_1",
+            "Geometry.mv_arrow_chest_2",
+            "Geometry.mv_arrow_knee"
+          ]
+        }
       },
-      "on_fire_color": {
-        "r": "q.is_alive ? 1 : 0",
-        "g": "q.is_alive ? 0 : 0",
-        "b": "q.is_alive ? 0 : 0",
-        "a": "q.is_alive ? 0.6 : 0"
-      }
+      "geometry": "array.arrows[v.mv_arrow]",
+      "materials": [
+        { "*": "Material.mv_overlay" }
+      ],
+      "textures": ["Texture.mv_arrows"]
+    },
+    "controller.render.mv.zombie_arrow2": {
+      "arrays": {
+        "geometries": {
+          "array.arrows": [
+            "Geometry.mv_empty",
+            "Geometry.mv_arrow_head_1",
+            "Geometry.mv_arrow_head_2",
+            "Geometry.mv_arrow_chest_1",
+            "Geometry.mv_arrow_chest_2",
+            "Geometry.mv_arrow_knee"
+          ]
+        }
+      },
+      "geometry": "array.arrows[v.mv_arrow2]",
+      "materials": [
+        { "*": "Material.mv_overlay" }
+      ],
+      "textures": ["Texture.mv_arrows"]
+    },
+    "controller.render.mv.zombie_miner": {
+      "geometry": "v.mv_miner ? Geometry.mv_miner : Geometry.mv_empty",
+      "materials": [
+        { "*": "Material.mv_overlay" }
+      ],
+      "textures": ["Texture.mv_miner"]
+    },
+    "controller.render.mv.zombie_miner_pickaxe": {
+      "arrays": {
+        "textures": {
+          "array.tools": [
+            "Texture.mv_overlay",
+            "Texture.mv_overlay2",
+            "Texture.mv_overlay3",
+            "Texture.mv_overlay4",
+            "Texture.mv_overlay5",
+            "Texture.mv_overlay6"
+          ]
+        }
+      },
+      "geometry": "v.mv_miner ? Geometry.mv_pickaxe : Geometry.mv_empty",
+      "materials": [
+        { "*": "Material.mv_overlay" }
+      ],
+      "textures": ["array.tools[v.mv_sword_type]"]
     }
   }
 }

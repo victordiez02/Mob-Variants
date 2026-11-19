@@ -13,13 +13,43 @@
         },
         "mv:variant": {
           "type": "int",
-          "range": [0, 334],
+          "range": [0, 34],
           "default": 0,
           "client_sync": true
         },
-        "mv:mark_variant": {
+        "mv:pose": {
           "type": "int",
-          "range": [0, 615],
+          "range": [0, 6],
+          "default": 0,
+          "client_sync": true
+        },
+        "mv:miner": {
+          "type": "int",
+          "range": [0, 1],
+          "default": 0,
+          "client_sync": true
+        },
+        "mv:sword": {
+          "type": "int",
+          "range": [0, 3],
+          "default": 0,
+          "client_sync": true
+        },
+        "mv:sword_type": {
+          "type": "int",
+          "range": [0, 5],
+          "default": 0,
+          "client_sync": true
+        },
+        "mv:arrow": {
+          "type": "int",
+          "range": [0, 5],
+          "default": 0,
+          "client_sync": true
+        },
+        "mv:arrow2": {
+          "type": "int",
+          "range": [0, 5],
           "default": 0,
           "client_sync": true
         }
@@ -109,6 +139,15 @@
           }
         ],
         "priority": 2
+      },
+      "minecraft:behavior.pickup_items": {
+        "can_pickup_any_item": true,
+        "excluded_items": ["minecraft:glow_ink_sac"],
+        "pickup_based_on_chance": true,
+        "goal_radius": 2,
+        "priority": 6,
+        "max_dist": 3,
+        "speed_multiplier": 1
       },
       "minecraft:behavior.random_look_around": { "priority": 9 },
       "minecraft:behavior.random_stroll": { "priority": 7, "speed_multiplier": 1 },
@@ -676,17 +715,6 @@
           "into": "minecraft:drowned<minecraft:as_baby>",
           "transformation_sound": "convert_to_drowned"
         }
-      },
-      "mv:pickup_items": {
-        "minecraft:behavior.pickup_items": {
-          "can_pickup_any_item": true,
-          "excluded_items": ["minecraft:glow_ink_sac"],
-          "pickup_based_on_chance": true,
-          "goal_radius": 2,
-          "priority": 6,
-          "max_dist": 3,
-          "speed_multiplier": 1
-        }
       }
     },
     "events": {
@@ -714,695 +742,304 @@
           {
             "randomize": [
               {
-                "weight": 800,
+                "weight": 100,
+                "set_property": { "mv:variant": 1 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 2 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 3 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 4 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 5 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 6 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 7 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 8 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 9 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 10 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 11 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 12 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 13 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 14 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 15 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 16 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 17 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 18 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 19 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 20 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 21 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 22 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 23 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 24 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 25 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 26 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 27 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 28 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 29 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 30 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 31 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 32 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 33 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 34 }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 23.4,
+                "set_property": { "mv:pose": 0 }
+              },
+              {
+                "weight": 23.3,
+                "set_property": { "mv:pose": 1 }
+              },
+              {
+                "weight": 23.3,
+                "set_property": { "mv:pose": 2 }
+              },
+              {
+                "weight": 7.5,
+                "set_property": { "mv:pose": 3 }
+              },
+              {
+                "weight": 7.5,
+                "set_property": { "mv:pose": 4 }
+              },
+              {
+                "weight": 7.5,
+                "set_property": { "mv:pose": 5 }
+              },
+              {
+                "weight": 7.5,
+                "set_property": { "mv:pose": 6 }
+              }
+            ]
+          },
+          {
+            "filters": {
+              "test": "int_property",
+              "domain": "mv:pose",
+              "operator": "<",
+              "value": 3
+            },
+            "sequence": [
+              {
+                "filters": {
+                  "test": "is_altitude",
+                  "operator": "<",
+                  "value": 30
+                },
                 "randomize": [
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 1 }
+                    "weight": 70,
+                    "set_property": { "mv:miner": 0 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 2 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 3 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 4 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 5 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 6 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 7 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 8 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 9 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 10 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 11 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 12 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 13 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 14 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 15 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 16 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 17 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 18 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 19 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 20 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 21 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 22 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 23 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 24 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 25 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 26 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 27 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 28 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 29 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 30 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 31 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 32 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 33 }
-                  },
-                  {
-                    "weight": 1,
-                    "set_property": { "mv:variant": 34 }
+                    "weight": 30,
+                    "set_property": { "mv:miner": 1 }
                   }
                 ]
               },
               {
-                "weight": 75,
                 "randomize": [
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 101 }
+                    "weight": 80,
+                    "set_property": { "mv:sword": 0 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 102 }
+                    "weight": 7.5,
+                    "set_property": { "mv:sword": 1 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 103 }
+                    "weight": 7.5,
+                    "set_property": { "mv:sword": 2 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 104 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 105 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 106 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 107 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 108 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 109 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 110 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 111 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 112 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 113 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 114 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 115 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 116 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 117 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 118 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 119 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 120 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 121 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 122 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 123 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 124 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 125 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 126 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 127 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 128 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 129 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 130 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 131 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 132 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 133 }
-                  },
-                  {
-                    "weight": 1,
-                    "set_property": { "mv:variant": 134 }
+                    "weight": 5,
+                    "set_property": { "mv:sword": 3 }
                   }
                 ]
               },
               {
-                "weight": 75,
                 "randomize": [
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 201 }
+                    "weight": 76,
+                    "set_property": { "mv:arrow": 0 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 202 }
+                    "weight": 4,
+                    "set_property": { "mv:arrow": 1 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 203 }
+                    "weight": 5,
+                    "set_property": { "mv:arrow": 2 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 204 }
+                    "weight": 5,
+                    "set_property": { "mv:arrow": 3 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 205 }
+                    "weight": 5,
+                    "set_property": { "mv:arrow": 4 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 206 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 207 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 208 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 209 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 210 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 211 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 212 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 213 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 214 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 215 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 216 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 217 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 218 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 219 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 220 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 221 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 222 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 223 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 224 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 225 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 226 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 227 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 228 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 229 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 230 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 231 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 232 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 233 }
-                  },
-                  {
-                    "weight": 1,
-                    "set_property": { "mv:variant": 234 }
+                    "weight": 5,
+                    "set_property": { "mv:arrow": 5 }
                   }
                 ]
               },
               {
-                "weight": 50,
                 "randomize": [
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 301 }
+                    "weight": 76,
+                    "set_property": { "mv:arrow2": 0 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 302 }
+                    "weight": 4,
+                    "set_property": { "mv:arrow2": 1 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 303 }
+                    "weight": 5,
+                    "set_property": { "mv:arrow2": 2 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 304 }
+                    "weight": 5,
+                    "set_property": { "mv:arrow2": 3 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 305 }
+                    "weight": 5,
+                    "set_property": { "mv:arrow2": 4 }
                   },
                   {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 306 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 307 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 308 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 309 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 310 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 311 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 312 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 313 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 314 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 315 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 316 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 317 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 318 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 319 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 320 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 321 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 322 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 323 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 324 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 325 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 326 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 327 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 328 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 329 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 330 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 331 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 332 }
-                  },
-                  {
-                    "weight": 100,
-                    "set_property": { "mv:variant": 333 }
-                  },
-                  {
-                    "weight": 1,
-                    "set_property": { "mv:variant": 334 }
+                    "weight": 5,
+                    "set_property": { "mv:arrow2": 5 }
                   }
                 ]
               }
             ]
           },
           {
-            "filters": {
-              "test": "is_altitude",
-              "operator": ">=",
-              "value": 30
-            },
             "randomize": [
               {
-                "weight": 75,
-                "randomize": [
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 300 }
-                  },
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 301 }
-                  },
-                  {
-                    "weight": 20,
-                    "set_property": { "mv:mark_variant": 302 }
-                  },
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 303 }
-                  },
-                  {
-                    "weight": 4,
-                    "set_property": { "mv:mark_variant": 304 }
-                  },
-                  {
-                    "weight": 1,
-                    "set_property": { "mv:mark_variant": 305 }
-                  }
-                ]
+                "weight": 25,
+                "set_property": { "mv:sword_type": 0 }
               },
               {
-                "weight": 75,
-                "randomize": [
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 400 }
-                  },
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 401 }
-                  },
-                  {
-                    "weight": 20,
-                    "set_property": { "mv:mark_variant": 402 }
-                  },
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 403 }
-                  },
-                  {
-                    "weight": 4,
-                    "set_property": { "mv:mark_variant": 404 }
-                  },
-                  {
-                    "weight": 1,
-                    "set_property": { "mv:mark_variant": 405 }
-                  }
-                ]
+                "weight": 25,
+                "set_property": { "mv:sword_type": 1 }
               },
               {
-                "weight": 75,
-                "randomize": [
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 500 }
-                  },
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 501 }
-                  },
-                  {
-                    "weight": 20,
-                    "set_property": { "mv:mark_variant": 502 }
-                  },
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 503 }
-                  },
-                  {
-                    "weight": 4,
-                    "set_property": { "mv:mark_variant": 504 }
-                  },
-                  {
-                    "weight": 1,
-                    "set_property": { "mv:mark_variant": 505 }
-                  }
-                ]
+                "weight": 20,
+                "set_property": { "mv:sword_type": 2 }
               },
               {
-                "weight": 75,
-                "randomize": [
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 600 }
-                  },
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 601 }
-                  },
-                  {
-                    "weight": 20,
-                    "set_property": { "mv:mark_variant": 602 }
-                  },
-                  {
-                    "weight": 25,
-                    "set_property": { "mv:mark_variant": 603 }
-                  },
-                  {
-                    "weight": 4,
-                    "set_property": { "mv:mark_variant": 604 }
-                  },
-                  {
-                    "weight": 1,
-                    "set_property": { "mv:mark_variant": 605 }
-                  }
-                ]
+                "weight": 25,
+                "set_property": { "mv:sword_type": 3 }
               },
-              { "weight": 693 }
+              {
+                "weight": 4,
+                "set_property": { "mv:sword_type": 4 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:sword_type": 5 }
+              }
             ]
           }
         ]
