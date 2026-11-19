@@ -1,5 +1,5 @@
-// Render controller frog (only temperate frogs, the first vanilla variant).
-// v.mv_variant: 1-10 = temperate skins, 11-19 = special skins, 20 = cake frog.
+// Render controller frog: every vanilla variant has its own skins (q.variant 0 temperate, 1 cold, 2 warm).
+// v.mv_variant: 1-10 = skins of the frog's climate (1 = vanilla), 11-19 = special skins, 20 = cake frog.
 // v.mv_mark: 1 = no crown, 2 = crown.
 {
   "format_version": "1.10.0",
@@ -28,6 +28,50 @@
             "Texture.mv_special8",
             "Texture.mv_special9",
             "Texture.mv_cake_frog"
+          ],
+          "Array.cold": [
+            "Texture.mv_cold",
+            "Texture.mv_cold2",
+            "Texture.mv_cold3",
+            "Texture.mv_cold4",
+            "Texture.mv_cold5",
+            "Texture.mv_cold6",
+            "Texture.mv_cold7",
+            "Texture.mv_cold8",
+            "Texture.mv_cold9",
+            "Texture.mv_cold10",
+            "Texture.mv_special",
+            "Texture.mv_special2",
+            "Texture.mv_special3",
+            "Texture.mv_special4",
+            "Texture.mv_special5",
+            "Texture.mv_special6",
+            "Texture.mv_special7",
+            "Texture.mv_special8",
+            "Texture.mv_special9",
+            "Texture.mv_cake_frog"
+          ],
+          "Array.warm": [
+            "Texture.mv_warm",
+            "Texture.mv_warm2",
+            "Texture.mv_warm3",
+            "Texture.mv_warm4",
+            "Texture.mv_warm5",
+            "Texture.mv_warm6",
+            "Texture.mv_warm7",
+            "Texture.mv_warm8",
+            "Texture.mv_warm9",
+            "Texture.mv_warm10",
+            "Texture.mv_special",
+            "Texture.mv_special2",
+            "Texture.mv_special3",
+            "Texture.mv_special4",
+            "Texture.mv_special5",
+            "Texture.mv_special6",
+            "Texture.mv_special7",
+            "Texture.mv_special8",
+            "Texture.mv_special9",
+            "Texture.mv_cake_frog"
           ]
         }
       },
@@ -38,7 +82,7 @@
       "materials": [
         { "*": "Material.mv_default" }
       ],
-      "textures": ["Array.skins[v.mv_variant - 1]"]
+      "textures": ["q.variant == 1 ? Array.cold[v.mv_variant - 1] : (q.variant == 2 ? Array.warm[v.mv_variant - 1] : Array.skins[v.mv_variant - 1])"]
     },
     "controller.render.mv.frog_crown": {
       "geometry": "v.mv_mark == 2 ? Geometry.mv_crown : Geometry.mv_empty",

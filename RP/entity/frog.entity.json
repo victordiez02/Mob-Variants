@@ -18,6 +18,26 @@
         "mv_temperate8": "textures/entity/frog/temperate_frog8",
         "mv_temperate9": "textures/entity/frog/temperate_frog9",
         "mv_temperate10": "textures/entity/frog/temperate_frog10",
+        "mv_cold": "textures/entity/frog/cold_frog",
+        "mv_cold2": "textures/entity/frog/cold_frog2",
+        "mv_cold3": "textures/entity/frog/cold_frog3",
+        "mv_cold4": "textures/entity/frog/cold_frog4",
+        "mv_cold5": "textures/entity/frog/cold_frog5",
+        "mv_cold6": "textures/entity/frog/cold_frog6",
+        "mv_cold7": "textures/entity/frog/cold_frog7",
+        "mv_cold8": "textures/entity/frog/cold_frog8",
+        "mv_cold9": "textures/entity/frog/cold_frog9",
+        "mv_cold10": "textures/entity/frog/cold_frog10",
+        "mv_warm": "textures/entity/frog/warm_frog",
+        "mv_warm2": "textures/entity/frog/warm_frog2",
+        "mv_warm3": "textures/entity/frog/warm_frog3",
+        "mv_warm4": "textures/entity/frog/warm_frog4",
+        "mv_warm5": "textures/entity/frog/warm_frog5",
+        "mv_warm6": "textures/entity/frog/warm_frog6",
+        "mv_warm7": "textures/entity/frog/warm_frog7",
+        "mv_warm8": "textures/entity/frog/warm_frog8",
+        "mv_warm9": "textures/entity/frog/warm_frog9",
+        "mv_warm10": "textures/entity/frog/warm_frog10",
         "mv_special": "textures/entity/frog/special_frog",
         "mv_special2": "textures/entity/frog/special_frog2",
         "mv_special3": "textures/entity/frog/special_frog3",
@@ -42,7 +62,7 @@
           "variable.moving = query.ground_speed > 0 || query.vertical_speed > 0;",
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 15 ? 11 : 1) + math.mod(math.floor(v.xvar), 10);",
           "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : (v.yvar < 20 ? 2 : 1);",
-          "v.mv_active = q.variant == 0;"
+          "v.mv_active = true;"
         ],
         "initialize": ["v.xvar = math.random(0,99);", "v.yvar = math.random(0, 99);"],
         "animate": ["general", "croaking", "eat_mob"]
@@ -60,7 +80,6 @@
         "eat_mob": "controller.animation.frog.eat_mob"
       },
       "render_controllers": [
-        { "controller.render.frog": "!v.mv_active" },
         { "controller.render.mv.frog": "v.mv_active" },
         { "controller.render.mv.frog_crown": "v.mv_active" }
       ]
