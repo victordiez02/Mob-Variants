@@ -1,6 +1,6 @@
 # Estado del proyecto
 
-Última actualización: 2026-11-18 (versión del pack 5.0.0, objetivo Minecraft 1.26.60).
+Última actualización: 2026-11-19 (versión del pack 5.0.0, objetivo Minecraft 1.26.60).
 Actualiza este archivo al terminar cada tarea.
 
 ## Estado por mob
@@ -14,15 +14,15 @@ Actualiza este archivo al terminar cada tarea.
 | blaze | siempre | vanilla | – | 0-8 | ok |
 | cat | adulto y gato blanco (`q.variant == 0`) | vanilla | gatos especiales (Garfield, Nyan, Puss, Tom) | 0-4 | ok; 0 = gato blanco normal |
 | cave_spider | siempre | vanilla | – | 0-7 | ok |
-| chicken | adulto templado | **re-rigueado** `mv.chicken` | duck, goose | 0-11 | pendiente: modelo vanilla + capas (cresta, cola, papada, pico) |
-| creeper | siempre | **re-rigueado** `mv.creeper` | creeper esqueleto, TnT, cactus, piedra, conchas | 0-34 / 0-4 | pendiente: modelo vanilla + capas (costillas, calavera) |
-| dolphin | adulto | vanilla | – | – (sin BP) | ok |
+| chicken | adulto templado | vanilla `chicken.v1.12` | chicken_extras (cola, papada, cresta, pico inferior), duck, goose | 0-11 | ok; pato y oca son modelos completos (fase 3) |
+| creeper | siempre | vanilla `creeper.v1.8` | creeper_extras (costillas, torso, calavera), TnT, cactus, piedra, conchas; creeper esqueleto (modelo completo) | 0-34 / 0-4 | ok; creeper esqueleto en fase 3 |
+| dolphin | adulto | vanilla | – | 0-7 | ok (7 skins, antes salía solo la primera) |
 | drowned | adulto | **cuerpo propio** `mv.drowned` (160×63) | drowned_trident | 0-5 / 0-1 | pendiente (decisión aplazada por el usuario) |
 | ender_dragon | siempre | vanilla | – | 0-7 | ok |
 | enderman | siempre | vanilla | – | 0-26 | pendiente: dientes/lengua al enfadarse (ver tareas) |
 | evocation_illager | siempre | vanilla | sombreros y disfraces (chef, wizard, …) | 0-32 / 0-8 | ok |
 | fox | adulto y zorro rojo | vanilla | platypus, platypus_perry | 0-2 | ok; 1 ornitorrinco, 2 Perry |
-| frog | rana templada | vanilla | frog_crown | 0-20 / 0-2 | ok; skins frías/cálidas sin usar (pendiente) |
+| frog | siempre (cada clima con sus skins) | vanilla | frog_crown | 0-20 / 0-2 | ok; 1-10 skins del clima, 11-20 especiales |
 | ghast | siempre | vanilla | – | 0-13 | ok |
 | guardian | siempre | vanilla | – | 0-9 | ok |
 | hoglin | adulto | vanilla | cabezas de piglin, calavera wither | 0-11 / 0-3 | ok |
@@ -35,7 +35,7 @@ Actualiza este archivo al terminar cada tarea.
 | sheep | adulto | vanilla | sheep_horns | 0-2 | ok |
 | skeleton | siempre | vanilla | skeleton.armor, skeleton.armor2 (ropa) | 0-15 / 0-1 | ok |
 | sniffer | adulto | vanilla | flores (crecen con temporizadores del BP) | 0-9 / 0-7 | ok |
-| spider | siempre | vanilla | spider_fangs, spider_giant_legs | 0-26 / 0-1 (gigante) | por verificar: "mini patas" y araña gigante |
+| spider | siempre | vanilla (patas ocultas si es gigante) | spider_fangs, spider_giant_legs (muslo + articulación) | 0-26 / 0-1 (gigante) | ok; la gigante tenía las patas hundidas en el suelo |
 | stray | – | vanilla | – | – | retextura pura (`stray.png` + `stray_overlay.png`), sin entidad |
 | turtle | adulto | vanilla | – | 0-6 | ok |
 | villager_v2 | adulto | vanilla | villager_overlay | – (sin BP) | ok; codos de la skin algo desplazados |
@@ -56,49 +56,26 @@ ocelote, husk.
 
 ## Tareas pendientes
 
-1. **Pollo** (commit propio): modelo vanilla + capa con cresta, cola, papada y segundo pico. Su cuerpo
-   re-rigueado está en otro sistema de coordenadas (comprobar pivotes/giro de `setup`). El usuario
-   dice que ahora se ve bien: no romperlo.
-2. **Creeper** (commit propio): modelo vanilla + capa con costillas/calavera. Igual: ahora se ve bien.
-3. **Enderman**: dientes y lengua al enfadarse. Propuesta pendiente de aprobación: pintarlos en la
-   zona `hat` (UV 0,16) de cada skin usando `RP/textures/entity/enderman/enderman_jaw.png`, sin
-   geometría (la cara de enfado vanilla sube `head` 5 px y baja `hat` 5 px). La alternativa con capa
-   necesita la jerarquía `body` → `head` → `hat` y ajuste con capturas.
-4. **Araña**: confirmar con captura qué son las "mini patas al final" (probablemente `spider_fangs`)
-   y si la araña gigante se ve bien (15 % de arañas nuevas con BP).
-5. **Ahogado**: cuerpo distinto (piernas de 2 px, cabeza 7×7, textura 160×63). Opciones planteadas:
-   cuerpo vanilla + algas/aletas como capa; lo mismo y el usuario repinta las 5 skins a 64×64; o
-   dejarlo así. El usuario lo aplazó.
-6. **Rana**: las skins frías y cálidas (`cold_frog*`, `warm_frog*`) no se usan; el usuario quiere
-   recuperarlas más adelante como subvariantes de esas variantes vanilla.
-7. **Variantes vanilla en general**: ahora las skins solo salen en la primera variante vanilla; la
-   idea futura es tener subvariantes por cada variante vanilla (clima, tipo de gato…).
-8. **Compatibilidad con Actions & Stuff**: dos packs no pueden redefinir la misma entidad de cliente.
-   Hará falta un parche de compatibilidad o heredar las animaciones de A&S en nuestras entidades.
-9. **Sorteo sin BP**: hoy es aleatorio por cliente y cambia al recargar; el usuario quiere estudiar una
-   semilla derivada de la posición (no es persistente, pero sería más estable).
-10. Revisar si las geometrías de variante completa (zombis caídos, capibara, caracol…) se mantienen
-    según la regla de "no sustituir el modelo".
-11. **Hallazgos de las herramientas (2026-11-18)**, sin corregir:
-    - **Delfín**: `controller.render.mv.dolphin` usa `array.xskins[0]`: siempre sale la primera skin;
-      `mv_default2`…`mv_default7` nunca se dibujan (`simulate.py`). No tiene BP.
-    - **`pack_icon.png`** de RP y BP miden 274×274; deben ser cuadrados y potencia de 2 (256×256).
-    - **Capas con pivote/padre distintos del modelo base** (regla 2): `validate.py` lista ~39. Las
-      relevantes: araña (`spider_fangs` y `spider_giant_legs` cuelgan de la raíz en vez de `body0`; en
-      reposo se ven bien con `render.py`, pero no seguirían una animación de `body0`, p. ej. de A&S), hoglin (`hoglin_piglinhead*` con pivotes de
-      `head`/`body` desplazados), rana (`frog_crown`: `root`/`body` con pivote distinto), sniffer
-      (`sniffer_torchflower` desplazado 1,75 en Z), evocador y vindicador (`body` con pivote 12 en vez
-      de 24 y padre `waist`), y casi todas las capas del zombi (cuelgan de `spine`, que no existe en
-      vanilla). Las de padre `root` cuando vanilla no tiene padre son inofensivas mientras nada anime `root`.
-    - **Vindicador**: `vindicator9.png` y `vindicator12.png` son idénticas (una variante repetida).
-    - **Wither**: `wither_armor_blue.png` mide 64×32 y `geometry.mv.wither_boss_armor` declara 64×64
-      (la textura se estira al doble en vertical).
-    - **Capas que se separan al animarse** (`bbcheck.py --measure`, 66 capas medidas): frog_crown 2,5 px al
-      saltar, irongolem_rose 1,9 px, sniffer_pitchflower 1,1 px y sniffer_torchflower 1,2 px al excavar.
-      El resto de capas sigue a sus huesos (0 px), incluidas las del zombi pese a los avisos de validate.
-    - `texuv.py lint`: `zombie-villager7.png` tiene 1104 px fuera del UV (¿pintada para otro modelo?).
-    - Inofensivo: `mv_default2` del pollo (rama de bebé inalcanzable), `mv_empty` del esqueleto wither,
-      `mv_ghost` del guardián y `mv_exploding` del dragón no se usan.
+Lista viva y detallada en [PLAN.md](PLAN.md). Resumen de lo que queda:
+
+1. **Ahogado**: cuerpo distinto (piernas de 2 px, cabeza 7×7, textura 160×63). Decisión del usuario.
+2. **Enderman**: dientes y lengua al enfadarse. Propuesta: pintarlos en la zona `hat` (UV 0,16) de
+   cada skin con `enderman_jaw.png`, sin geometría. Pendiente de aprobación.
+3. **Geometrías de variante completa** (capibara, caracol, pato, oca, ornitorrinco, gatos especiales,
+   zombis caídos 2-5, creeper esqueleto): ¿excepción como el wither o modelo vanilla + capa?
+4. **Compatibilidad con Actions & Stuff**: dos packs no pueden redefinir la misma entidad de cliente.
+5. **Sorteo sin BP por posición**: estudiado, no compensa (ver PLAN.md).
+6. Vindicador: `vindicator9.png` = `vindicator12.png`. Pollo: `chicken2.png` (pollito) ya no se usa.
+
+## Hallazgos resueltos (2026-11-19)
+
+- Avisos del editor: `.mcignore`, `.mcattributes`, `cspell.json`, `.gitattributes` (docs/TOOLS.md).
+- 33 capas con pivote/padre/rotación vanilla (`geotool relayer`); `bbcheck --measure`: 0 px en todas.
+- Delfín con sus 7 skins y BP; ranas frías/cálidas con sus skins; araña gigante con las patas en el
+  suelo; pollo y creeper con modelo vanilla + capa; `pack_icon` 256×256; claves sin uso eliminadas.
+- Herramientas: render.py (neverRender, bind_pose_rotation, pivote de cubo por defecto en el centro),
+  bbscene/load_scene (pivote de cubo, relative_to), molang.py (`true`/`false`), validate (variables
+  `v.mv_*` sin asignar, rotación de capas), simulate (texturas vanilla).
 
 ## Historial de decisiones
 
@@ -109,3 +86,5 @@ ocelote, husk.
 - Borrados: Rey Esqueleto Wither, modelos WIP sin usar (blastling, watchling, endersent, necrosent,
   hector_salamanca, evoker_costume, piglin_merchant), skins de vaca/champiñaca, BP de la vaca.
 - El zombie_pillager.json del BP era el zombie villager v1 vanilla con un sorteo sin uso: borrado.
+- Subvariantes por variante vanilla: empezado con la rana (cada clima usa sus skins).
+- Párpados de pollo y creeper eliminados: necesitaban animación propia (regla 1).
