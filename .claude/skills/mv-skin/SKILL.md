@@ -6,14 +6,16 @@ allowed-tools: Bash(python -I tools/addskin.py:*), Bash(python -I tools/check.py
 
 # Skins, capas y mobs
 
-Antes: lee la fila del mob en docs/STATUS.md. Reglas en CLAUDE.md (modelo vanilla, capas, `mv_*`).
+Antes: lee la ficha del mob (`docs/mobs/<mob>.md`). Reglas en CLAUDE.md (modelo vanilla, capas, `mv_*`,
+regla 7: los extras vuelven de uno en uno con la skill **mv-mob**).
 
 ## Skin nueva (patrón estándar)
 
 `python -I tools/addskin.py <mob> <png> --dry-run`, revisa y repite sin `--dry-run`.
-Hace las 4 cosas: copia el PNG a `RP/textures/entity/<mob>/`, clave `mv_defaultN` en la entidad,
+Hace las 5 cosas: copia el PNG a `RP/textures/entity/<mob>/`, clave `mv_defaultN` en la entidad,
 `Texture.mv_defaultN` al final del array del render controller y, si el array se lee como
-`[v.mv_variant - 1]`, amplía el `range` de `mv:variant` y añade `{weight, set_property}` al randomize.
+`[v.mv_variant - 1]`, sube el `N` del sorteo local de la entidad, amplía el `range` de `mv:variant` y
+añade `{weight, set_property}` a cada randomize del BP.
 Opciones: `--array array.yskins` (otro array, p. ej. ensillado), `--key`, `--weight N`.
 Si dice que el patrón no es estándar o que no encuentra el randomize, edítalo a mano.
 Después: skill mv-verify con `--bp mv:variant=<N que imprime>`.

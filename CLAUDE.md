@@ -1,11 +1,17 @@
 # CLAUDE.md — Mob Variants
 
-Add-on de Minecraft Bedrock que da skins y cosméticos aleatorios a los mobs vanilla.
+Add-on de Minecraft Bedrock que da skins aleatorias a los mobs vanilla.
 Objetivo actual: **1.26.60**, y en el futuro ser compatible con *Actions & Stuff* (A&S).
+
+**Estado (rama `skins-base`)**: base **solo de skins** (entidad vanilla + un render controller que solo
+cambia la textura). Capas, variantes de modelo completo y animaciones propias están en la etiqueta
+`legacy-v5` y vuelven **de uno en uno**, con el usuario y probadas en el juego (skill **mv-mob**).
 
 Lee también:
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): cómo funciona el sistema de variantes (léelo antes de tocar un mob).
-- [docs/STATUS.md](docs/STATUS.md): estado de cada mob, tareas pendientes y decisiones ya tomadas.
+- [docs/mobs/](docs/mobs/README.md): **una ficha por mob** (estado actual generado, notas, lo que había
+  en `legacy-v5` y plan). Léela antes de tocar un mob.
+- [docs/STATUS.md](docs/STATUS.md) y [docs/PLAN.md](docs/PLAN.md): estado general, plan y decisiones.
 - [docs/TOOLS.md](docs/TOOLS.md): herramientas de `tools/` (validación, simulación, render, BDS, paquetes).
 
 ## Estructura
@@ -25,14 +31,13 @@ No hay que copiar nada: guardar y volver a entrar al mundo basta.
 
 ## Reglas del proyecto (decididas con el usuario; no las cambies sin preguntar)
 
-1. **Modelo y animaciones vanilla.** No se sustituye el modelo base de ningún mob ni se añaden
-   animaciones propias (las entidades llevan solo las animaciones vanilla). Nada de modelos
-   re-rigueados (codos/rodillas partidos, párpados). Únicas animaciones propias, porque son de una
-   geometría propia: el **wither** (`animation.mv.wither_boss.move`, con su modelo) y el **zombi que se
-   arrastra** (`animation.mv.zombie_crawl.*`, solo mueve los huesos `*_z2` de zombie2-5).
-   **Variantes de modelo completo** (pato, oca, capibara, caracol, ornitorrinco, gatos especiales,
-   creeper esqueleto): geometría propia dibujada en lugar del cuerpo vanilla, con los **huesos
-   renombrados a los vanilla** (`geotool rebone`) para que las animaciones vanilla la muevan.
+1. **Modelo y animaciones vanilla.** Las entidades son las vanilla actuales y llevan solo sus
+   animaciones vanilla. Nada de modelos re-rigueados (codos/rodillas partidos, párpados).
+   Extras que pueden volver (de uno en uno, regla 7): **variantes de modelo completo** (pato, oca,
+   capibara, caracol, ornitorrinco, gatos especiales, creeper esqueleto, zombi que se arrastra), dibujadas
+   en lugar del cuerpo vanilla con los **huesos renombrados a los vanilla** (`geotool rebone`) para que
+   las animaciones vanilla las muevan; únicas animaciones propias admitidas, porque son de una geometría
+   propia: el **zombi que se arrastra** (`animation.mv.zombie_crawl.*`) y el **wither**.
 2. **Lo nuevo va en capas.** Sombreros, flores, colmillos, etc. son geometrías aparte cuyos huesos
    **se llaman como los huesos vanilla** (`head`, `body`, `leg0`, …) con su mismo pivote y jerarquía
    de padres, para que sigan cualquier animación (vanilla o A&S). Las piezas propias van como hijos
@@ -46,10 +51,16 @@ No hay que copiar nada: guardar y volver a entrar al mundo basta.
 5. **El BP se construye sobre el archivo vanilla actual**, añadiendo solo propiedades y nodos
    `set_property` a los eventos vanilla. Nunca copies un archivo vanilla antiguo.
 6. **Retexturas puras** (sin entidad) cuando la skin encaja en el UV vanilla y no hay aleatoriedad:
-   texturas en la ruta vanilla (stray, caballos, panda, slime, wither).
+   texturas en la ruta vanilla (stray, caballos, panda, slime, oveja).
+7. **Base primero, extras de uno en uno.** Cada skin de la base pinta todas las piezas del modelo
+   vanilla (`tools/inventory.py`, columna "Revisar"); si no, se arregla o queda fuera. Cada extra (capa,
+   variante de modelo completo, mecánica del BP) entra en su propio commit, solo con el visto bueno del
+   usuario y después de que lo pruebe en el juego. Procedimiento: skill **mv-mob**.
 
 ## Skills (úsalas en vez de redescubrir las herramientas)
 
+- **mv-mob**: trabajar un mob de la base (revisar skins, recuperar un extra de `legacy-v5`). Una conversación
+  o agente por mob: solo toca los archivos de su ficha.
 - **mv-verify**: comprobar cualquier cambio (check, render, Content Log, BDS, CI).
 - **mv-skin**: skins nuevas (`addskin.py`), cosméticos como capa y mobs nuevos.
 - **mv-release**: commits, versiones, paquetes, releases y Minecraft nuevo.
@@ -97,7 +108,8 @@ de este proyecto (`~/.claude.json`), no en el repo. Código en `C:\Users\victo\D
 
 ## Flujo de trabajo
 
-1. Antes de tocar un mob, mira su fila en docs/STATUS.md.
+1. Antes de tocar un mob, lee su ficha `docs/mobs/<mob>.md`; al acabar, `python tools/inventory.py <mob>`
+   y actualiza sus notas y su plan.
 2. Después de cualquier cambio: skill **mv-verify** (`python -I tools/check.py <mob>` hasta
    `RESULT: OK` y `python tools/render.py <mob>`, mirando tú el PNG).
 3. **Pruebas en el juego: las hace el usuario**, solo para lo que no cubren las herramientas
