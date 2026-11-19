@@ -238,6 +238,9 @@ def model_faces(bones: list[Json], desc: Json, poses: dict[str, BonePose], layer
         pm = mat_of(parent, depth + 1) if parent in by and depth < 64 else translate(0, 0, 0)
         piv = bb(b.get("pivot", [0, 0, 0]))
         rot = [float(x) for x in b.get("rotation", [0, 0, 0])]
+        bind = b.get("bind_pose_rotation")  # 1.8 rest rotation (zombie villager hat brim)
+        if bind:
+            rot = [rot[i] + float(bind[i]) for i in range(3)]
         ps = poses.get(name)
         local = translate(0, 0, 0)
         if ps:
@@ -250,15 +253,17 @@ def model_faces(bones: list[Json], desc: Json, poses: dict[str, BonePose], layer
         return world[name]
 
     def vis(name: str, depth: int = 0) -> bool:
+        """part_visibility is inherited by the children; neverRender is not (it only hides the bone's own
+        cubes: the zombie villager's waist has it and is the parent of the whole body)."""
         if name not in visible:
             parent = (by[name].get("parent") or "").lower()
-            ok = bone_visible(layer, by[name]["name"]) and not by[name].get("neverRender")
+            ok = bone_visible(layer, by[name]["name"])
             visible[name] = ok and (vis(parent, depth + 1) if parent in by and depth < 64 else True)
         return visible[name]
 
     faces: list[Face] = []
     for name, b in by.items():
-        if not b.get("cubes") or not vis(name):
+        if not b.get("cubes") or b.get("neverRender") or not vis(name):
             continue
         m = mat_of(name)
         for c in b["cubes"]:

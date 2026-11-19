@@ -60,7 +60,7 @@ def ratio_problems(pairs: set[tuple[str, str]]) -> list[str]:
             desc, _ = resolve_geo(geo, *_GEOS)
         except KeyError:
             continue
-        f = texture_file(tex, [find_pack("RP"), VRP])
+        f = texture_file(tex, [find_pack("RP")])  # vanilla textures are not ours (wither_armor_blue is 64x32 in vanilla)
         size = png_size(f) if f and f.endswith(".png") else None
         tw, th = float(desc.get("texture_width", 64)), float(desc.get("texture_height", 64))
         if size and "empty" not in tex and abs(size[0] / size[1] - tw / th) > 1e-3:
