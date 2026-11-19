@@ -1,0 +1,28 @@
+# Blockception Minecraft Bedrock extension (VS Code). Codes that are false positives in this project;
+# tools/validate.py and tools/bpcheck.py check the same things correctly (see docs/TOOLS.md).
+
+# The extension cannot parse the multi-line Molang blocks of 1.26 entities ("(cond) ? { ... };") and then
+# loses every variable of the entity, vanilla ones included. validate.py checks our v.mv_* / xvar.
+diagnostic.disable.molang.variable.undefined=true
+diagnostic.disable.molang.v.undefined=true
+diagnostic.disable.molang.(v.melee_spear_equipped)?{ =true
+
+# Vanilla animations the game has but bedrock-samples does not ship (validate.py: EXPECTED vanilla gaps).
+diagnostic.disable.resourcepack.anim_or_controller.missing=true
+
+# Our packs only contain the files we change; items, blocks, loot tables, sounds, entities and biome
+# tags referenced by the vanilla entity files live in the game.
+diagnostic.disable.behaviorpack.items.missing=true
+diagnostic.disable.behaviorpack.blocks.missing=true
+diagnostic.disable.behaviorpack.lootTables.missing=true
+diagnostic.disable.behaviorpack.entities.missing=true
+diagnostic.disable.resourcepack.sounds.missing=true
+diagnostic.disable.minecraft.filter.has_biome_tag.type=true
+
+# Identical in the vanilla 1.26 entity files (rule 5; bpcheck.py checks groups/events and the diff to vanilla).
+diagnostic.disable.behaviorpack.entity.component_group.missing=true
+diagnostic.disable.behaviorpack.entity.event.missing=true
+diagnostic.disable.behaviorpack.entity.component.missing=true
+diagnostic.disable.behaviorpack.entity.component.annotation_break_door=true
+diagnostic.disable.behaviorpack.entity.component.spawn_entity=true
+diagnostic.disable.diagnostics.components.internal.error=true

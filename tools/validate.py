@@ -134,6 +134,12 @@ def main() -> int:
                 for prop in set(re.findall(r"property\('(mv:\w+)'\)", expr)):
                     if f"has_property('{prop}')" not in expr:
                         errors.append(f"{r}: q.property('{prop}') without q.has_property guard: {expr[:70]}")
+        # our variables (v.mv_*, v.xvar/yvar/zvar) must be assigned in the entity scripts; the editor
+        # extension cannot check this (it stops at the multi-line Molang blocks of 1.26 entities)
+        assigned = {m.lower() for m in re.findall(r"\b(?:v|variable)\.(\w+)\s*=(?!=)", texts[0], re.I)}
+        for m in sorted({m.lower() for t in texts for m in re.findall(r"\b(?:v|variable)\.(mv_\w+|[xyz]var)\b", t, re.I)}):
+            if m not in assigned:
+                errors.append(f"{r}: v.{m} is used but never assigned in its scripts")
         layer_check(r, desc, geos_a, geos_v)
 
     # ---- packs

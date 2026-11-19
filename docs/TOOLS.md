@@ -19,7 +19,7 @@ Todos devuelven código 1 si hay errores.
 | Script | Para qué |
 |---|---|
 | `check.py [mob ...]` | Lanza `validate`, `bpcheck` y `simulate` (este último solo para los mobs indicados, o todos) y muestra errores y avisos. |
-| `validate.py [--all]` | RP: referencias rotas (texturas, geometrías, animaciones, render controllers, `Texture./Geometry./Material.` sin definir) y las **trampas de CLAUDE.md**: `format_version` menor que la vanilla, lista `animation_controllers`, materiales que no son vanilla, `q.property('mv:…')` sin `q.has_property`, IDs vanilla redefinidos o fuera del namespace `mv`, **huesos de capas con pivote o padre distintos del modelo base** (regla 2) y `pack_icon` que no es potencia de 2. `--all` lista además los archivos sin usar (las texturas en rutas vanilla cuentan como retexturas). |
+| `validate.py [--all]` | RP: referencias rotas (texturas, geometrías, animaciones, render controllers, `Texture./Geometry./Material.` sin definir) y las **trampas de CLAUDE.md**: `format_version` menor que la vanilla, lista `animation_controllers`, materiales que no son vanilla, `q.property('mv:…')` sin `q.has_property`, variables `v.mv_*`/`v.xvar` usadas sin asignar, IDs vanilla redefinidos o fuera del namespace `mv`, **huesos de capas con pivote o padre distintos del modelo base** (regla 2) y `pack_icon` que no es potencia de 2. `--all` lista además los archivos sin usar (las texturas en rutas vanilla cuentan como retexturas). |
 | `bpcheck.py` | BP: grupos y eventos que no existen, propiedades `mv:*` sin declarar, fuera de rango o sin `client_sync`, lógica en `minecraft:add_attributes` y **regla 5**: componentes, grupos, eventos y propiedades vanilla idénticos al archivo vanilla actual (solo se permiten añadidos `mv:` y eventos del motor como `minecraft:entity_spawned`). Las desviaciones documentadas están en `ALLOWED_DIFFS`. |
 | `simulate.py [mob ...] [--detail]` | Ejecuta los scripts de la entidad y evalúa los render controllers (intérprete de Molang propio) para los 100 valores del sorteo sin BP y para cada resultado del `randomize` de `minecraft:entity_spawned` con BP. Por capa, cuántas combinaciones (geometría, texturas) distintas salen (1 = no varía). Avisa de **claves `mv_*` que nunca se dibujan** (probando también enfadado, ensillado, domesticado, profesiones, clima…), de capas que **con BP siguen dependiendo del sorteo local** y de errores de Molang. `--detail` da la probabilidad de cada resultado con los pesos reales del BP. |
 | `render.py <mob> [opciones]` | Renderizador por software: dibuja cada combinación distinta (de más a menos probable) con todas sus capas, `part_visibility` y la pose estática de las animaciones de la entidad. Opciones: `--nobp`, `--bp mv:variant=3`, `--q is_angry=1`, `--q climate=warm`, `--view front\|back\|side\|top\|all`, `--max N`, `--size PX`, `--nopose`, `--out`. Ver detalles en la cabecera del script. |
@@ -47,6 +47,16 @@ Todos devuelven código 1 si hay errores.
   mano, armaduras, sillas de vanilla…) no salen.
 - **simulate/render con BP** ignoran los `filters` de los eventos (bioma, bebé…): las probabilidades
   son las del `randomize` sin condiciones.
+
+## Avisos del editor (extensión Blockception)
+
+`.mcignore` excluye `vanilla/`, `dist/` y `tools/out/` (eran ~2600 avisos de los archivos de Mojang).
+`.mcattributes` desactiva los códigos que son falsos positivos aquí, cada uno con su motivo:
+la extensión no entiende los bloques Molang multilínea de las entidades 1.26 y pierde todas sus
+variables; nuestros packs no contienen los objetos, bloques, sonidos ni loot tables del juego; y los
+avisos del BP son idénticos en el archivo vanilla. Lo que esos códigos comprobarían lo hacen
+`validate.py` (variables `v.mv_*`/`xvar` asignadas, claves `Texture./Geometry.`, animaciones) y
+`bpcheck.py`. Tras cambiar estos archivos: *Developer: Reload Window*.
 
 ## Validador oficial de Mojang (opcional)
 
