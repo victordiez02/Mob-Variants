@@ -211,6 +211,8 @@ class _Parser:
             return x
         if k == "i":
             name = str(self.eat()).lower()
+            if name in ("true", "false"):  # Molang keywords (vanilla: "v.use_dedicated_baby_armor = true;")
+                return 1.0 if name == "true" else 0.0
             args: list[Value] | None = None
             if self.peek() == "(":
                 self.eat()
