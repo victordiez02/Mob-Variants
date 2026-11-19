@@ -6,6 +6,12 @@
   "render_controllers": {
     "controller.render.mv.vindicator": {
       "geometry": "Geometry.mv_default",
+      "part_visibility": [
+        { "rightArm": "query.is_angry || query.is_celebrating" },
+        { "leftArm": "query.is_angry || query.is_celebrating" },
+        { "rightItem": "query.is_angry" },
+        { "arms": "!(query.is_angry || query.is_celebrating)" }
+      ],
       "materials": [
         { "*": "Material.mv_default" }
       ],
@@ -41,6 +47,12 @@
     },
     "controller.render.mv.vindicator_armor": {
       "geometry": "v.mv_variant ? array.xgeosq[v.mv_mark] : (variable.xvar < 40 ? array.xgeos[variable.xvar] : Geometry.mv_empty)",
+      "part_visibility": [
+        { "rightArm": "query.is_angry || query.is_celebrating" },
+        { "leftArm": "query.is_angry || query.is_celebrating" },
+        { "rightItem": "query.is_angry" },
+        { "arms": "!(query.is_angry || query.is_celebrating)" }
+      ],
       "materials": [
         { "*": "Material.mv_armor" }
       ],

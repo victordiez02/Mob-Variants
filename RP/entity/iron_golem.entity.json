@@ -42,24 +42,23 @@
         "walk_to_target": "animation.iron_golem.walk_to_target",
         "move_to_target": "animation.iron_golem.move_to_target",
         "move_controller": "controller.animation.iron_golem.move",
-        "arm_controller": "controller.animation.iron_golem.arm_movement",
-        "arm": "controller.animation.iron_golem.arm_movement"
+        "arm_controller": "controller.animation.iron_golem.arm_movement"
       },
       "render_controllers": [
         "controller.render.mv.iron_golem",
         "controller.render.mv.irongolem_rose",
         "controller.render.iron_golem_cracks"
       ],
+      "spawn_egg": { "texture": "spawn_egg_iron_golem" },
       "scripts": {
         "pre_animation": [
-          "variable.modified_tcos0 = Math.clamp(((Math.cos(query.modified_distance_moved * 13.5) * Math.min(query.modified_move_speed, 0.6) / variable.gliding_speed_value) * 25.0), -12.5, 12.5);",
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
+          "variable.modified_tcos0 = Math.clamp(((Math.cos(query.modified_distance_moved * 13.5) * Math.min(query.modified_move_speed, 0.6) / variable.gliding_speed_value) * 25.0), -12.5, 12.5);"
         ],
-        "animate": ["look_at_target", "move_controller", "arm_controller", "arm"],
+        "animate": ["look_at_target", "move_controller", "arm_controller"],
         "initialize": ["v.xvar = Math.random(0,99);"]
-      },
-      "spawn_egg": { "texture": "spawn_egg_iron_golem" }
+      }
     }
   }
 }

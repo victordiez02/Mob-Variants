@@ -39,6 +39,11 @@
         "baby_sleep": "animation.fox.baby_sleep",
         "baby_wiggle": "animation.fox.baby_wiggle"
       },
+      "render_controllers": [
+        { "controller.render.fox.v2": "!v.mv_active" },
+        { "controller.render.mv.fox": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_fox" },
       "scripts": {
         "animate": ["setup", "move"],
         "scale": "query.is_baby ? 2.0 : 1.0",
@@ -47,12 +52,7 @@
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 5 ? 2 : (v.xvar < 20 ? 1 : 0));",
           "v.mv_active = !q.is_baby && q.variant == 0;"
         ]
-      },
-      "render_controllers": [
-        { "controller.render.fox.v2": "!v.mv_active" },
-        { "controller.render.mv.fox": "v.mv_active" }
-      ],
-      "spawn_egg": { "texture": "spawn_egg_fox" }
+      }
     }
   }
 }

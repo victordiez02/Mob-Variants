@@ -7,12 +7,12 @@
       "textures": {
         "default": "textures/entity/wither_boss/wither_invulnerable"
       },
-      "geometry": { "default": "geometry.mv.wither_skull" },
+      "geometry": { "default": "geometry.wither_skull" },
       "animations": { "move": "animation.wither_skull.move" },
+      "render_controllers": ["controller.render.wither_skull"],
       "scripts": {
         "animate": ["move"]
-      },
-      "render_controllers": ["controller.render.wither_skull"]
+      }
     }
   }
 }

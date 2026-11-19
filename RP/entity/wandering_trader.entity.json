@@ -25,12 +25,6 @@
         "mv_default": "geometry.villager_v2",
         "mv_backpack": "geometry.mv.wandering_trader_backpack"
       },
-      "scripts": {
-        "scale": "0.9375",
-        "initialize": ["v.xvar = Math.random(0,99);"],
-        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"],
-        "animate": ["general_controller", "raise_arms_controller", "move_controller"]
-      },
       "animations": {
         "general": "animation.villager.general",
         "look_at_target": "animation.common.look_at_target",
@@ -41,7 +35,13 @@
         "move_controller": "controller.animation.villager.move"
       },
       "render_controllers": ["controller.render.mv.wandering_trader", "controller.render.mv.wandering_trader_backpack"],
-      "spawn_egg": { "texture": "spawn_egg_wandering_trader" }
+      "spawn_egg": { "texture": "spawn_egg_wandering_trader" },
+      "scripts": {
+        "scale": "0.9375",
+        "animate": ["general_controller", "raise_arms_controller", "move_controller"],
+        "initialize": ["v.xvar = Math.random(0,99);"],
+        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"]
+      }
     }
   }
 }

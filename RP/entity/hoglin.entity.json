@@ -30,19 +30,6 @@
         "mv_wither_skull": "geometry.mv.hoglin_wither_skull"
       },
       "spawn_egg": { "texture": "spawn_egg_hoglin" },
-      "scripts": {
-        "pre_animation": [
-          "variable.tcos_right_side = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
-          "variable.tcos_left_side = -variable.tcos_right_side;",
-          "variable.attack_head_rot =  Math.sin(variable.attack_time * 180.0) * -37.3;",
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "v.mv_active = !q.is_baby;"
-        ],
-        "scale": "query.is_baby ? 2.0 : 1.0",
-        "initialize": ["v.xvar = Math.random(0,99);"],
-        "animate": ["look_at_target_controller", "walk_controller", "attack_controller"]
-      },
       "animations": {
         "walk": "animation.hoglin.walk",
         "look_at_target": "animation.hoglin.look_at_target",
@@ -56,7 +43,20 @@
         { "controller.render.hoglin.v2": "!v.mv_active" },
         { "controller.render.mv.hoglin": "v.mv_active" },
         { "controller.render.mv.hoglin_piglinhead": "v.mv_active" }
-      ]
+      ],
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
+          "v.mv_active = !q.is_baby;",
+          "variable.tcos_right_side = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.tcos_left_side = -variable.tcos_right_side;",
+          "variable.attack_head_rot =  Math.sin(variable.attack_time * 180.0) * -37.3;"
+        ],
+        "scale": "query.is_baby ? 2.0 : 1.0",
+        "animate": ["look_at_target_controller", "walk_controller", "attack_controller"],
+        "initialize": ["v.xvar = Math.random(0,99);"]
+      }
     }
   }
 }

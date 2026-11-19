@@ -4,7 +4,7 @@
     "description": {
       "identifier": "minecraft:wither",
       "min_engine_version": "1.8.0",
-      "materials": { "default": "enderman", "armor": "wither_boss_armor" },
+      "materials": { "default": "wither_boss", "armor": "wither_boss_armor" },
       "textures": {
         "default": "textures/entity/wither_boss/wither",
         "armor_white": "textures/entity/wither_boss/wither_armor_white",
@@ -12,9 +12,21 @@
         "invulnerable": "textures/entity/wither_boss/wither_invulnerable"
       },
       "geometry": {
-        "default": "geometry.mv.wither_boss",
-        "armor": "geometry.mv.wither_boss_armor"
+        "default": "geometry.witherBoss",
+        "armor": "geometry.witherBoss.armor.v1.8"
       },
+      "animations": {
+        "scale": "animation.wither_boss.scale",
+        "move": "animation.mv.wither_boss.move",
+        "look_at_target": "animation.wither_boss.look_at_target",
+        "move_controller": "controller.animation.wither_boss.move"
+      },
+      "render_controllers": [
+        "controller.render.wither_boss",
+        "controller.render.wither_boss_armor_white",
+        "controller.render.wither_boss_armor_blue"
+      ],
+      "spawn_egg": { "texture": "spawn_egg_wither" },
       "scripts": {
         "pre_animation": [
           "variable.base_scale = 2;",
@@ -32,19 +44,7 @@
         "scaley": "variable.scale_y * variable.base_scale",
         "scalez": "variable.scale_xz * variable.base_scale",
         "animate": ["move_controller"]
-      },
-      "animations": {
-        "scale": "animation.wither_boss.scale",
-        "move": "animation.mv.wither_boss.move",
-        "look_at_target": "animation.wither_boss.look_at_target",
-        "move_controller": "controller.animation.wither_boss.move"
-      },
-      "render_controllers": [
-        "controller.render.wither_boss",
-        "controller.render.wither_boss_armor_white",
-        "controller.render.wither_boss_armor_blue"
-      ],
-      "spawn_egg": { "texture": "spawn_egg_wither" }
+      }
     }
   }
 }

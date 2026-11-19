@@ -113,17 +113,6 @@
         "mv_overlay": "geometry.mv.villager_overlay",
         "mv_empty": "geometry.mv.zombie_empty"
       },
-      "scripts": {
-        "scale": "query.is_baby ? 2.0 : 0.9375",
-        "pre_animation": [
-          "variable.num_professions = 15;",
-          "variable.num_tiers = 3;",
-          "variable.profession_index = (query.variant < variable.num_professions ? query.variant : 0);",
-          "variable.level_index = query.trade_tier;",
-          "v.mv_active = !q.is_baby;"
-        ],
-        "animate": ["general_controller", "move_controller", "raise_arms_controller"]
-      },
       "animations": {
         "general": "animation.villager.general",
         "look_at_target": "animation.common.look_at_target",
@@ -145,7 +134,18 @@
         { "controller.render.mv.villager_v2_level": "v.mv_active" },
         { "controller.render.mv.villager_v2_overlay": "v.mv_active" }
       ],
-      "spawn_egg": { "texture": "spawn_egg_villager" }
+      "spawn_egg": { "texture": "spawn_egg_villager" },
+      "scripts": {
+        "scale": "query.is_baby ? 2.0 : 0.9375",
+        "pre_animation": [
+          "v.mv_active = !q.is_baby;",
+          "variable.num_professions = 15;",
+          "variable.num_tiers = 3;",
+          "variable.profession_index = (query.variant < variable.num_professions ? query.variant : 0);",
+          "variable.level_index = query.trade_tier;"
+        ],
+        "animate": ["general_controller", "move_controller", "raise_arms_controller"]
+      }
     }
   }
 }

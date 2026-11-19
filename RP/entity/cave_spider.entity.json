@@ -23,12 +23,6 @@
         "default": "geometry.spider.v1.8",
         "mv_default": "geometry.spider.v1.8"
       },
-      "scripts": {
-        "scale": "0.7",
-        "initialize": ["v.xvar = math.random(0,99);"],
-        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"],
-        "animate": ["move"]
-      },
       "animations": {
         "default_leg_pose": "animation.spider.default_leg_pose",
         "look_at_target": "animation.spider.look_at_target",
@@ -36,7 +30,13 @@
         "move": "controller.animation.spider.move"
       },
       "render_controllers": ["controller.render.mv.cave_spider"],
-      "spawn_egg": { "texture": "spawn_egg_cave_spider" }
+      "spawn_egg": { "texture": "spawn_egg_cave_spider" },
+      "scripts": {
+        "scale": "0.7",
+        "animate": ["move"],
+        "initialize": ["v.xvar = math.random(0,99);"],
+        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"]
+      }
     }
   }
 }

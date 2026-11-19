@@ -19,19 +19,6 @@
         "baby": "geometry.turtle.baby",
         "mv_default": "geometry.turtle"
       },
-      "scripts": {
-        "pre_animation": [
-          "variable.timeMultiplier = query.has_rider ? 0.39972 : 1.0;",
-          "variable.backLegMultiplier = query.has_rider ? 0.5 : 3.0;",
-          "variable.frontLegMultiplier = query.has_rider ? 2.0 : 8.0;",
-          "variable.legSpeedMultiplier = query.has_rider ? 2.0 : 5.0;",
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_active = !q.is_baby;"
-        ],
-        "scale": "query.is_baby ? (1 / 0.16) : 1.0",
-        "initialize": ["v.xvar = Math.random(0,99);"],
-        "animate": ["general_controller", "move_controller"]
-      },
       "animations": {
         "general": "animation.turtle.general",
         "move": "animation.turtle.move",
@@ -45,7 +32,20 @@
         { "controller.render.turtle.v2": "!v.mv_active" },
         { "controller.render.mv.turtle": "v.mv_active" }
       ],
-      "spawn_egg": { "texture": "spawn_egg_turtle" }
+      "spawn_egg": { "texture": "spawn_egg_turtle" },
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_active = !q.is_baby;",
+          "variable.timeMultiplier = query.has_rider ? 0.39972 : 1.0;",
+          "variable.backLegMultiplier = query.has_rider ? 0.5 : 3.0;",
+          "variable.frontLegMultiplier = query.has_rider ? 2.0 : 8.0;",
+          "variable.legSpeedMultiplier = query.has_rider ? 2.0 : 5.0;"
+        ],
+        "scale": "query.is_baby ? (1 / 0.16) : 1.0",
+        "animate": ["general_controller", "move_controller"],
+        "initialize": ["v.xvar = Math.random(0,99);"]
+      }
     }
   }
 }

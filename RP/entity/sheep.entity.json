@@ -33,6 +33,12 @@
         "move": "controller.animation.sheep.move",
         "baby_grazing": "animation.sheep.baby_grazing"
       },
+      "render_controllers": [
+        { "controller.render.sheep.v2": "!v.mv_active" },
+        { "controller.render.mv.sheep": "v.mv_active" },
+        { "controller.render.mv.sheep_horns": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_sheep" },
       "scripts": {
         "animate": ["look_at_target", "move"],
         "scale": "query.is_baby ? 2.0 : 1.0",
@@ -41,13 +47,7 @@
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
           "v.mv_active = !q.is_baby;"
         ]
-      },
-      "render_controllers": [
-        { "controller.render.sheep.v2": "!v.mv_active" },
-        { "controller.render.mv.sheep": "v.mv_active" },
-        { "controller.render.mv.sheep_horns": "v.mv_active" }
-      ],
-      "spawn_egg": { "texture": "spawn_egg_sheep" }
+      }
     }
   }
 }

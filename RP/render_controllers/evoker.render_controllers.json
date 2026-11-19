@@ -3,6 +3,11 @@
   "render_controllers": {
     "controller.render.mv.evoker": {
       "geometry": "Geometry.mv_default",
+      "part_visibility": [
+        { "arms": "!(query.is_casting || query.is_celebrating)" },
+        { "leftarm": "query.is_casting || query.is_celebrating" },
+        { "rightarm": "query.is_casting || query.is_celebrating" }
+      ],
       "materials": [
         { "*": "Material.mv_default" }
       ],
@@ -49,6 +54,11 @@
     "controller.render.mv.evoker_hat": {
       "rebuild_animation_matrices": true,
       "geometry": "v.mv_variant ? array.geosq[v.mv_mark] : (variable.xvar < 30 ? array.geosd[variable.xvar] : Geometry.mv_hat)",
+      "part_visibility": [
+        { "arms": "!(query.is_casting || query.is_celebrating)" },
+        { "leftarm": "query.is_casting || query.is_celebrating" },
+        { "rightarm": "query.is_casting || query.is_celebrating" }
+      ],
       "materials": [
         { "*": "Material.mv_glow" }
       ],

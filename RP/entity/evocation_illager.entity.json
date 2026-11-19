@@ -63,18 +63,6 @@
         "mv_geomancer": "geometry.mv.evoker_geomancer",
         "mv_chef": "geometry.mv.evoker_chef"
       },
-      "scripts": {
-        "scale": "0.9375",
-        "animate": ["controller_general", "controller_move"],
-        "pre_animation": [
-          "variable.riding_y_offset_with_respect_to_player = 1.25;",
-          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
-          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;",
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
-        ],
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      },
       "animations": {
         "general": "animation.evoker.general",
         "casting": "animation.evoker.casting",
@@ -89,7 +77,19 @@
       },
       "particle_effects": { "spell": "minecraft:evoker_spell" },
       "render_controllers": ["controller.render.mv.evoker", "controller.render.mv.evoker_hat"],
-      "spawn_egg": { "texture": "spawn_egg_evoker" }
+      "spawn_egg": { "texture": "spawn_egg_evoker" },
+      "scripts": {
+        "scale": "0.9375",
+        "animate": ["controller_general", "controller_move"],
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
+          "variable.riding_y_offset_with_respect_to_player = 1.25;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
+        ],
+        "initialize": ["v.xvar = Math.random(0,99);"]
+      }
     }
   }
 }

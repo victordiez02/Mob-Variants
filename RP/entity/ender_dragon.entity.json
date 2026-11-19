@@ -30,8 +30,28 @@
         "default": "geometry.dragon",
         "mv_default": "geometry.dragon"
       },
+      "animations": {
+        "setup": "animation.ender_dragon.setup",
+        "jaw_movement": "animation.ender_dragon.jaw_movement",
+        "neck_head_movement": "animation.ender_dragon.neck_head_movement",
+        "wings_limbs_movement": "animation.ender_dragon.wings_limbs_movement",
+        "tail_movement": "animation.ender_dragon.tail_movement"
+      },
+      "render_controllers": [
+        {
+          "controller.render.mv.ender_dragon_death_pre_pass": "query.death_ticks > 1.0"
+        },
+        {
+          "controller.render.mv.ender_dragon_death_main_pass": "query.death_ticks > 1.0"
+        },
+        {
+          "controller.render.mv.ender_dragon_default": "query.death_ticks <= 1.0"
+        }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_ender_dragon" },
       "scripts": {
         "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
           "variable.flap_time = query.wing_flap_position * 360.0;",
           "variable.base_rotation = Math.sin(variable.flap_time - 57.3) + 57.3;",
           "variable.rotation_factor = (variable.base_rotation * variable.base_rotation + variable.base_rotation * 114.6) * 2.87;",
@@ -207,31 +227,11 @@
           "variable.tail_12_rotation_z = -(variable.tail_12_rotation_z_raw < 0.0 ? (variable.tail_12_rotation_z_raw + 180.0) : (variable.tail_12_rotation_z_raw - 180.0)) * variable.rotationScale;",
           "variable.tail_12_position_x = variable.tail_11_position_x - Math.sin(variable.tail_11_rotation_y) * Math.cos(variable.tail_11_rotation_x) * 10.0;",
           "variable.tail_12_position_y = variable.tail_11_position_y - Math.sin(variable.tail_11_rotation_x) * variable.tail_distance;",
-          "variable.tail_12_position_z = variable.tail_11_position_z - Math.cos(variable.tail_11_rotation_y) * Math.cos(variable.tail_11_rotation_x) * 10.0;",
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"
+          "variable.tail_12_position_z = variable.tail_11_position_z - Math.cos(variable.tail_11_rotation_y) * Math.cos(variable.tail_11_rotation_x) * 10.0;"
         ],
         "animate": ["setup", "jaw_movement", "neck_head_movement", "wings_limbs_movement", "tail_movement"],
         "initialize": ["v.xvar = Math.random(0,99);"]
-      },
-      "animations": {
-        "setup": "animation.ender_dragon.setup",
-        "jaw_movement": "animation.ender_dragon.jaw_movement",
-        "neck_head_movement": "animation.ender_dragon.neck_head_movement",
-        "wings_limbs_movement": "animation.ender_dragon.wings_limbs_movement",
-        "tail_movement": "animation.ender_dragon.tail_movement"
-      },
-      "render_controllers": [
-        {
-          "controller.render.mv.ender_dragon_death_pre_pass": "query.death_ticks > 1.0"
-        },
-        {
-          "controller.render.mv.ender_dragon_death_main_pass": "query.death_ticks > 1.0"
-        },
-        {
-          "controller.render.mv.ender_dragon_default": "query.death_ticks <= 1.0"
-        }
-      ],
-      "spawn_egg": { "texture": "spawn_egg_ender_dragon" }
+      }
     }
   }
 }

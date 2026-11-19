@@ -17,26 +17,6 @@
         "mv_default8": "textures/entity/sniffer/sniffer8",
         "mv_default9": "textures/entity/sniffer/sniffer9"
       },
-      "scripts": {
-        "pre_animation": [
-          "variable.moving = math.min(1.0, query.modified_move_speed * 10);",
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "v.mv_active = !q.is_baby;"
-        ],
-        "scale": "query.is_baby ? (1 / 0.45) : 1.0",
-        "initialize": ["v.xvar = math.random(0,99);"],
-        "animate": [
-          "general",
-          "walk_controller",
-          "sniffsniff_controller",
-          "long_sniff_controller",
-          "search_controller",
-          "dig_controller",
-          "stand_up_controller",
-          "feeling_happy_controller"
-        ]
-      },
       "geometry": {
         "default": "geometry.sniffer",
         "baby": "geometry.sniffer.baby",
@@ -77,6 +57,26 @@
         "digging": "mob.sniffer.digging",
         "stand_up": "mob.sniffer.stand_up",
         "happy": "mob.sniffer.happy"
+      },
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
+          "v.mv_active = !q.is_baby;",
+          "variable.moving = math.min(1.0, query.modified_move_speed * 10);"
+        ],
+        "scale": "query.is_baby ? (1 / 0.45) : 1.0",
+        "animate": [
+          "general",
+          "walk_controller",
+          "sniffsniff_controller",
+          "long_sniff_controller",
+          "search_controller",
+          "dig_controller",
+          "stand_up_controller",
+          "feeling_happy_controller"
+        ],
+        "initialize": ["v.xvar = math.random(0,99);"]
       }
     }
   }

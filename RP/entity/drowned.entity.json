@@ -22,41 +22,6 @@
         "mv_trident": "geometry.mv.drowned_trident",
         "mv_empty": "geometry.mv.zombie_empty"
       },
-      "scripts": {
-        "pre_animation": [
-          "v.use_dedicated_baby_armor = true;",
-          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
-          "variable.riding_y_offset_baby_scaling = query.is_baby ? -0.5 : 0.0;",
-          "variable.riding_y_offset_with_respect_to_player = 1.0;",
-          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
-          "variable.unscaled_riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;",
-          "variable.riding_y_offset = variable.riding_y_offset_baby_scaling * math.abs(variable.unscaled_riding_y_offset) + variable.unscaled_riding_y_offset + variable.riding_y_offset_baby_scaling * 0.2f;",
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "v.mv_active = !q.is_baby;"
-        ],
-        "animate": [
-          "look_at_target",
-          "move",
-          { "riding.body": "query.is_riding" },
-          { "riding.arms": "query.is_riding" },
-          { "riding.legs": "query.is_riding" },
-          "holding",
-          { "charging": "query.is_charging" },
-          "attack_controller",
-          { "brandish_spear": "variable.is_brandishing_spear" },
-          "bob",
-          { "damage_nearby_mobs": "variable.damage_nearby_mobs" },
-          {
-            "use_item_progress": "( variable.use_item_interval_progress > 0.0 ) || ( variable.use_item_startup_progress > 0.0 )"
-          },
-          { "swimming": "variable.swim_amount > 0.0" }
-        ],
-        "should_update_effects_offscreen": "1.0",
-        "scale": "query.is_baby ? 2.0 : 1.0",
-        "variables": { "variable.use_dedicated_baby_armor": "public" },
-        "initialize": ["v.xvar = Math.random(0,99);", "v.yvar = Math.random(0,99);"]
-      },
       "animations": {
         "humanoid_big_head": "animation.humanoid.big_head",
         "look_at_target": "controller.animation.humanoid.look_at_target",
@@ -86,7 +51,42 @@
         { "controller.render.mv.drowned_trident": "v.mv_active" }
       ],
       "enable_attachables": true,
-      "spawn_egg": { "texture": "spawn_egg_drowned" }
+      "spawn_egg": { "texture": "spawn_egg_drowned" },
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
+          "v.mv_active = !q.is_baby;",
+          "v.use_dedicated_baby_armor = true;",
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.riding_y_offset_baby_scaling = query.is_baby ? -0.5 : 0.0;",
+          "variable.riding_y_offset_with_respect_to_player = 1.0;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.unscaled_riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;",
+          "variable.riding_y_offset = variable.riding_y_offset_baby_scaling * math.abs(variable.unscaled_riding_y_offset) + variable.unscaled_riding_y_offset + variable.riding_y_offset_baby_scaling * 0.2f;"
+        ],
+        "animate": [
+          "look_at_target",
+          "move",
+          { "riding.body": "query.is_riding" },
+          { "riding.arms": "query.is_riding" },
+          { "riding.legs": "query.is_riding" },
+          "holding",
+          { "charging": "query.is_charging" },
+          "attack_controller",
+          { "brandish_spear": "variable.is_brandishing_spear" },
+          "bob",
+          { "damage_nearby_mobs": "variable.damage_nearby_mobs" },
+          {
+            "use_item_progress": "( variable.use_item_interval_progress > 0.0 ) || ( variable.use_item_startup_progress > 0.0 )"
+          },
+          { "swimming": "variable.swim_amount > 0.0" }
+        ],
+        "should_update_effects_offscreen": "1.0",
+        "scale": "query.is_baby ? 2.0 : 1.0",
+        "variables": { "variable.use_dedicated_baby_armor": "public" },
+        "initialize": ["v.xvar = Math.random(0,99);", "v.yvar = Math.random(0,99);"]
+      }
     }
   }
 }

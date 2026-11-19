@@ -35,9 +35,9 @@
       "render_controllers": ["controller.render.mv.blaze"],
       "spawn_egg": { "texture": "spawn_egg_blaze" },
       "scripts": {
+        "animate": ["move_controller", "flame"],
         "initialize": ["v.xvar = Math.floor(Math.random(0, 99));"],
-        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"],
-        "animate": ["move_controller", "flame"]
+        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"]
       }
     }
   }

@@ -57,13 +57,13 @@
       ],
       "spawn_egg": { "texture": "spawn_egg_spider" },
       "scripts": {
+        "animate": ["move"],
         "initialize": ["v.xvar = math.random(0,99);"],
         "pre_animation": [
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
           "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
           "v.mv_giant = q.has_property('mv:mark_variant') ? v.mv_mark == 1 : v.xvar >= 85;"
-        ],
-        "animate": ["move"]
+        ]
       }
     }
   }

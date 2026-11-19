@@ -92,12 +92,12 @@
       "spawn_egg": { "texture": "spawn_egg_cat" },
       "scripts": {
         "scale": "query.is_baby ? (1 / 0.4) : 1.0",
+        "animate": ["look_at_target_controller", "move"],
         "initialize": ["v.xvar = Math.random(0,99);"],
         "pre_animation": [
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 20 ? 1 + math.mod(math.floor(v.xvar), 4) : 0);",
           "v.mv_active = !q.is_baby && q.variant == 0;"
-        ],
-        "animate": ["look_at_target_controller", "move"]
+        ]
       }
     }
   }

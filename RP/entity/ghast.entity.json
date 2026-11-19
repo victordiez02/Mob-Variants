@@ -46,9 +46,9 @@
       },
       "render_controllers": ["controller.render.mv.ghast"],
       "scripts": {
+        "animate": ["move_controller"],
         "initialize": ["v.xvar = Math.random(0,99);"],
-        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"],
-        "animate": ["move_controller"]
+        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"]
       }
     }
   }

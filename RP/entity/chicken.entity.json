@@ -46,6 +46,14 @@
         "look_at_target": "animation.common.look_at_target",
         "baby_transform": "animation.chicken.baby_transform"
       },
+      "render_controllers": [
+        { "controller.render.chicken.v3": "!v.mv_active" },
+        { "controller.render.mv.chicken": "v.mv_active" },
+        {
+          "controller.render.mv.chicken_extras": "v.mv_active && v.mv_is_chicken"
+        }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_chicken" },
       "scripts": {
         "animate": [
           "general",
@@ -53,22 +61,16 @@
           "look_at_target"
         ],
         "pre_animation": [
-          "t.variant = query.property('minecraft:climate_variant');",
-          "v.index = (t.variant == 'temperate') ? 0 : ((t.variant == 'warm') ? 1 : 2);",
-          "v.is_cold = t.variant == 'cold';",
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
           "v.mv_active = !q.is_baby && q.property('minecraft:climate_variant') == 'temperate';",
-          "v.mv_is_chicken = v.mv_variant ? v.mv_variant <= 4 : v.xvar >= 30;"
+          "v.mv_is_chicken = v.mv_variant ? v.mv_variant <= 4 : v.xvar >= 30;",
+          "t.variant = query.property('minecraft:climate_variant');",
+          "v.index = (t.variant == 'temperate') ? 0 : ((t.variant == 'warm') ? 1 : 2);",
+          "v.is_cold = t.variant == 'cold';"
         ],
         "scale": "query.is_baby ? 2.0 : 1.0",
         "initialize": ["v.xvar = Math.random(0,99);"]
-      },
-      "render_controllers": [
-        { "controller.render.chicken.v3": "!v.mv_active" },
-        { "controller.render.mv.chicken": "v.mv_active" },
-        { "controller.render.mv.chicken_extras": "v.mv_active && v.mv_is_chicken" }
-      ],
-      "spawn_egg": { "texture": "spawn_egg_chicken" }
+      }
     }
   }
 }

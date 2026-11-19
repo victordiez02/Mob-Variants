@@ -36,33 +36,6 @@
         "mv_overlay2": "geometry.mv.skeleton.armor2"
       },
       "spawn_egg": { "texture": "spawn_egg_skeleton" },
-      "scripts": {
-        "pre_animation": [
-          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
-          "variable.riding_y_offset_with_respect_to_player = 0.5;",
-          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
-          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;",
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;"
-        ],
-        "initialize": ["v.xvar = math.random(0,99);"],
-        "animate": [
-          "look_at_target",
-          "move_controller",
-          "riding",
-          "holding_controller",
-          "brandish_spear_controller",
-          "charging_controller",
-          "attack",
-          "sneaking_controller",
-          "bob_controller",
-          "damage_nearby_mobs_controller",
-          "bow_and_arrow_controller",
-          "swimming_controller",
-          "use_item_progress_controller",
-          "skeleton_attack_controller"
-        ]
-      },
       "animations": {
         "look_at_target_default": "animation.humanoid.look_at_target.default",
         "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
@@ -98,7 +71,34 @@
         "skeleton_attack_controller": "controller.animation.skeleton.attack"
       },
       "render_controllers": ["controller.render.mv.skeleton", "controller.render.mv.skeleton_clothes"],
-      "enable_attachables": true
+      "enable_attachables": true,
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.riding_y_offset_with_respect_to_player = 0.5;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
+        ],
+        "animate": [
+          "look_at_target",
+          "move_controller",
+          "riding",
+          "holding_controller",
+          "brandish_spear_controller",
+          "charging_controller",
+          "attack",
+          "sneaking_controller",
+          "bob_controller",
+          "damage_nearby_mobs_controller",
+          "bow_and_arrow_controller",
+          "swimming_controller",
+          "use_item_progress_controller",
+          "skeleton_attack_controller"
+        ],
+        "initialize": ["v.xvar = math.random(0,99);"]
+      }
     }
   }
 }

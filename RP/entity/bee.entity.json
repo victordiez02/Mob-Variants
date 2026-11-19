@@ -45,6 +45,14 @@
         "bee_root_controller": "controller.animation.bee.root"
       },
       "particle_effects": { "nectar_dripping": "minecraft:nectar_drip_particle" },
+      "render_controllers": [
+        { "controller.render.bee.v2": "!v.mv_active" },
+        { "controller.render.mv.bee": "v.mv_active" },
+        {
+          "controller.render.mv.bee_nectar": "v.mv_active && q.property('minecraft:has_nectar')"
+        }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_bee" },
       "scripts": {
         "animate": [
           "bee_root_controller",
@@ -56,15 +64,7 @@
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
           "v.mv_active = !q.is_baby;"
         ]
-      },
-      "render_controllers": [
-        { "controller.render.bee.v2": "!v.mv_active" },
-        { "controller.render.mv.bee": "v.mv_active" },
-        {
-          "controller.render.mv.bee_nectar": "v.mv_active && q.property('minecraft:has_nectar')"
-        }
-      ],
-      "spawn_egg": { "texture": "spawn_egg_bee" }
+      }
     }
   }
 }
