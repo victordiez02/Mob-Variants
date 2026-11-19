@@ -19,7 +19,6 @@
         "baby_warm": "textures/entity/chicken/chicken_warm_baby",
         "baby_cold": "textures/entity/chicken/chicken_cold_baby",
         "mv_default": "textures/entity/chicken/chicken",
-        "mv_default2": "textures/entity/chicken/chicken2",
         "mv_default3": "textures/entity/chicken/chicken3",
         "mv_default4": "textures/entity/chicken/chicken4",
         "mv_default5": "textures/entity/chicken/chicken5",
@@ -36,7 +35,8 @@
         "warm": "geometry.chicken.v1.12",
         "cold": "geometry.chicken.cold",
         "baby": "geometry.chicken.baby",
-        "mv_default": "geometry.mv.chicken",
+        "mv_default": "geometry.chicken.v1.12",
+        "mv_extras": "geometry.mv.chicken_extras",
         "mv_duck": "geometry.mv.duck",
         "mv_goose": "geometry.mv.goose"
       },
@@ -57,14 +57,16 @@
           "v.index = (t.variant == 'temperate') ? 0 : ((t.variant == 'warm') ? 1 : 2);",
           "v.is_cold = t.variant == 'cold';",
           "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_active = !q.is_baby && q.property('minecraft:climate_variant') == 'temperate';"
+          "v.mv_active = !q.is_baby && q.property('minecraft:climate_variant') == 'temperate';",
+          "v.mv_is_chicken = v.mv_variant ? v.mv_variant <= 4 : v.xvar >= 30;"
         ],
         "scale": "query.is_baby ? 2.0 : 1.0",
         "initialize": ["v.xvar = Math.random(0,99);"]
       },
       "render_controllers": [
         { "controller.render.chicken.v3": "!v.mv_active" },
-        { "controller.render.mv.chicken": "v.mv_active" }
+        { "controller.render.mv.chicken": "v.mv_active" },
+        { "controller.render.mv.chicken_extras": "v.mv_active && v.mv_is_chicken" }
       ],
       "spawn_egg": { "texture": "spawn_egg_chicken" }
     }

@@ -1,16 +1,17 @@
 // Render controller chicken
 // v.mv_variant: puede ser un pollo (1, 2, 3, 4), un ganso (5, 6, 7, 8) o un pato (9, 10, 11).
+// Pollos: modelo vanilla geometry.chicken.v1.12 + capa chicken_extras (cola, papada, cresta, pico inferior).
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.chicken": {
-      "geometry": "query.is_baby ? Geometry.mv_default : (v.mv_variant ? array.geosq[(v.mv_variant - 1) / 4] : (variable.xvar >= 30 ? Geometry.mv_default : (variable.xvar < 15 ? Geometry.mv_duck : Geometry.mv_goose)))",
+      "geometry": "v.mv_variant ? array.geosq[(v.mv_variant - 1) / 4] : (variable.xvar >= 30 ? Geometry.mv_default : (variable.xvar < 15 ? Geometry.mv_duck : Geometry.mv_goose))",
       "materials": [
         { "*": "Material.mv_default" },
         { "leg*": "Material.mv_legs" }
       ],
       "textures": [
-        "query.is_baby ? Texture.mv_default2 : (v.mv_variant ? array.skinsq[v.mv_variant - 1] : (variable.xvar < 15 ? array.dskins[variable.xvar] : (variable.xvar < 30 ? array.gskins[variable.xvar] : array.xskins[variable.xvar])))"
+        "v.mv_variant ? array.skinsq[v.mv_variant - 1] : (variable.xvar < 15 ? array.dskins[variable.xvar] : (variable.xvar < 30 ? array.gskins[variable.xvar] : array.xskins[variable.xvar]))"
       ],
       "arrays": {
         "textures": {
@@ -33,6 +34,18 @@
         },
         "geometries": {
           "array.geosq": ["Geometry.mv_default", "Geometry.mv_goose", "Geometry.mv_duck"]
+        }
+      }
+    },
+    "controller.render.mv.chicken_extras": {
+      "geometry": "Geometry.mv_extras",
+      "materials": [
+        { "*": "Material.mv_default" }
+      ],
+      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
+      "arrays": {
+        "textures": {
+          "array.xskins": ["Texture.mv_default", "Texture.mv_default3", "Texture.mv_default4", "Texture.mv_default5"]
         }
       }
     }
