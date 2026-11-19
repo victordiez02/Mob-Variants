@@ -28,8 +28,7 @@
       "geometry": {
         "default": "geometry.guardian.v1.8",
         "ghost": "geometry.guardian",
-        "mv_default": "geometry.guardian.v1.8",
-        "mv_ghost": "geometry.guardian"
+        "mv_default": "geometry.guardian.v1.8"
       },
       "animations": {
         "setup": "animation.guardian.setup",

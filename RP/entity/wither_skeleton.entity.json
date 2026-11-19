@@ -18,8 +18,7 @@
         "mv_default9": "textures/entity/skeleton/wither_skeleton9",
         "mv_cape": "textures/entity/skeleton/wither_skeleton_cape",
         "mv_backpack": "textures/entity/skeleton/backpack",
-        "mv_piglin_heads": "textures/entity/skeleton/piglin_heads",
-        "mv_empty": "textures/entity/empty"
+        "mv_piglin_heads": "textures/entity/skeleton/piglin_heads"
       },
       "geometry": {
         "default": "geometry.skeleton.wither.v1.8",
