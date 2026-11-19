@@ -5,6 +5,9 @@
   "render_controllers": {
     "controller.render.mv.spider": {
       "geometry": "Geometry.mv_default",
+      "part_visibility": [
+        { "leg*": "!v.mv_giant" }
+      ],
       "materials": [
         { "*": "Material.mv_default" }
       ],

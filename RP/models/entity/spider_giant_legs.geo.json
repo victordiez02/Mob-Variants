@@ -21,8 +21,21 @@
           "pivot": [-4, 9, 2]
         },
         {
-          "name": "mv_joint0",
+          "name": "mv_thigh0",
           "parent": "leg0",
+          "pivot": [-4, 9, 2],
+          "rotation": [-28.2868, 11.4475, 46.1012],
+          "cubes": [
+            {
+              "origin": [-19, 8, 1],
+              "size": [16, 2, 2],
+              "uv": [18, 0]
+            }
+          ]
+        },
+        {
+          "name": "mv_joint0",
+          "parent": "mv_thigh0",
           "pivot": [-19, 9, 2],
           "rotation": [0, 0, -70],
           "cubes": [
@@ -39,8 +52,21 @@
           "pivot": [4, 9, 2]
         },
         {
-          "name": "mv_joint1",
+          "name": "mv_thigh1",
           "parent": "leg1",
+          "pivot": [4, 9, 2],
+          "rotation": [-30.2801, -3.0185, -50.859],
+          "cubes": [
+            {
+              "origin": [3, 8, 1],
+              "size": [16, 2, 2],
+              "uv": [18, 0]
+            }
+          ]
+        },
+        {
+          "name": "mv_joint1",
+          "parent": "mv_thigh1",
           "pivot": [19, 9, 2],
           "rotation": [0, 0, 70],
           "cubes": [
@@ -57,8 +83,21 @@
           "pivot": [-4, 9, 1]
         },
         {
-          "name": "mv_joint2",
+          "name": "mv_thigh2",
           "parent": "leg2",
+          "pivot": [-4, 9, 1],
+          "rotation": [-12.8037, -2.634, 49.7637],
+          "cubes": [
+            {
+              "origin": [-19, 8, 0],
+              "size": [16, 2, 2],
+              "uv": [18, 0]
+            }
+          ]
+        },
+        {
+          "name": "mv_joint2",
+          "parent": "mv_thigh2",
           "pivot": [-19, 9, 1],
           "rotation": [0, 0, -75],
           "cubes": [
@@ -75,8 +114,21 @@
           "pivot": [4, 9, 1]
         },
         {
-          "name": "mv_joint3",
+          "name": "mv_thigh3",
           "parent": "leg3",
+          "pivot": [4, 9, 1],
+          "rotation": [-14.1256, 5.4465, -47.8962],
+          "cubes": [
+            {
+              "origin": [3, 8, 0],
+              "size": [16, 2, 2],
+              "uv": [18, 0]
+            }
+          ]
+        },
+        {
+          "name": "mv_joint3",
+          "parent": "mv_thigh3",
           "pivot": [19, 9, 1],
           "rotation": [0, 0, 70],
           "cubes": [
@@ -93,8 +145,21 @@
           "pivot": [-4, 9, 0]
         },
         {
-          "name": "mv_joint4",
+          "name": "mv_thigh4",
           "parent": "leg4",
+          "pivot": [-4, 9, 0],
+          "rotation": [13.4794, 5.5325, 47.9028],
+          "cubes": [
+            {
+              "origin": [-19, 8, -1],
+              "size": [16, 2, 2],
+              "uv": [18, 0]
+            }
+          ]
+        },
+        {
+          "name": "mv_joint4",
+          "parent": "mv_thigh4",
           "pivot": [-19, 9, 0],
           "rotation": [0, 0, -70],
           "cubes": [
@@ -111,8 +176,21 @@
           "pivot": [4, 9, 0]
         },
         {
-          "name": "mv_joint5",
+          "name": "mv_thigh5",
           "parent": "leg5",
+          "pivot": [4, 9, 0],
+          "rotation": [14.1256, -5.4465, -47.8962],
+          "cubes": [
+            {
+              "origin": [3, 8, -1],
+              "size": [16, 2, 2],
+              "uv": [18, 0]
+            }
+          ]
+        },
+        {
+          "name": "mv_joint5",
+          "parent": "mv_thigh5",
           "pivot": [19, 9, 0],
           "rotation": [0, 0, 70],
           "cubes": [
@@ -129,8 +207,21 @@
           "pivot": [-4, 9, -1]
         },
         {
-          "name": "mv_joint6",
+          "name": "mv_thigh6",
           "parent": "leg6",
+          "pivot": [-4, 9, -1],
+          "rotation": [29.7188, -5.1098, 49.6487],
+          "cubes": [
+            {
+              "origin": [-19, 8, -2],
+              "size": [16, 2, 2],
+              "uv": [18, 0]
+            }
+          ]
+        },
+        {
+          "name": "mv_joint6",
+          "parent": "mv_thigh6",
           "pivot": [-19, 9, -1],
           "rotation": [0, 0, -70],
           "cubes": [
@@ -147,8 +238,21 @@
           "pivot": [4, 9, -1]
         },
         {
-          "name": "mv_joint7",
+          "name": "mv_thigh7",
           "parent": "leg7",
+          "pivot": [4, 9, -1],
+          "rotation": [30.8848, 0.9395, -52.0883],
+          "cubes": [
+            {
+              "origin": [3, 8, -2],
+              "size": [16, 2, 2],
+              "uv": [18, 0]
+            }
+          ]
+        },
+        {
+          "name": "mv_joint7",
+          "parent": "mv_thigh7",
           "pivot": [19, 9, -1],
           "rotation": [0, 0, 70],
           "cubes": [
