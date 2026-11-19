@@ -159,6 +159,10 @@ def build(argv: list[str]) -> Scene:
         if not lay.geometry or "empty" in lay.geometry or not lay.textures:
             continue
         desc, bones = resolve_geo(lay.geometry, *geos)
+        for b in bones:  # Bedrock rotates a cube without pivot about its centre; Blockbench would use 0,0,0
+            for c in b.get("cubes", []):
+                if "rotation" in c and "pivot" not in c:
+                    c["pivot"] = [float(c["origin"][i]) + float(c["size"][i]) / 2 for i in range(3)]
         tex = texture_file(lay.textures[0], [rp, VRP])
         hidden = sorted({b["name"].lower() for b in bones if not bone_visible(lay, b["name"])})
         out_layers.append({

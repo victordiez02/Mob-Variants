@@ -183,7 +183,8 @@ def cube_faces_world(c: Json, m: Mat, tw: float, th: float, bone_mirror: bool, t
     y0, y1 = float(o[1]) - inf, float(o[1]) + float(s[1]) + inf
     z0, z1 = float(o[2]) - inf, float(o[2]) + float(s[2]) + inf
     if "rotation" in c:
-        piv = bb(c.get("pivot", [0, 0, 0]))
+        # no cube pivot: Bedrock rotates the cube about its own centre (vanilla chicken body)
+        piv = bb(c.get("pivot") or [float(o[i]) + float(s[i]) / 2 for i in range(3)])
         m = mat_mul(m, about(piv, rot_bb(*[float(x) for x in c["rotation"]])))
     corners = {  # p0, pu, pv per face (Blockbench box-UV orientation)
         "north": ((x1, y1, z0), (x0, y1, z0), (x1, y0, z0)),
