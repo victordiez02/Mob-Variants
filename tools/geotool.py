@@ -352,6 +352,92 @@ def relayer(layer_id: str, base_id: str, write: bool) -> int:
     return 0
 
 
+def rebone(geo_id: str, base_id: str, renames: dict[str, str], drop: set[str], write: bool) -> int:
+    """Full-model variant drawn instead of the base: bones renamed to the vanilla names (renames, plus the ones
+    already called like a vanilla bone) so the vanilla animations move them; their own pivots are kept (each
+    piece turns at its own joint). Bones in `drop` go with their subtree (eyelids). Vanilla-named bones take
+    the vanilla parent when that does not move anything at rest; other bones get the mv_ prefix; empty
+    custom bones are removed."""
+    from mvlib import load_for_edit, save
+    geos_a, geos_v = geo_index(find_pack("RP")), geo_index(VRP)
+    g = geos_a[geo_id]
+    if g.parent:
+        print(f"{geo_id}: 1.8 inheritance not supported")
+        return 1
+    _, base = resolve_geo(base_id, geos_a, geos_v)
+    vb = {b["name"].lower(): b for b in base}
+    old = [b for b in copy.deepcopy(g.bones)]
+    low = {k.lower(): v for k, v in renames.items()}
+    dropped = {d.lower() for d in drop}
+    while True:  # subtrees of dropped bones
+        more = {b["name"].lower() for b in old if (b.get("parent") or "").lower() in dropped} - dropped
+        if not more:
+            break
+        dropped |= more
+    old = [b for b in old if b["name"].lower() not in dropped]
+
+    def newname(n: str) -> str:
+        if n.lower() in low:
+            return low[n.lower()]
+        if n.lower() in vb:
+            return vb[n.lower()]["name"]
+        return n if n.lower().startswith("mv_") else "mv_" + n
+    names = {b["name"].lower(): newname(b["name"]) for b in old}
+    if len(set(x.lower() for x in names.values())) != len(names):
+        print(f"{geo_id}: two bones would get the same name: {sorted(names.values())}")
+        return 1
+    new: list[Bone] = []
+    for b in old:
+        nb = dict(b)
+        nb["name"] = names[b["name"].lower()]
+        p = (b.get("parent") or "").lower()
+        if p in names:
+            nb["parent"] = names[p]
+        new.append(nb)
+    by = {b["name"].lower(): b for b in new}
+    w_ref = _world(new)  # renaming does not move anything: this is the rest pose to keep
+    adopted: list[str] = []
+    for b in new:
+        n = b["name"].lower()
+        if n not in vb:
+            continue
+        vpar = (vb[n].get("parent") or "")
+        if vpar.lower() == (b.get("parent") or "").lower() or (vpar and vpar.lower() not in by):
+            continue
+        before = b.get("parent")
+        if vpar:
+            b["parent"] = by[vpar.lower()]["name"]
+        else:
+            b.pop("parent", None)
+        w = _world(new)
+        if all(max(abs(w[k][i][j] - w_ref[k][i][j]) for i in range(3) for j in range(4)) < 1e-3 for k in w_ref):
+            adopted.append(f"{b['name']} -> parent {vpar or '(root)'}")
+        elif before is None:
+            b.pop("parent", None)
+        else:
+            b["parent"] = before
+    while True:  # empty custom bones
+        parents = {(b.get("parent") or "").lower() for b in new}
+        empty = [b for b in new if b["name"].lower() not in vb and not b.get("cubes") and b["name"].lower() not in parents]
+        if not empty:
+            break
+        for b in empty:
+            new.remove(b)
+    print(f"{geo_id}: dropped {sorted(dropped) or '-'}")
+    print("    renamed:", {k: v for k, v in names.items() if k != v.lower()} or "-")
+    print("    vanilla parent:", adopted or "-")
+    vanilla_named = sorted(b["name"] for b in new if b["name"].lower() in vb)
+    print("    animated as vanilla:", vanilla_named)
+    if write:
+        data, header = load_for_edit(g.file)
+        for geo in data["minecraft:geometry"]:
+            if geo["description"]["identifier"] == geo_id:
+                geo["bones"] = new
+        save(g.file, data, header)
+        print("    written", os.path.relpath(g.file))
+    return 0
+
+
 def main() -> int:
     args = sys.argv[1:]
     if not args:
@@ -366,6 +452,10 @@ def main() -> int:
         limbmerge(rest[0], rest[1], rest[2:])
     elif cmd == "relayer" and len(rest) >= 2:
         return relayer(rest[0], rest[1], "--write" in rest)
+    elif cmd == "rebone" and len(rest) >= 2:
+        opts = [x for x in rest[2:] if not x.startswith("--")]
+        drop = {d for x in rest if x.startswith("--drop=") for d in x[7:].split(",") if d}
+        return rebone(rest[0], rest[1], dict(x.split("=", 1) for x in opts), drop, "--write" in rest)
     else:
         print(__doc__)
         return 2

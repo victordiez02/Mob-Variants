@@ -195,13 +195,28 @@ def layer_check(r: str, desc: Json, geos_a: dict, geos_v: dict) -> None:  # type
     except KeyError:
         return
     bb = {b["name"].lower(): b for b in base}
+    layers: list[tuple[str, list[Json]]] = []
+    fulls: list[dict[str, Json]] = []  # full-model variants: their layers may follow them instead of the base
     for key, gid in g.items():
         if not key.startswith("mv_") or gid == base_id or gid not in geos_a:
             continue
         _, bones = resolve_geo(gid, geos_a, geos_v)
+        if sum(1 for b in bones if b["name"].lower() in bb and b.get("cubes")) >= 3:
+            fulls.append({b["name"].lower(): b for b in bones})
+        else:
+            layers.append((gid, bones))
+
+    def same(b: Json, v: Json) -> bool:
+        def r(x: Json, *k: str) -> list[float]:
+            return [round(float(n), 2) for n in next((x[i] for i in k if x.get(i)), [0, 0, 0])]
+        return (r(b, "pivot") == r(v, "pivot") and (b.get("parent") or "").lower() == (v.get("parent") or "").lower()
+                and r(b, "rotation") == r(v, "rotation", "bind_pose_rotation"))
+    for gid, bones in layers:
         shared = [b for b in bones if b["name"].lower() in bb]
-        if not shared or sum(1 for b in shared if b.get("cubes")) >= 3:
-            continue  # a full replacement model (cubes on several base bones), not a layer
+        if not shared:
+            continue
+        if fulls and all(any(b["name"].lower() in f and same(b, f[b["name"].lower()]) for f in fulls) for b in shared):
+            continue
         bad: list[str] = []
         for b in shared:
             v = bb[b["name"].lower()]
