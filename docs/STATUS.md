@@ -14,8 +14,8 @@ Actualiza este archivo al terminar cada tarea.
 | blaze | siempre | vanilla | – | 0-8 | ok |
 | cat | adulto y gato blanco (`q.variant == 0`) | vanilla | gatos especiales (Garfield, Nyan, Puss, Tom) | 0-4 | ok; 0 = gato blanco normal |
 | cave_spider | siempre | vanilla | – | 0-7 | ok |
-| chicken | adulto templado | vanilla `chicken.v1.12` | chicken_extras (cola, papada, cresta, pico inferior), duck, goose | 0-11 | ok; pato y oca son modelos completos (fase 3) |
-| creeper | siempre | vanilla `creeper.v1.8` | creeper_extras (costillas, torso, calavera), TnT, cactus, piedra, conchas; creeper esqueleto (modelo completo) | 0-34 / 0-4 | ok; creeper esqueleto en fase 3 |
+| chicken | adulto templado | vanilla `chicken.v1.12` | chicken_extras (cola, papada, cresta, pico inferior), duck, goose | 0-11 | ok; pato y oca: modelo completo con huesos vanilla |
+| creeper | siempre | vanilla `creeper.v1.8` | creeper_extras (costillas, torso, calavera), TnT, cactus, piedra, conchas; creeper esqueleto (modelo completo) | 0-34 / 0-4 | ok; creeper esqueleto con huesos vanilla |
 | dolphin | adulto | vanilla | – | 0-7 | ok (7 skins, antes salía solo la primera) |
 | drowned | adulto | **cuerpo propio** `mv.drowned` (160×63) | drowned_trident | 0-5 / 0-1 | pendiente (decisión aplazada por el usuario) |
 | ender_dragon | siempre | vanilla | – | 0-7 | ok |
@@ -38,14 +38,14 @@ Actualiza este archivo al terminar cada tarea.
 | spider | siempre | vanilla (patas ocultas si es gigante) | spider_fangs, spider_giant_legs (muslo + articulación) | 0-26 / 0-1 (gigante) | ok; la gigante tenía las patas hundidas en el suelo |
 | stray | – | vanilla | – | – | retextura pura (`stray.png` + `stray_overlay.png`), sin entidad |
 | turtle | adulto | vanilla | – | 0-6 | ok |
-| villager_v2 | adulto | vanilla | villager_overlay | – (sin BP) | ok; codos de la skin algo desplazados |
-| vindicator | siempre | vanilla | armaduras | 0-22 / 0-4 | ok |
+| villager_v2 | adulto | vanilla | villager_professions (una capa por profesión) | – (sin BP) | ok |
+| vindicator | siempre | vanilla | armaduras | 0-21 / 0-4 | ok; `part_visibility` vanilla (brazos) |
 | wandering_trader | siempre | vanilla | mochila | 0-9 | ok |
 | warden | siempre | vanilla | – | 0-6 | ok |
 | witch | siempre | vanilla (sombrero oculto) | witch_extras (sombrero, escoba, pociones) | 0-9 | ok (probado) |
 | wither | siempre | **modelo propio** `mv.wither_boss` | armadura, calavera | – | excepción aceptada: conserva modelo y animación |
 | wither_skeleton | siempre | vanilla | capa, mochila, cabezas de piglin | 0-9 / 0-2 | ok |
-| zombie | adulto | vanilla | caídos (zombie2-5), mandíbula rota, minero, espadas, flechas, pierna | 0-334 / 0-615 | ok; codos de la skin algo desplazados |
+| zombie | adulto | vanilla | que se arrastra (zombie2-5, animación propia), mandíbula rota, minero, espadas, flechas, pierna | `variant` 0-34, `pose` 0-6, `miner`, `sword` 0-3, `sword_type` 0-5, `arrow`/`arrow2` 0-5 | ok (bdstest a y=64 y y=10) |
 | zombie_villager_v2 | adulto | vanilla | – | – (sin BP) | ok |
 
 Retexturas puras (solo texturas en rutas vanilla, sin entidad): caballos/burro/mula/caballo
@@ -61,11 +61,10 @@ Lista viva y detallada en [PLAN.md](PLAN.md). Resumen de lo que queda:
 1. **Ahogado**: cuerpo distinto (piernas de 2 px, cabeza 7×7, textura 160×63). Decisión del usuario.
 2. **Enderman**: dientes y lengua al enfadarse. Propuesta: pintarlos en la zona `hat` (UV 0,16) de
    cada skin con `enderman_jaw.png`, sin geometría. Pendiente de aprobación.
-3. **Geometrías de variante completa** (capibara, caracol, pato, oca, ornitorrinco, gatos especiales,
-   zombis caídos 2-5, creeper esqueleto): ¿excepción como el wither o modelo vanilla + capa?
+3. **Oveja**: el usuario ve que le falta el hocico; RP, geometría y textura coinciden con vanilla.
+   Pendiente de captura.
 4. **Compatibilidad con Actions & Stuff**: dos packs no pueden redefinir la misma entidad de cliente.
 5. **Sorteo sin BP por posición**: estudiado, no compensa (ver PLAN.md).
-6. Vindicador: `vindicator9.png` = `vindicator12.png`. Pollo: `chicken2.png` (pollito) ya no se usa.
 
 ## Hallazgos resueltos (2026-11-19)
 
@@ -88,3 +87,9 @@ Lista viva y detallada en [PLAN.md](PLAN.md). Resumen de lo que queda:
 - El zombie_pillager.json del BP era el zombie villager v1 vanilla con un sorteo sin uso: borrado.
 - Subvariantes por variante vanilla: empezado con la rana (cada clima usa sus skins).
 - Párpados de pollo y creeper eliminados: necesitaban animación propia (regla 1).
+- 0 animaciones propias salvo wither y zombi que se arrastra. Variantes de modelo completo con huesos
+  renombrados a los vanilla (`geotool rebone`), sin párpados. Entidades reconstruidas desde la vanilla
+  (la lista `animation_controllers` duplicaba animaciones).
+- Zombi: una propiedad BP por rasgo (la codificación en dos números salía mal: solo espadas de madera).
+- Aldeano: una capa por profesión (`villager_professions.geo.json`), piernas con `inflate` 0.1.
+- Borrados los duplicados `vindicator12.png` y `chicken2.png` (pollito).

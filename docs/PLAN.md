@@ -12,7 +12,7 @@ Detalle de cada mob: STATUS.md.
 - [x] Wither: `wither_armor_blue.png` 64×32 es así en vanilla; simulate ya no avisa de texturas vanilla (011b38e)
 - [x] `zombie-villager7.png`: los píxeles fuera del UV no se dibujan; la skin se ve bien (011b38e)
 - [x] Claves sin uso del guardián y del esqueleto wither (fa1ea21); rama de bebé del pollo (con el pollo)
-- [ ] Vindicador: `vindicator9` = `vindicator12` (pregunta 1)
+- [x] Vindicador: `vindicator12` (= `vindicator9`) y pollito `chicken2` borrados (fd9f12e)
 
 ## Fase 1: capas con pivote y padre vanilla (regla 2)
 - [x] 33 capas con `geotool relayer` + pig_chest a mano (b289a91). bbcheck --measure: 66 capas, 0 px.
@@ -26,8 +26,14 @@ Detalle de cada mob: STATUS.md.
 - [ ] Ahogado (pregunta 2)
 - [ ] Enderman: dientes/lengua al enfadarse (pregunta 3)
 
-## Fase 3: geometrías de variante completa (pregunta 4)
-- [ ] capibara, caracol, pato, oca, ornitorrinco, gatos especiales, zombis caídos 2-5, creeper esqueleto
+## Fase 3: geometrías de variante completa
+- [x] Huesos renombrados a los vanilla (`geotool rebone`), sin párpados: capibara, pato, oca,
+      ornitorrinco, gatos especiales, creeper esqueleto (1251f9b). Zombie2-5 conservan sus huesos y su
+      animación de arrastrarse (be1cf62)
+- [x] Entidades reconstruidas desde la vanilla: 0 animaciones propias salvo wither y zombi (1251f9b)
+- [x] Vindicador/evocador: `part_visibility` vanilla (dos pares de brazos); zombi con una propiedad por
+      rasgo (be1cf62); aldeano con una capa por profesión (c080ca9)
+- [ ] Oveja sin hocico (pregunta 4)
 
 ## Fase 4: funciones nuevas
 - [x] Ranas frías y cálidas con sus skins (2781464)
@@ -44,10 +50,9 @@ Detalle de cada mob: STATUS.md.
 - [ ] bdstest de todos los mobs, package, tag v5.0.0
 
 ## Preguntas para el usuario
-1. Vindicador: `vindicator9.png` y `vindicator12.png` son idénticas. ¿Borro una o la recoloreo?
-   Pollo: `chicken2.png` es un pollito (skin de bebé) y los bebés son vanilla: ¿lo borro?
+1. (resuelta: duplicados borrados)
 2. Ahogado (aplazado).
 3. Enderman: dientes/lengua pintados en la zona `hat` de la skin (sin geometría), ¿sí?
-4. Geometrías de variante completa: ¿excepción como el wither o pasarlas a modelo vanilla + capa?
+4. Oveja: captura del hocico que falta, junto a una oveja vanilla.
 5. Actions & Stuff: hace falta su pack (versión actual) para ver qué entidades redefine.
 6. Probar en el juego (Content Log incluido).

@@ -26,9 +26,13 @@ No hay que copiar nada: guardar y volver a entrar al mundo basta.
 ## Reglas del proyecto (decididas con el usuario; no las cambies sin preguntar)
 
 1. **Modelo y animaciones vanilla.** No se sustituye el modelo base de ningún mob ni se añaden
-   animaciones propias. Los modelos re-rigueados heredados de otros packs (codos/rodillas partidos,
-   párpados) se están eliminando. Excepción temporal: el **wither** conserva su modelo y su animación
-   `animation.mv.wither_boss.move`.
+   animaciones propias (las entidades llevan solo las animaciones vanilla). Nada de modelos
+   re-rigueados (codos/rodillas partidos, párpados). Únicas animaciones propias, porque son de una
+   geometría propia: el **wither** (`animation.mv.wither_boss.move`, con su modelo) y el **zombi que se
+   arrastra** (`animation.mv.zombie_crawl.*`, solo mueve los huesos `*_z2` de zombie2-5).
+   **Variantes de modelo completo** (pato, oca, capibara, caracol, ornitorrinco, gatos especiales,
+   creeper esqueleto): geometría propia dibujada en lugar del cuerpo vanilla, con los **huesos
+   renombrados a los vanilla** (`geotool rebone`) para que las animaciones vanilla la muevan.
 2. **Lo nuevo va en capas.** Sombreros, flores, colmillos, etc. son geometrías aparte cuyos huesos
    **se llaman como los huesos vanilla** (`head`, `body`, `leg0`, …) con su mismo pivote y jerarquía
    de padres, para que sigan cualquier animación (vanilla o A&S). Las piezas propias van como hijos
@@ -110,6 +114,12 @@ de este proyecto (`~/.claude.json`), no en el repo. Código en `C:\Users\victo\D
 - **No uses `animation_controllers`** (lista antigua): el juego la rechaza en entidades de packs y se
   pierde la pose base (enderman con la cabeza separada). Mete los controladores en `animations` y
   lánzalos desde `scripts.animate`.
+  En formato ≥ 1.10 esa lista es un duplicado de `scripts.animate`: bórrala, no la conviertas (se
+  duplican las animaciones: cabezas que giran de más, brazos raros del gólem). Solo en 1.8.0 es la real.
+- **Copia la `part_visibility` vanilla** en cada render controller `mv` que dibuje el cuerpo (brazos
+  cruzados o sueltos del vindicador/evocador; si no, salen dos pares de brazos).
+- **Un solo array de texturas por render controller** cuando el índice cambia de array: la rana con
+  varios fue rechazada (`child 'Array.cold' not valid here`). Calcula el índice en la entidad.
 - **Materiales inexistentes invalidan la entidad entera** (`[Json][error] Material "x" ... not defined`).
   Usa materiales vanilla (`entity_alphatest`, `enderman`, `stray_clothes`, …). No hay materiales propios.
 - **`minecraft:add_attributes` no es un evento del motor**: nada que pongas ahí se ejecuta.
