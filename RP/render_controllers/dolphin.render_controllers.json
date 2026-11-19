@@ -6,7 +6,7 @@
       "materials": [
         { "*": "Material.mv_default" }
       ],
-      "textures": ["array.xskins[0]"],
+      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
       "arrays": {
         "textures": {
           "array.xskins": [
