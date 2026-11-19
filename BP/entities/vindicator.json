@@ -9,7 +9,7 @@
       "properties": {
         "mv:variant": {
           "type": "int",
-          "range": [0, 22],
+          "range": [0, 21],
           "default": 0,
           "client_sync": true
         },
@@ -411,12 +411,8 @@
                 "set_property": { "mv:variant": 20 }
               },
               {
-                "weight": 1000,
-                "set_property": { "mv:variant": 21 }
-              },
-              {
                 "weight": 5,
-                "set_property": { "mv:variant": 22 }
+                "set_property": { "mv:variant": 21 }
               }
             ]
           },
