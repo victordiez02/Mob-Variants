@@ -1,5 +1,6 @@
-// Render controller frog: every vanilla variant has its own skins (q.variant 0 temperate, 1 cold, 2 warm).
-// v.mv_variant: 1-10 = skins of the frog's climate (1 = vanilla), 11-19 = special skins, 20 = cake frog.
+// Render controller frog: one array with the 10 skins of each climate (temperate, cold, warm) and the
+// 10 special skins. v.mv_skin (entity) = index: climate skins 0-29 (q.variant * 10), specials 30-39.
+// v.mv_variant: 1-10 = skin of the frog's climate (1 = vanilla), 11-19 = special, 20 = cake frog.
 // v.mv_mark: 1 = no crown, 2 = crown.
 {
   "format_version": "1.10.0",
@@ -7,7 +8,7 @@
     "controller.render.mv.frog": {
       "arrays": {
         "textures": {
-          "Array.skins": [
+          "array.skins": [
             "Texture.mv_temperate",
             "Texture.mv_temperate2",
             "Texture.mv_temperate3",
@@ -18,18 +19,6 @@
             "Texture.mv_temperate8",
             "Texture.mv_temperate9",
             "Texture.mv_temperate10",
-            "Texture.mv_special",
-            "Texture.mv_special2",
-            "Texture.mv_special3",
-            "Texture.mv_special4",
-            "Texture.mv_special5",
-            "Texture.mv_special6",
-            "Texture.mv_special7",
-            "Texture.mv_special8",
-            "Texture.mv_special9",
-            "Texture.mv_cake_frog"
-          ],
-          "Array.cold": [
             "Texture.mv_cold",
             "Texture.mv_cold2",
             "Texture.mv_cold3",
@@ -40,18 +29,6 @@
             "Texture.mv_cold8",
             "Texture.mv_cold9",
             "Texture.mv_cold10",
-            "Texture.mv_special",
-            "Texture.mv_special2",
-            "Texture.mv_special3",
-            "Texture.mv_special4",
-            "Texture.mv_special5",
-            "Texture.mv_special6",
-            "Texture.mv_special7",
-            "Texture.mv_special8",
-            "Texture.mv_special9",
-            "Texture.mv_cake_frog"
-          ],
-          "Array.warm": [
             "Texture.mv_warm",
             "Texture.mv_warm2",
             "Texture.mv_warm3",
@@ -82,7 +59,7 @@
       "materials": [
         { "*": "Material.mv_default" }
       ],
-      "textures": ["q.variant == 1 ? Array.cold[v.mv_variant - 1] : (q.variant == 2 ? Array.warm[v.mv_variant - 1] : Array.skins[v.mv_variant - 1])"]
+      "textures": ["array.skins[v.mv_skin]"]
     },
     "controller.render.mv.frog_crown": {
       "geometry": "v.mv_mark == 2 ? Geometry.mv_crown : Geometry.mv_empty",

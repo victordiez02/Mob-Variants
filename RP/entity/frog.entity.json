@@ -57,16 +57,6 @@
         "mv_empty": "geometry.mv.zombie_empty"
       },
       "spawn_egg": { "texture": "spawn_egg_frog" },
-      "scripts": {
-        "pre_animation": [
-          "variable.moving = query.ground_speed > 0 || query.vertical_speed > 0;",
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 15 ? 11 : 1) + math.mod(math.floor(v.xvar), 10);",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : (v.yvar < 20 ? 2 : 1);",
-          "v.mv_active = true;"
-        ],
-        "initialize": ["v.xvar = math.random(0,99);", "v.yvar = math.random(0, 99);"],
-        "animate": ["general", "croaking", "eat_mob"]
-      },
       "animations": {
         "croak": "animation.frog.croak",
         "jump": "animation.frog.jump",
@@ -82,7 +72,18 @@
       "render_controllers": [
         { "controller.render.mv.frog": "v.mv_active" },
         { "controller.render.mv.frog_crown": "v.mv_active" }
-      ]
+      ],
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 15 ? 11 : 1) + math.mod(math.floor(v.xvar), 10);",
+          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : (v.yvar < 20 ? 2 : 1);",
+          "v.mv_skin = v.mv_variant > 10 ? 19 + v.mv_variant : q.variant * 10 + v.mv_variant - 1;",
+          "v.mv_active = true;",
+          "variable.moving = query.ground_speed > 0 || query.vertical_speed > 0;"
+        ],
+        "animate": ["general", "croaking", "eat_mob"],
+        "initialize": ["v.xvar = math.random(0,99);", "v.yvar = math.random(0, 99);"]
+      }
     }
   }
 }
