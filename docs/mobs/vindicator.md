@@ -24,10 +24,10 @@ En la base: 21 skins sobre el modelo vanilla; BP con `mv:variant` (sorteo en ent
 | 7 | `mv_default7` | `textures/entity/vindicator/vindicator7` (pack) | 1000 (5.0%) |  |
 | 8 | `mv_default8` | `textures/entity/vindicator/vindicator8` (pack) | 1000 (5.0%) |  |
 | 9 | `mv_default9` | `textures/entity/vindicator/vindicator9` (pack) | 1000 (5.0%) |  |
-| 10 | `mv_default10` | `textures/entity/vindicator/vindicator10` (pack) | 1000 (5.0%) | nose 0% |
+| 10 | `mv_default10` | `textures/entity/vindicator/vindicator10` (pack) | 1000 (5.0%) | a propósito (nose 0%) |
 | 11 | `mv_default11` | `textures/entity/vindicator/vindicator11` (pack) | 1000 (5.0%) |  |
 | 12 | `mv_default12` | `textures/entity/vindicator/vindicator13` (pack) | 1000 (5.0%) |  |
-| 13 | `mv_default13` | `textures/entity/vindicator/vindicator14` (pack) | 1000 (5.0%) | nose 0% |
+| 13 | `mv_default13` | `textures/entity/vindicator/vindicator14` (pack) | 1000 (5.0%) | a propósito (nose 0%) |
 | 14 | `mv_default14` | `textures/entity/vindicator/vindicator15` (pack) | 1000 (5.0%) |  |
 | 15 | `mv_default15` | `textures/entity/vindicator/vindicator16` (pack) | 1000 (5.0%) |  |
 | 16 | `mv_default16` | `textures/entity/vindicator/vindicator17` (pack) | 1000 (5.0%) |  |
@@ -35,12 +35,14 @@ En la base: 21 skins sobre el modelo vanilla; BP con `mv:variant` (sorteo en ent
 | 18 | `mv_default18` | `textures/entity/vindicator/vindicator19` (pack) | 1000 (5.0%) |  |
 | 19 | `mv_default19` | `textures/entity/vindicator/vindicator20` (pack) | 1000 (5.0%) |  |
 | 20 | `mv_default20` | `textures/entity/vindicator/vindicator21` (pack) | 1000 (5.0%) |  |
-| 21 | `mv_default21` | `textures/entity/vindicator/vindicator_clown` (pack) | 5 (0.0%) | nose 40% |
+| 21 | `mv_default21` | `textures/entity/vindicator/vindicator_clown` (pack) | 5 (0.0%) | a propósito (nose 40%) |
 
 <!-- inventory:end -->
 
 ## Notas (fallos vistos en el juego y decisiones)
 
+- Revisadas (a propósito): `vindicator10`, `vindicator14`, `vindicator_clown` (máscaras de hockey y de
+  payaso: sin nariz). Render del 19-11-2026.
 - En el juego (19-11-2026, con capas): el **hacha no se veía nunca** al enfadarse. El BP da el hacha igual que el vanilla (`vindicator_gear`). Sospecha sin confirmar: el objeto se engancha a `rightItem` de una geometría que no lo tiene (capas de armadura / vacía). Comprobar primero con la base.
 - Las armaduras (capa) no se adaptaban a los brazos cruzados (`arms`): solo colgaban de `rightArm`/`leftArm`.
 - Antes salían dos pares de brazos: faltaba la `part_visibility` vanilla en los render controllers propios.
@@ -67,5 +69,5 @@ Lo que tenía el add-on antes de la base solo de skins. Recuperar un archivo: `g
 
 ## Plan
 
-- [ ] Probar la base en el juego (mobs recién aparecidos).
+- [ ] Probar la base en el juego (mobs recién aparecidos): ¿se ve el **hacha** al enfadarse sin capas?
 - [ ] Decidir con el usuario qué extras de "Antes" vuelven, de uno en uno (skill `mv-mob`).

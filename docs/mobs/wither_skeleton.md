@@ -55,5 +55,5 @@ Lo que tenía el add-on antes de la base solo de skins. Recuperar un archivo: `g
 
 ## Plan
 
-- [ ] Probar la base en el juego (mobs recién aparecidos).
+- [ ] Probar la base en el juego (mobs recién aparecidos): ¿se ve la **espada** sin capas?
 - [ ] Decidir con el usuario qué extras de "Antes" vuelven, de uno en uno (skill `mv-mob`).

@@ -32,7 +32,8 @@ recuperes para él (`RP/models/entity/…`, `RP/animations/…`) y `docs/mobs/<m
 
 - Columna "Revisar" de la ficha: piezas que la skin deja casi sin pintar (saldrían invisibles).
   `python tools/render.py <mob> --bp mv:variant=N --view all` y mira el PNG. Si es a propósito (máscara sin
-  nariz), anótalo en las notas; si está rota: arréglala (skill `mv-texture`: `texuv.py retarget`, rellenar
+  nariz), añádela a la línea `` - Revisadas (a propósito): `<textura>`, … `` de las notas (inventory deja de
+  contarla); si está rota: arréglala (skill `mv-texture`: `texuv.py retarget`, rellenar
   desde otra parte de la misma skin solo en píxeles transparentes) o sácala de la base.
 - Sacar una skin: quita su clave y su entrada del array, renumera (las siguientes bajan uno), baja el `N`
   de `math.random_integer(1, N)`, el `range` y cada `randomize` del BP. Después `check.py` y `inventory.py`.

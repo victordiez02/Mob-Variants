@@ -16,10 +16,10 @@ En la base: 7 skins sobre el modelo vanilla, puerta `!q.is_baby`; BP con `mv:var
 | `mv:variant` | Clave | Textura | Peso BP | Revisar |
 |---|---|---|---|---|
 | 1 | `mv_default` | `textures/entity/dolphin` (vanilla) | 1 (14.3%) |  |
-| 2 | `mv_default2` | `textures/entity/dolphin/dolphin2` (pack) | 1 (14.3%) | back_fin 0% |
-| 3 | `mv_default3` | `textures/entity/dolphin/dolphin3` (pack) | 1 (14.3%) | nose 0% |
+| 2 | `mv_default2` | `textures/entity/dolphin/dolphin2` (pack) | 1 (14.3%) | a propósito (back_fin 0%) |
+| 3 | `mv_default3` | `textures/entity/dolphin/dolphin3` (pack) | 1 (14.3%) | a propósito (nose 0%) |
 | 4 | `mv_default4` | `textures/entity/dolphin/dolphin4` (pack) | 1 (14.3%) |  |
-| 5 | `mv_default5` | `textures/entity/dolphin/dolphin5` (pack) | 1 (14.3%) | nose 0% |
+| 5 | `mv_default5` | `textures/entity/dolphin/dolphin5` (pack) | 1 (14.3%) | a propósito (nose 0%) |
 | 6 | `mv_default6` | `textures/entity/dolphin/dolphin6` (pack) | 1 (14.3%) |  |
 | 7 | `mv_default7` | `textures/entity/dolphin/dolphin7` (pack) | 1 (14.3%) |  |
 
@@ -27,7 +27,8 @@ En la base: 7 skins sobre el modelo vanilla, puerta `!q.is_baby`; BP con `mv:var
 
 ## Notas (fallos vistos en el juego y decisiones)
 
-- (ninguna todavía)
+- Revisadas (a propósito): `dolphin2`, `dolphin3`, `dolphin5` (narval sin aleta dorsal; ballena y orca sin
+  nariz de delfín). Render con `--view all` el 19-11-2026.
 
 ## Antes (`legacy-v5`)
 

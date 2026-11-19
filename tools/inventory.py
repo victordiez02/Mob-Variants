@@ -9,6 +9,9 @@ would show holes, e.g. crossed arms of illagers), BP events that roll mv:variant
 Writes the section between `<!-- inventory:start -->` and `<!-- inventory:end -->` of docs/mobs/<mob>.md
 (creates the file if needed; the rest of the file is hand-written and kept) and the table of
 docs/mobs/README.md. Prints the skins with coverage problems. Needs Pillow for the coverage check.
+Skins checked by hand and fine on purpose (a mask without nose…): list them in the md, outside the auto
+section, in a line `Revisadas (a propósito): `dolphin2`, `dolphin3`` (texture file names): they are shown
+as "a propósito" and no longer counted.
 """
 from __future__ import annotations
 
@@ -76,9 +79,21 @@ def variant_rolls(node: Json, path: str, out: dict[str, list[tuple[int, float]]]
             variant_rolls(v, path, out)
 
 
+def reviewed_skins(name: str) -> set[str]:
+    """Texture names listed in a hand-written `Revisadas (a propósito): `a`, `b`` line of the mob's md."""
+    path = os.path.join(DOCS, f"{name}.md")
+    if not os.path.exists(path):
+        return set()
+    text = open(path, encoding="utf-8").read()
+    if START in text and END in text:
+        text = text[:text.index(START)] + text[text.index(END):]
+    return {n for line in re.findall(r"Revisadas \(a propósito\):(.*)", text) for n in re.findall(r"`([^`]+)`", line)}
+
+
 def mob_section(f: str, rp: str, bp: str, gi: dict[str, Any]) -> tuple[str, dict[str, Any]]:
     d = load(f)["minecraft:client_entity"]["description"]
     name = os.path.basename(f).split(".")[0]
+    reviewed = reviewed_skins(name)
     ident = d["identifier"]
     van = vanilla_client_entity(ident)
     vdesc = van[1]["minecraft:client_entity"]["description"] if van else {}
@@ -128,12 +143,14 @@ def mob_section(f: str, rp: str, bp: str, gi: dict[str, Any]) -> tuple[str, dict
                 path = textures.get(k.lower(), "?")
                 tf = texture_file(path, [rp, VRP])
                 cv = coverage(tf, geo, vtex) if tf and geo is not None and label in ("skins", "con silla") else []
-                if cv:
+                ok = os.path.basename(path) in reviewed
+                if cv and not ok:
                     problems.append(f"{name}: {os.path.basename(path)} {', '.join(cv)}")
                 w = weights.get(i)
                 wtxt = f"{w:g} ({w / total:.1%})" if w is not None else "—"
                 src = "vanilla" if tf and os.path.abspath(tf).startswith(os.path.abspath(VRP)) else "pack"
-                lines.append(f"| {i} | `{k}` | `{path}` ({src}) | {wtxt} | {', '.join(cv)} |")
+                note = (f"a propósito ({', '.join(cv)})" if ok else ", ".join(cv)) if cv else ""
+                lines.append(f"| {i} | `{k}` | `{path}` ({src}) | {wtxt} | {note} |")
             if label == "skins":
                 skins_n = max(skins_n, len(items))
     lines += ["", END]

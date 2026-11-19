@@ -20,7 +20,7 @@ Retexturas puras (sin entidad, textura en la ruta vanilla): caballos, burro, mul
 | [blaze](blaze.md) | 8 | sí | 1 |
 | [chicken](chicken.md) | 4 | sí |  |
 | [creeper](creeper.md) | 18 | sí |  |
-| [dolphin](dolphin.md) | 7 | sí | 3 |
+| [dolphin](dolphin.md) | 7 | sí |  |
 | [ender_dragon](ender_dragon.md) | 7 | sí | 1 |
 | [enderman](enderman.md) | 26 | sí | 2 |
 | [evocation_illager](evocation_illager.md) | 31 | sí |  |
@@ -38,7 +38,7 @@ Retexturas puras (sin entidad, textura en la ruta vanilla): caballos, burro, mul
 | [sniffer](sniffer.md) | 9 | sí | 1 |
 | [spider](spider.md) | 25 | sí | 1 |
 | [turtle](turtle.md) | 6 | sí |  |
-| [vindicator](vindicator.md) | 21 | sí | 3 |
+| [vindicator](vindicator.md) | 21 | sí |  |
 | [wandering_trader](wandering_trader.md) | 9 | sí |  |
 | [warden](warden.md) | 6 | sí |  |
 | [witch](witch.md) | 9 | sí | 9 |
