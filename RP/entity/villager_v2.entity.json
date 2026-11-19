@@ -110,8 +110,20 @@
         "default": "geometry.villager_v2",
         "baby": "geometry.villager.baby",
         "mv_default": "geometry.villager_v2",
-        "mv_overlay": "geometry.mv.villager_overlay",
-        "mv_empty": "geometry.mv.zombie_empty"
+        "mv_farmer": "geometry.mv.villager_farmer",
+        "mv_fisherman": "geometry.mv.villager_fisherman",
+        "mv_shepherd": "geometry.mv.villager_shepherd",
+        "mv_fletcher": "geometry.mv.villager_fletcher",
+        "mv_librarian": "geometry.mv.villager_librarian",
+        "mv_cartographer": "geometry.mv.villager_cartographer",
+        "mv_cleric": "geometry.mv.villager_cleric",
+        "mv_armorer": "geometry.mv.villager_armorer",
+        "mv_weapon_smith": "geometry.mv.villager_weapon_smith",
+        "mv_tool_smith": "geometry.mv.villager_tool_smith",
+        "mv_butcher": "geometry.mv.villager_butcher",
+        "mv_leatherworker": "geometry.mv.villager_leatherworker",
+        "mv_stonemason": "geometry.mv.villager_stonemason",
+        "mv_nitwit": "geometry.mv.villager_nitwit"
       },
       "animations": {
         "general": "animation.villager.general",

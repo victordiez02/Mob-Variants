@@ -1,8 +1,13 @@
+
+// One layer per profession (geometry.mv.villager_<profession>), chosen by profession_index (0 = none).
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.villager_v2_overlay": {
-      "geometry": "variable.profession_index == 0 ? Geometry.mv_empty : Geometry.mv_overlay",
+      "geometry": "array.geos[variable.profession_index]",
+      "part_visibility": [
+        { "*": "variable.profession_index != 0" }
+      ],
       "materials": [
         { "*": "Material.mv_default" }
       ],
@@ -25,6 +30,25 @@
             "Texture.mv_leatherworker_overlay",
             "Texture.mv_stonemason_overlay",
             "Texture.mv_nitwit_overlay"
+          ]
+        },
+        "geometries": {
+          "array.geos": [
+            "Geometry.mv_farmer",
+            "Geometry.mv_farmer",
+            "Geometry.mv_fisherman",
+            "Geometry.mv_shepherd",
+            "Geometry.mv_fletcher",
+            "Geometry.mv_librarian",
+            "Geometry.mv_cartographer",
+            "Geometry.mv_cleric",
+            "Geometry.mv_armorer",
+            "Geometry.mv_weapon_smith",
+            "Geometry.mv_tool_smith",
+            "Geometry.mv_butcher",
+            "Geometry.mv_leatherworker",
+            "Geometry.mv_stonemason",
+            "Geometry.mv_nitwit"
           ]
         }
       }
