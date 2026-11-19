@@ -4,11 +4,11 @@
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.pig": {
-      "geometry": "Geometry.mv_legacy",
+      "geometry": "query.is_baby ? Geometry.baby : Geometry.default",
       "materials": [
-        { "*": "Material.mv_legacy" }
+        { "*": "Material.default" }
       ],
-      "textures": ["query.is_saddled ? array.mv_saddled[v.mv_variant - 1] : array.mv_skins[v.mv_variant - 1]"],
+      "textures": ["array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
         "textures": {
           "array.mv_skins": [
@@ -17,13 +17,6 @@
             "Texture.mv_default3",
             "Texture.mv_default4",
             "Texture.mv_default5"
-          ],
-          "array.mv_saddled": [
-            "Texture.mv_saddled",
-            "Texture.mv_saddled2",
-            "Texture.mv_saddled3",
-            "Texture.mv_saddled4",
-            "Texture.mv_saddled5"
           ]
         }
       }

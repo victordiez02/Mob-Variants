@@ -6,7 +6,7 @@
     "description": {
       "identifier": "minecraft:pig",
       "min_engine_version": "1.8.0",
-      "materials": { "default": "pig_v3", "mv_legacy": "pig" },
+      "materials": { "default": "pig_v3" },
       "textures": {
         "default": "textures/entity/pig/pig_v3",
         "saddled": "textures/entity/pig/pig_saddle",
@@ -16,33 +16,22 @@
         "baby_default": "textures/entity/pig/pig_temperate_baby",
         "baby_warm": "textures/entity/pig/pig_warm_baby",
         "baby_cold": "textures/entity/pig/pig_cold_baby",
-        "mv_default": "textures/entity/pig/pig",
+        "mv_default": "textures/entity/pig/pig1",
         "mv_default2": "textures/entity/pig/pig2",
         "mv_default3": "textures/entity/pig/pig3",
         "mv_default4": "textures/entity/pig/pig4",
-        "mv_default5": "textures/entity/pig/pig5",
-        "mv_saddled": "textures/entity/pig/pig_saddle",
-        "mv_saddled2": "textures/entity/pig/pig_saddle2",
-        "mv_saddled3": "textures/entity/pig/pig_saddle3",
-        "mv_saddled4": "textures/entity/pig/pig_saddle4",
-        "mv_saddled5": "textures/entity/pig/pig_saddle5"
+        "mv_default5": "textures/entity/pig/pig5"
       },
-      "geometry": {
-        "default": "geometry.pig.v3",
-        "baby": "geometry.pig.baby",
-        "mv_legacy": "geometry.pig"
-      },
+      "geometry": { "default": "geometry.pig.v3", "baby": "geometry.pig.baby" },
       "animations": {
         "setup": "animation.pig.setup",
         "walk": "animation.quadruped.walk",
         "look_at_target": "animation.common.look_at_target",
-        "baby_transform": "animation.pig.baby_transform",
-        "mv_setup_legacy": "animation.pig.setup.v1.0"
+        "baby_transform": "animation.pig.baby_transform"
       },
       "scripts": {
         "animate": [
-          { "setup": "!v.mv_active" },
-          { "mv_setup_legacy": "v.mv_active" },
+          "setup",
           { "walk": "query.modified_move_speed" },
           "look_at_target"
         ],
@@ -56,7 +45,7 @@
         "initialize": ["v.xvar = math.random_integer(1, 5);"]
       },
       "render_controllers": [
-        { "controller.render.saddle": "!v.mv_active" },
+        "controller.render.saddle",
         { "controller.render.pig.v4": "!v.mv_active" },
         { "controller.render.mv.pig": "v.mv_active" }
       ],

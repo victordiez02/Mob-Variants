@@ -15,27 +15,20 @@ En la base: 5 skins sobre el modelo vanilla, puerta `!q.is_baby && q.property('m
 
 | `mv:variant` | Clave | Textura | Peso BP | Revisar |
 |---|---|---|---|---|
-| 1 | `mv_default` | `textures/entity/pig/pig` (pack) | 805 (20.0%) |  |
+| 1 | `mv_default` | `textures/entity/pig/pig1` (pack) | 805 (20.0%) |  |
 | 2 | `mv_default2` | `textures/entity/pig/pig2` (pack) | 805 (20.0%) |  |
 | 3 | `mv_default3` | `textures/entity/pig/pig3` (pack) | 805 (20.0%) |  |
 | 4 | `mv_default4` | `textures/entity/pig/pig4` (pack) | 805 (20.0%) |  |
 | 5 | `mv_default5` | `textures/entity/pig/pig5` (pack) | 805 (20.0%) |  |
 
-### `array.mv_saddled` (con silla, 5)
-
-| `mv:variant` | Clave | Textura | Peso BP | Revisar |
-|---|---|---|---|---|
-| 1 | `mv_saddled` | `textures/entity/pig/pig_saddle` (pack) | 805 (20.0%) |  |
-| 2 | `mv_saddled2` | `textures/entity/pig/pig_saddle2` (pack) | 805 (20.0%) |  |
-| 3 | `mv_saddled3` | `textures/entity/pig/pig_saddle3` (pack) | 805 (20.0%) |  |
-| 4 | `mv_saddled4` | `textures/entity/pig/pig_saddle4` (pack) | 805 (20.0%) |  |
-| 5 | `mv_saddled5` | `textures/entity/pig/pig_saddle5` (pack) | 805 (20.0%) |  |
-
 <!-- inventory:end -->
 
 ## Notas (fallos vistos en el juego y decisiones)
 
-- Las skins usan el layout del modelo antiguo 64×32: en la base se dibujan con la geometría vanilla antigua `geometry.pig` y `animation.pig.setup.v1.0` (vanilla, no propias).
+- 20-11-2026: skins pasadas al modelo actual `geometry.pig.v3` (64×64): mismo UV de cabeza, hocico, patas y
+  cuerpo (28,8); la mitad de abajo queda transparente (capa exterior `inflate` del cuerpo, vacía en vanilla).
+  `pig.png` (ruta vanilla del modelo antiguo) pasa a `pig1.png`. La silla ya no va pintada en cada skin
+  (`pig_saddle*.png` borradas): es la capa vanilla `controller.render.saddle` encima.
 
 ## Antes (`legacy-v5`)
 

@@ -35,8 +35,7 @@ Copia del archivo vanilla actual (`mvlib.vanilla_client_entity`: el de mayor `mi
 `*.v1.0`) con:
 
 - Texturas `mv_default`, `mv_default2`, … en el orden de `mv:variant`. Mobs con un segundo juego de
-  texturas por estado: `mv_angry*` (abeja enfadada), `mv_charging*` (ghast disparando), `mv_saddled*`
-  (cerdo con silla).
+  texturas por estado: `mv_angry*` (abeja enfadada), `mv_charging*` (ghast disparando).
 - `initialize` + `v.xvar = math.random_integer(1, N);` (rana: `math.random(0, 100)`, ver su ficha).
 - Al principio de `pre_animation`:
   ```
@@ -62,9 +61,7 @@ Copia del archivo vanilla actual (`mvlib.vanilla_client_entity`: el de mayor `mi
 - Si el vanilla elige la textura con un array (abeja, pollo, rana, ghast, cerdo), la expresión se
   escribe a mano: p. ej. `query.is_angry ? array.mv_angry[v.mv_variant - 1] : array.mv_skins[v.mv_variant - 1]`.
 - Casos especiales (detalle en su ficha):
-  - **Cerdo**: sus skins usan el layout del modelo antiguo 64×32, así que el render controller propio
-    dibuja la geometría vanilla antigua `geometry.pig` (clave `mv_legacy`, material `pig`) y la entidad
-    lanza `animation.pig.setup.v1.0` (`mv_setup_legacy`) en vez de `setup` cuando `v.mv_active`.
+  - **Cerdo**: la silla es la capa vanilla `controller.render.saddle` encima de la skin (sin condición).
   - **Gólem de hierro**: `controller.render.iron_golem` no está en bedrock-samples, así que el propio
     sustituye al vanilla y dibuja `Texture.default` cuando `!v.mv_active`.
   - **Rana**: un solo array de 40 (`temperate1-10`, `cold1-10`, `warm1-10`, especiales); la entidad
@@ -76,7 +73,7 @@ Sin materiales propios: se usan las claves de material vanilla de la entidad.
 
 - Skins en `RP/textures/entity/<mob>/` (algunas carpetas vanilla compartidas: `illager/`, `piglin/`…).
 - Retexturas en la ruta vanilla (regla 6): `horse2/`, `panda/`, `slime/slime`, `skeleton/stray*`,
-  `sheep/sheep.tga`, y las skin 1 de pollo, cerdo, sniffer y zombi (`chicken/chicken`, `pig/pig`, …),
+  `sheep/sheep.tga`, y las skin 1 de pollo, sniffer y zombi (`chicken/chicken`, `zombie/zombie`, …),
   que también cambian el mob cuando se ve vanilla.
 - Toda skin debe **pintar todas las piezas del modelo vanilla** que pinta la textura vanilla:
   `python tools/inventory.py` lo comprueba (columna "Revisar" de la ficha).
