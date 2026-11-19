@@ -19,7 +19,7 @@ from collections import defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from mvlib import VRP, Geo, files, find_pack, geo_index, png_size, rc_list, require_vanilla, resolve_geo, texture_file  # noqa: E402
-from mvsim import Layer, Mob, State, bp_entity, spawn_distribution  # noqa: E402
+from mvsim import Layer, Mob, State, bp_entity, capped, spawn_distribution  # noqa: E402
 
 _SKIP_Q = {"property", "has_property", "position", "life_time", "anim_time", "modified_move_speed", "target_x_rotation",
            "target_y_rotation", "head_x_rotation", "head_y_rotation", "body_y_rotation", "time_stamp", "delta_time"}
@@ -110,7 +110,7 @@ def simulate_mob(f: str, name: str, detail: bool) -> bool:
         for y in ys:
             record(State(None, {"xvar": x + 0.5, "yvar": y, "zvar": (x * 7 % 100) + 0.5}), nobp, 1 / (100 * len(ys)))
     ent = bp_entity(mob.ident)
-    dist = spawn_distribution(ent) if ent else []
+    dist = capped(spawn_distribution(ent)) if ent else []
     for p, props in dist or [(1.0, {})]:
         bpv = props if ent else None
         res = record(State(bpv, {"xvar": 50.5, "yvar": 50.5, "zvar": 50.5}), bp, p)

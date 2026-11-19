@@ -1,12 +1,13 @@
 """Test the behavior pack in the real engine with a Bedrock Dedicated Server (BDS).
 
-    python -I tools/bdstest.py --bds <BDS folder> [mob ...] [--count 200] [--timeout 600] [--keep]
+    python -I tools/bdstest.py --bds <BDS folder> [mob ...] [--count 200] [--timeout 600] [--y 64] [--keep]
 
 The BDS folder can also come from the MV_BDS environment variable. Steps (all inside the BDS folder;
 the repo is not modified): copies RP, BP and the harness tools/bds/mv_test_bp as development packs,
 creates a fresh superflat world "mv_test" with the packs enabled, sets server.properties (backup in
 server.properties.mvbak, restored at the end unless --keep), starts the server, and for every mob of the BP
-spawns it --count times (fires minecraft:entity_spawned) and reads its mv:* properties.
+spawns it --count times (fires minecraft:entity_spawned) and reads its mv:* properties. --y: spawn height
+(64 = surface; --y 10 for underground branches such as zombie miners).
 
 Reports per mob and property: observed % of each value vs. the % expected from the BP randomize
 (mvsim.spawn_distribution, which ignores filters), values never seen, values out of range, and every
@@ -69,7 +70,7 @@ def pack_ref(folder: str) -> dict[str, object]:
     return {"pack_id": h["uuid"], "version": h["version"]}
 
 
-def prepare(bds: str, mobs: list[dict[str, object]], count: int) -> None:
+def prepare(bds: str, mobs: list[dict[str, object]], count: int, y: int = 64) -> None:
     rp, bp = find_pack("RP"), find_pack("BP")
     dev_bp, dev_rp = os.path.join(bds, "development_behavior_packs"), os.path.join(bds, "development_resource_packs")
     targets = {os.path.join(dev_bp, "mv_bp"): bp, os.path.join(dev_bp, "mv_test_bp"): HARNESS, os.path.join(dev_rp, "mv_rp"): rp}
@@ -78,7 +79,8 @@ def prepare(bds: str, mobs: list[dict[str, object]], count: int) -> None:
             shutil.rmtree(dst)
         shutil.copytree(src, dst, ignore=shutil.ignore_patterns(".mcattributes", "desktop.ini"))
     config = (f"export const MOBS = {json.dumps(mobs)};\nexport const COUNT = {count};\n"
-              f"export const BOSS_COUNT = {max(5, count // 10)};\nexport const BOSSES = {json.dumps(BOSSES)};\n")
+              f"export const BOSS_COUNT = {max(5, count // 10)};\nexport const BOSSES = {json.dumps(BOSSES)};\n"
+              f"export const Y = {y};\n")
     with open(os.path.join(dev_bp, "mv_test_bp", "scripts", "config.js"), "w", encoding="utf-8") as f:
         f.write(config)
     world = os.path.join(bds, "worlds", WORLD)
@@ -153,7 +155,8 @@ def main() -> int:
         return 2
     count = int(opt(args, "--count", "200") or 200)
     timeout = float(opt(args, "--timeout", "600") or 600)
-    flagged_values = {"--bds", "--count", "--timeout"}
+    y = int(opt(args, "--y", "64") or 64)
+    flagged_values = {"--bds", "--count", "--timeout", "--y"}
     only = [a for i, a in enumerate(args) if not a.startswith("--") and (i == 0 or args[i - 1] not in flagged_values)]
 
     mobs: list[dict[str, object]] = []
@@ -175,7 +178,7 @@ def main() -> int:
         expected[ident] = exp
 
     print(f"preparing {bds} ({len(mobs)} mobs, {count} each)")
-    prepare(bds, mobs, count)
+    prepare(bds, mobs, count, y)
     try:
         lines, done = run_server(bds, timeout)
     finally:

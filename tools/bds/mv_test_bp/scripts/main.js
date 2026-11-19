@@ -3,10 +3,10 @@
 // properties and prints one "MVTEST {json}" line per mob, then "MVTEST-DONE".
 // config.js is written by bdstest.py: export const MOBS = [{ id, props: [...] }], COUNT, BOSS_COUNT, BOSSES.
 import { world, system } from "@minecraft/server";
-import { MOBS, COUNT, BOSS_COUNT, BOSSES } from "./config.js";
+import { MOBS, COUNT, BOSS_COUNT, BOSSES, Y } from "./config.js";
 
-// y = 64: surface altitude, so filters like is_altitude >= 30 (zombie marks) take the surface branch.
-const LOC = { x: 0.5, y: 64, z: 0.5 };
+// Y (bdstest --y, default 64 = surface): filters like is_altitude < 30 (zombie miners) need --y 10.
+const LOC = { x: 0.5, y: Y, z: 0.5 };
 
 function log(obj) {
   console.warn("MVTEST " + JSON.stringify(obj));

@@ -223,3 +223,19 @@ def spawn_distribution(entity: Json, event: str = "minecraft:entity_spawned") ->
     start = {json.dumps(base, sort_keys=True): 1.0}
     out = walk(events.get(event) or {}, start)
     return sorted(((p, json.loads(k)) for k, p in out.items()), key=lambda x: -x[0])
+
+
+def capped(dist: list[tuple[float, dict[str, int]]], limit: int = 1500) -> list[tuple[float, dict[str, int]]]:
+    """At most `limit` outcomes of spawn_distribution (one property per feature multiplies them: the zombie
+    has ~400k): the most probable ones plus, for every property value, its most probable outcome. The
+    probabilities are those of the full distribution (they no longer add up to 1)."""
+    if len(dist) <= limit:
+        return dist
+    keep: dict[str, tuple[float, dict[str, int]]] = {}
+    seen: set[tuple[str, int]] = set()
+    for p, d in dist:  # sorted by probability
+        new = {(k, v) for k, v in d.items()} - seen
+        if new or len(keep) < limit:
+            keep[json.dumps(d, sort_keys=True)] = (p, d)
+            seen |= new
+    return sorted(keep.values(), key=lambda x: -x[0])

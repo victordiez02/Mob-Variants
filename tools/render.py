@@ -30,7 +30,7 @@ from PIL import Image, ImageDraw  # noqa: E402
 from molang import Env, Value, evaluate, num, truthy  # noqa: E402
 from mvlib import (ROOT, VRP, Geo, Json, find_pack, geo_index, keyed_ids, load, require_vanilla,  # noqa: E402
                    resolve_geo, texture_file)
-from mvsim import Layer, Mob, State, bone_visible, bp_entity, spawn_distribution  # noqa: E402
+from mvsim import Layer, Mob, State, bone_visible, bp_entity, capped, spawn_distribution  # noqa: E402
 
 Vec = tuple[float, float, float]
 Mat = list[list[float]]  # 4x4
@@ -487,7 +487,7 @@ def main() -> int:
         props.update(forced)
         states.append((1.0, State(props, queries=queries, climate=climate)))
     elif ent and "--nobp" not in opts:
-        for p, props in spawn_distribution(ent):
+        for p, props in capped(spawn_distribution(ent)):
             states.append((p, State(props, queries=queries, climate=climate)))
     else:
         for x in range(100):
