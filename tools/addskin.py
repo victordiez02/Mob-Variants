@@ -6,10 +6,11 @@ Steps (the four places that are easy to forget by hand):
 1. copies the PNG to RP/textures/entity/<mob>/ (unless it is already inside RP/);
 2. adds `"<key>": "<texture path>"` to the client entity (default key: next free mv_defaultN);
 3. appends `Texture.<key>` to the array of controller.render.mv.<mob> (default: its first texture array);
-4. if the render controller reads that array as `array[v.mv_variant - 1]` and the mob has a BP: widens
-   the range of mv:variant and adds `{weight, set_property: {mv:variant: N}}` to the randomize of
-   minecraft:entity_spawned that sets mv:variant (default weight: the last entry's).
-Without BP the new skin also enters the local roll automatically (arrays wrap around).
+4. if the render controller reads that array as `array[v.mv_variant - 1]`: raises the local roll of the
+   entity (`v.xvar = math.random_integer(1, N)`, used without BP) and, if the mob has a BP, widens the
+   range of mv:variant and adds `{weight, set_property: {mv:variant: N}}` to every randomize that sets
+   mv:variant (entity_spawned, entity_born, entity_transformed; default weight: the last entry's).
+Mobs with a second skin array (bee angry, ghast charging, pig saddled): add that texture by hand.
 Then run: python -I tools/check.py <mob> and python tools/render.py <mob> --bp mv:variant=N
 """
 from __future__ import annotations
@@ -27,18 +28,18 @@ def opt(args: list[str], name: str) -> str | None:
     return args[args.index(name) + 1] if name in args and args.index(name) + 1 < len(args) else None
 
 
-def find_variant_randomize(node: Json) -> list[Json] | None:
-    """The randomize list whose entries set mv:variant."""
+def variant_randomizes(node: Json, out: list[list[Json]]) -> list[list[Json]]:
+    """Every randomize list (in any event) whose entries set mv:variant."""
     if isinstance(node, dict):
         rnd = node.get("randomize")
         if isinstance(rnd, list) and any("mv:variant" in (o.get("set_property") or {}) for o in rnd):
-            return rnd
-        for k in ("sequence", "randomize"):
-            for child in node.get(k) or []:
-                found = find_variant_randomize(child)
-                if found is not None:
-                    return found
-    return None
+            out.append(rnd)
+        for v in node.values():
+            variant_randomizes(v, out)
+    elif isinstance(node, list):
+        for v in node:
+            variant_randomizes(v, out)
+    return out
 
 
 def main() -> int:
@@ -107,36 +108,47 @@ def main() -> int:
     texts = " ".join(rc.get("textures") or [])
     standard = re.search(re.escape(match) + r"\[\s*v(?:ariable)?\.mv_variant\s*-\s*1\s*\]", texts, re.I) is not None
 
-    # 4. BP
+    # 4. local roll (RP alone) and BP
+    roll_change = "local roll: not found (v.xvar = math.random_integer(1, N)), update it by hand"
+    if standard:
+        init = (desc.get("scripts") or {}).get("initialize") or []
+        for i, line in enumerate(init):
+            m = re.match(r"(v(?:ariable)?\.xvar\s*=\s*math\.random_integer\(\s*1\s*,\s*)(\d+)(\s*\);?)$", line, re.I)
+            if m:
+                init[i] = f"{m.group(1)}{index}{m.group(3)}"
+                roll_change = f"local roll: 1-{index}"
     bp_change = "no BP change"
-    bp_file = os.path.join(bp, "entities", f"{mob}.json")
+    ident = desc["identifier"]
+    bp_file = next((f for f in files(bp, "entities")
+                    if load_for_edit(f)[0]["minecraft:entity"]["description"]["identifier"] == ident), "")
     bp_data: Json = None
     bp_head: str | None = None
-    if os.path.exists(bp_file) and standard:
+    if bp_file and standard:
         bp_data, bp_head = load_for_edit(bp_file)
         e = bp_data["minecraft:entity"]
         prop = (e["description"].get("properties") or {}).get("mv:variant")
-        rnd = find_variant_randomize((e.get("events") or {}).get("minecraft:entity_spawned"))
-        if prop is None or rnd is None:
+        rnds = variant_randomizes(e.get("events") or {}, [])
+        if prop is None or not rnds:
             bp_change = "BP: mv:variant or its randomize not found, update it by hand"
             bp_data = None
         else:
-            values = {int(o["set_property"]["mv:variant"]) for o in rnd if "mv:variant" in (o.get("set_property") or {})}
-            if index in values:
-                bp_change = f"BP already sets mv:variant={index}"
-                bp_data = None
-            else:
-                weight = int(opt(args, "--weight") or rnd[-1].get("weight", 1))
-                rnd.append({"weight": weight, "set_property": {"mv:variant": index}})
-                prop["range"][1] = max(int(prop["range"][1]), index)
-                bp_change = f"BP: mv:variant={index} weight {weight}, range {prop['range']}"
+            weight = int(opt(args, "--weight") or rnds[0][-1].get("weight", 1))
+            for rnd in rnds:
+                values = {int(o["set_property"]["mv:variant"]) for o in rnd if "mv:variant" in (o.get("set_property") or {})}
+                if index not in values:
+                    rnd.append({"weight": weight, "set_property": {"mv:variant": index}})
+            prop["range"][1] = max(int(prop["range"][1]), index)
+            bp_change = f"BP: mv:variant={index} weight {weight} in {len(rnds)} randomize, range {prop['range']}"
     elif not standard:
         bp_change = f"{match} is not read as [v.mv_variant - 1]: BP not changed, check the render controller"
 
     print(f"texture  {tex_path}" + (f"  (copy {png} -> {rel(copy_to)})" if copy_to else ""))
     print(f"entity   {rel(ent_file)}: {key}")
     print(f"rc       {rel(rc_file)}: {match}[{index - 1}] = Texture.{key}")
+    print(f"roll     {roll_change}")
     print(f"bp       {bp_change}")
+    if len(arrays) > 1:
+        print(f"WARNING  {rc_name} has more skin arrays ({', '.join(a for a in arrays if a != match)}): add their texture by hand")
     if dry:
         print("(dry run: nothing written)")
         return 0
