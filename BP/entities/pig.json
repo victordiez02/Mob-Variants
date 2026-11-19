@@ -21,13 +21,7 @@
         },
         "mv:variant": {
           "type": "int",
-          "range": [0, 8],
-          "default": 0,
-          "client_sync": true
-        },
-        "mv:mark_variant": {
-          "type": "int",
-          "range": [0, 3],
+          "range": [0, 5],
           "default": 0,
           "client_sync": true
         }
@@ -337,49 +331,45 @@
               {
                 "weight": 805,
                 "set_property": { "mv:variant": 5 }
-              },
-              {
-                "weight": 100,
-                "set_property": { "mv:variant": 6 }
-              },
-              {
-                "weight": 100,
-                "set_property": { "mv:variant": 7 }
-              },
-              {
-                "weight": 5,
-                "set_property": { "mv:variant": 8 }
-              }
-            ]
-          },
-          {
-            "randomize": [
-              {
-                "weight": 875,
-                "set_property": { "mv:mark_variant": 0 }
-              },
-              {
-                "weight": 100,
-                "set_property": { "mv:mark_variant": 1 }
-              },
-              {
-                "weight": 20,
-                "set_property": { "mv:mark_variant": 2 }
-              },
-              {
-                "weight": 5,
-                "set_property": { "mv:mark_variant": 3 }
               }
             ]
           }
         ]
       },
       "minecraft:entity_born": {
-        "remove": {},
-        "add": {
-          "component_groups": ["minecraft:pig_baby"]
-        },
-        "trigger": "minecraft:randomize_sound_variant"
+        "sequence": [
+          {
+            "remove": {},
+            "add": {
+              "component_groups": ["minecraft:pig_baby"]
+            },
+            "trigger": "minecraft:randomize_sound_variant"
+          },
+          {
+            "randomize": [
+              {
+                "weight": 805,
+                "set_property": { "mv:variant": 1 }
+              },
+              {
+                "weight": 805,
+                "set_property": { "mv:variant": 2 }
+              },
+              {
+                "weight": 805,
+                "set_property": { "mv:variant": 3 }
+              },
+              {
+                "weight": 805,
+                "set_property": { "mv:variant": 4 }
+              },
+              {
+                "weight": 805,
+                "set_property": { "mv:variant": 5 }
+              }
+            ]
+          }
+        ]
       },
       "minecraft:ageable_grow_up": {
         "remove": {

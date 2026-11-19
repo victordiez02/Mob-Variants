@@ -21,7 +21,7 @@
         },
         "mv:variant": {
           "type": "int",
-          "range": [0, 11],
+          "range": [0, 4],
           "default": 0,
           "client_sync": true
         }
@@ -280,45 +280,41 @@
               {
                 "weight": 7,
                 "set_property": { "mv:variant": 4 }
-              },
-              {
-                "weight": 1.5,
-                "set_property": { "mv:variant": 5 }
-              },
-              {
-                "weight": 1.5,
-                "set_property": { "mv:variant": 6 }
-              },
-              {
-                "weight": 1.5,
-                "set_property": { "mv:variant": 7 }
-              },
-              {
-                "weight": 1.5,
-                "set_property": { "mv:variant": 8 }
-              },
-              {
-                "weight": 1.5,
-                "set_property": { "mv:variant": 9 }
-              },
-              {
-                "weight": 1.5,
-                "set_property": { "mv:variant": 10 }
-              },
-              {
-                "weight": 1.5,
-                "set_property": { "mv:variant": 11 }
               }
             ]
           }
         ]
       },
       "minecraft:entity_born": {
-        "remove": {},
-        "add": {
-          "component_groups": ["minecraft:chicken_baby"]
-        },
-        "trigger": "minecraft:randomize_sound_variant"
+        "sequence": [
+          {
+            "remove": {},
+            "add": {
+              "component_groups": ["minecraft:chicken_baby"]
+            },
+            "trigger": "minecraft:randomize_sound_variant"
+          },
+          {
+            "randomize": [
+              {
+                "weight": 7,
+                "set_property": { "mv:variant": 1 }
+              },
+              {
+                "weight": 7,
+                "set_property": { "mv:variant": 2 }
+              },
+              {
+                "weight": 7,
+                "set_property": { "mv:variant": 3 }
+              },
+              {
+                "weight": 7,
+                "set_property": { "mv:variant": 4 }
+              }
+            ]
+          }
+        ]
       },
       "minecraft:ageable_grow_up": {
         "remove": {

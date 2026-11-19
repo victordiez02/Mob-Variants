@@ -1,18 +1,17 @@
-// Render controller wither skeleton
-// v.mv_variant: skin del mob (1-9).
-// v.mv_mark: default (0), Nameless wither (1) o hunter wither (2).
+// Copy of the vanilla controller.render.wither_skeleton with the skin texture.
+// v.mv_variant: 1-9 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.wither_skeleton": {
-      "geometry": "Geometry.mv_default",
+      "geometry": "Geometry.default",
       "materials": [
-        { "*": "Material.mv_default" }
+        { "*": "Material.default" }
       ],
-      "textures": ["array.xskins[v.mv_variant ? v.mv_variant - 1 : variable.xvar]"],
+      "textures": ["array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
         "textures": {
-          "array.xskins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",
@@ -25,27 +24,6 @@
           ]
         }
       }
-    },
-    "controller.render.mv.wither_skeleton_cape": {
-      "geometry": "(v.mv_variant ? v.mv_mark == 1 : variable.xvar < 20) ? Geometry.mv_cape : Geometry.mv_empty",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["Texture.mv_cape"]
-    },
-    "controller.render.mv.backpack": {
-      "geometry": "(v.mv_variant ? v.mv_mark == 2 : variable.xvar > 85) ? Geometry.mv_backpack : Geometry.mv_empty",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["Texture.mv_backpack"]
-    },
-    "controller.render.mv.piglin_heads": {
-      "geometry": "(v.mv_variant ? v.mv_mark == 2 : variable.xvar > 85) ? Geometry.mv_piglin_heads : Geometry.mv_empty",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["Texture.mv_piglin_heads"]
     }
   }
 }

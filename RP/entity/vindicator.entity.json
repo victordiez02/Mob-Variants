@@ -1,14 +1,12 @@
+// vindicator: vanilla client entity (vindicator.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:vindicator",
       "min_engine_version": "1.8.0",
-      "materials": {
-        "default": "vindicator",
-        "mv_default": "vindicator",
-        "mv_armor": "enderman"
-      },
+      "materials": { "default": "vindicator" },
       "textures": {
         "default": "textures/entity/vindicator",
         "mv_default": "textures/entity/vindicator",
@@ -22,29 +20,37 @@
         "mv_default9": "textures/entity/vindicator/vindicator9",
         "mv_default10": "textures/entity/vindicator/vindicator10",
         "mv_default11": "textures/entity/vindicator/vindicator11",
-        "mv_default13": "textures/entity/vindicator/vindicator13",
-        "mv_default14": "textures/entity/vindicator/vindicator14",
-        "mv_default15": "textures/entity/vindicator/vindicator15",
-        "mv_default16": "textures/entity/vindicator/vindicator16",
-        "mv_default17": "textures/entity/vindicator/vindicator17",
-        "mv_default18": "textures/entity/vindicator/vindicator18",
-        "mv_default19": "textures/entity/vindicator/vindicator19",
-        "mv_default20": "textures/entity/vindicator/vindicator20",
-        "mv_default21": "textures/entity/vindicator/vindicator21",
-        "mv_clown": "textures/entity/vindicator/vindicator_clown",
-        "mv_armor": "textures/entity/vindicator/vindicator_armor",
-        "mv_armor2": "textures/entity/vindicator/vindicator_armor2",
-        "mv_armor3": "textures/entity/vindicator/vindicator_armor3",
-        "mv_armor4": "textures/entity/vindicator/vindicator_armor4"
+        "mv_default12": "textures/entity/vindicator/vindicator13",
+        "mv_default13": "textures/entity/vindicator/vindicator14",
+        "mv_default14": "textures/entity/vindicator/vindicator15",
+        "mv_default15": "textures/entity/vindicator/vindicator16",
+        "mv_default16": "textures/entity/vindicator/vindicator17",
+        "mv_default17": "textures/entity/vindicator/vindicator18",
+        "mv_default18": "textures/entity/vindicator/vindicator19",
+        "mv_default19": "textures/entity/vindicator/vindicator20",
+        "mv_default20": "textures/entity/vindicator/vindicator21",
+        "mv_default21": "textures/entity/vindicator/vindicator_clown"
       },
-      "geometry": {
-        "default": "geometry.vindicator.v1.8",
-        "mv_default": "geometry.vindicator.v1.8",
-        "mv_empty": "geometry.mv.zombie_empty",
-        "mv_armor": "geometry.mv.vindicator_armor",
-        "mv_armor2": "geometry.mv.vindicator_armor2"
-      },
+      "geometry": { "default": "geometry.vindicator.v1.8" },
       "spawn_egg": { "texture": "spawn_egg_vindicator" },
+      "scripts": {
+        "scale": "0.9375",
+        "animate": [
+          "vindicator_base",
+          "vindicator_walk",
+          "controller_look_at_target",
+          "controller_vindicator_base",
+          "controller_riding"
+        ],
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;",
+          "variable.riding_y_offset_with_respect_to_player = 1.25;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
+        ],
+        "initialize": ["v.xvar = math.random_integer(1, 21);"]
+      },
       "animations": {
         "look_at_target_default": "animation.humanoid.look_at_target.default",
         "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
@@ -61,27 +67,12 @@
         "vindicator_hand_attack": "animation.vindicator.hand_attack",
         "riding.body": "animation.humanoid.riding.body"
       },
-      "render_controllers": ["controller.render.mv.vindicator", "controller.render.mv.vindicator_armor"],
+      "render_controllers": [
+        { "controller.render.vindicator": "!v.mv_active" },
+        { "controller.render.mv.vindicator": "v.mv_active" }
+      ],
       "enable_attachables": true,
-      "hide_armor": true,
-      "scripts": {
-        "scale": "0.9375",
-        "animate": [
-          "vindicator_base",
-          "vindicator_walk",
-          "controller_look_at_target",
-          "controller_vindicator_base",
-          "controller_riding"
-        ],
-        "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "variable.riding_y_offset_with_respect_to_player = 1.25;",
-          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
-          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
-        ],
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      }
+      "hide_armor": true
     }
   }
 }

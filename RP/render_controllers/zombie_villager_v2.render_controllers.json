@@ -1,15 +1,17 @@
+// Copy of the vanilla controller.render.zombie_villager_v3_base with the skin texture.
+// v.mv_variant: 1-9 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
-    "controller.render.mv.zombie_villager_v2_base": {
-      "geometry": "Geometry.mv_default",
+    "controller.render.mv.zombie_villager_v2": {
+      "geometry": "query.is_baby? Geometry.baby : Geometry.default",
       "materials": [
-        { "*": "Material.mv_default" }
+        { "*": "Material.default" }
       ],
-      "textures": ["array.xskins[variable.xvar]"],
+      "textures": ["query.is_baby? Texture.baby_default : array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
         "textures": {
-          "array.xskins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",
@@ -22,44 +24,6 @@
           ]
         }
       }
-    },
-    "controller.render.mv.zombie_villager_v2_masked": {
-      "arrays": {
-        "textures": {
-          "Array.biomes": [
-            "Texture.mv_plains",
-            "Texture.mv_desert",
-            "Texture.mv_jungle",
-            "Texture.mv_savanna",
-            "Texture.mv_snow",
-            "Texture.mv_swamp",
-            "Texture.mv_taiga"
-          ],
-          "Array.professions": [
-            "Texture.mv_farmer",
-            "Texture.mv_fisherman",
-            "Texture.mv_shepherd",
-            "Texture.mv_fletcher",
-            "Texture.mv_librarian",
-            "Texture.mv_cartographer",
-            "Texture.mv_cleric",
-            "Texture.mv_armorer",
-            "Texture.mv_weapon_smith",
-            "Texture.mv_tool_smith",
-            "Texture.mv_butcher",
-            "Texture.mv_leatherworker",
-            "Texture.mv_stonemason",
-            "Texture.mv_nitwit"
-          ]
-        }
-      },
-      "geometry": "Geometry.mv_default",
-      "materials": [
-        {
-          "*": "q.is_baby ? Material.mv_default : Material.mv_masked"
-        }
-      ],
-      "textures": ["Array.biomes[q.mark_variant]", "Array.professions[variable.profession_index]"]
     }
   }
 }

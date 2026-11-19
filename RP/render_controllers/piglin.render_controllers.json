@@ -1,17 +1,17 @@
-// Render controller piglin
-// Uso mark variant porque variant esta ya usada.
+// Copy of the vanilla controller.render.piglin.v2 with the skin texture.
+// v.mv_variant: 1-13 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.piglin": {
-      "geometry": "Geometry.mv_default",
+      "geometry": "query.is_baby ? Geometry.baby : Geometry.default",
       "materials": [
-        { "*": "Material.mv_default" }
+        { "*": "Material.default" }
       ],
-      "textures": ["v.mv_mark ? array.xskins[v.mv_mark - 1] : array.xskins[variable.xvar]"],
+      "textures": ["query.is_baby ? Texture.baby : array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
         "textures": {
-          "array.xskins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",

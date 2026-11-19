@@ -1,19 +1,17 @@
+// Copy of the vanilla controller.render.guardian with the skin texture.
+// v.mv_variant: 1-9 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.guardian": {
-      "geometry": "Geometry.mv_default",
+      "geometry": "Geometry.default",
       "materials": [
-        {
-          "*": "q.is_ghost ? Material.mv_ghost : Material.mv_default"
-        }
+        { "*": "query.is_ghost ? Material.ghost : Material.default" }
       ],
-      "textures": [
-        "q.is_elder ? Texture.mv_elder : (v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar])"
-      ],
+      "textures": ["query.is_elder ? Texture.elder : array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
         "textures": {
-          "array.xskins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",

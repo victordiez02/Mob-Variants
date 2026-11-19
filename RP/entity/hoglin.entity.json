@@ -1,9 +1,11 @@
+// hoglin: vanilla client entity (hoglin.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:hoglin",
-      "materials": { "default": "hoglin", "mv_default": "hoglin" },
+      "materials": { "default": "hoglin" },
       "textures": {
         "default": "textures/entity/hoglin/hoglin",
         "baby": "textures/entity/hoglin/hoglin_baby",
@@ -17,19 +19,25 @@
         "mv_default8": "textures/entity/hoglin/hoglin8",
         "mv_default9": "textures/entity/hoglin/hoglin9",
         "mv_default10": "textures/entity/hoglin/hoglin10",
-        "mv_default11": "textures/entity/hoglin/hoglin11",
-        "mv_piglinhead": "textures/entity/skeleton/piglin_heads"
+        "mv_default11": "textures/entity/hoglin/hoglin11"
       },
       "geometry": {
         "default": "geometry.hoglin",
-        "baby": "geometry.hoglin.baby",
-        "mv_default": "geometry.hoglin",
-        "mv_empty": "geometry.mv.zombie_empty",
-        "mv_piglinhead": "geometry.mv.hoglin_piglinhead",
-        "mv_piglinhead2": "geometry.mv.hoglin_piglinhead2",
-        "mv_wither_skull": "geometry.mv.hoglin_wither_skull"
+        "baby": "geometry.hoglin.baby"
       },
       "spawn_egg": { "texture": "spawn_egg_hoglin" },
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0 && (!q.is_baby);",
+          "variable.tcos_right_side = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.tcos_left_side = -variable.tcos_right_side;",
+          "variable.attack_head_rot =  Math.sin(variable.attack_time * 180.0) * -37.3;"
+        ],
+        "scale": "query.is_baby ? 2.0 : 1.0",
+        "initialize": ["v.xvar = math.random_integer(1, 11);"],
+        "animate": ["look_at_target_controller", "walk_controller", "attack_controller"]
+      },
       "animations": {
         "walk": "animation.hoglin.walk",
         "look_at_target": "animation.hoglin.look_at_target",
@@ -41,22 +49,8 @@
       },
       "render_controllers": [
         { "controller.render.hoglin.v2": "!v.mv_active" },
-        { "controller.render.mv.hoglin": "v.mv_active" },
-        { "controller.render.mv.hoglin_piglinhead": "v.mv_active" }
-      ],
-      "scripts": {
-        "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "v.mv_active = !q.is_baby;",
-          "variable.tcos_right_side = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
-          "variable.tcos_left_side = -variable.tcos_right_side;",
-          "variable.attack_head_rot =  Math.sin(variable.attack_time * 180.0) * -37.3;"
-        ],
-        "scale": "query.is_baby ? 2.0 : 1.0",
-        "animate": ["look_at_target_controller", "walk_controller", "attack_controller"],
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      }
+        { "controller.render.mv.hoglin": "v.mv_active" }
+      ]
     }
   }
 }

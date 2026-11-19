@@ -1,10 +1,12 @@
+// wither_skeleton: vanilla client entity (wither_skeleton.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:wither_skeleton",
       "min_engine_version": "1.8.0",
-      "materials": { "default": "skeleton", "mv_default": "enderman" },
+      "materials": { "default": "skeleton" },
       "textures": {
         "default": "textures/entity/skeleton/wither_skeleton",
         "mv_default": "textures/entity/skeleton/wither_skeleton",
@@ -15,18 +17,34 @@
         "mv_default6": "textures/entity/skeleton/wither_skeleton6",
         "mv_default7": "textures/entity/skeleton/wither_skeleton7",
         "mv_default8": "textures/entity/skeleton/wither_skeleton8",
-        "mv_default9": "textures/entity/skeleton/wither_skeleton9",
-        "mv_cape": "textures/entity/skeleton/wither_skeleton_cape",
-        "mv_backpack": "textures/entity/skeleton/backpack",
-        "mv_piglin_heads": "textures/entity/skeleton/piglin_heads"
+        "mv_default9": "textures/entity/skeleton/wither_skeleton9"
       },
-      "geometry": {
-        "default": "geometry.skeleton.wither.v1.8",
-        "mv_default": "geometry.skeleton.wither.v1.8",
-        "mv_empty": "geometry.mv.zombie_empty",
-        "mv_cape": "geometry.mv.wither_skeleton_cape",
-        "mv_backpack": "geometry.mv.backpack",
-        "mv_piglin_heads": "geometry.mv.piglin_heads"
+      "geometry": { "default": "geometry.skeleton.wither.v1.8" },
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;",
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.riding_y_offset_with_respect_to_player = -1.0;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
+        ],
+        "initialize": ["v.xvar = math.random_integer(1, 9);"],
+        "animate": [
+          "look_at_target",
+          "move_controller",
+          "riding",
+          "holding_controller",
+          "brandish_spear_controller",
+          "charging_controller",
+          "attack",
+          "sneaking_controller",
+          "damage_nearby_mobs_controller",
+          "bow_and_arrow_controller",
+          "use_item_progress_controller",
+          "wither_skeleton_attack_controller",
+          "swimming_controller"
+        ]
       },
       "animations": {
         "look_at_target_default": "animation.humanoid.look_at_target.default",
@@ -62,39 +80,11 @@
         "swimming_controller": "controller.animation.zombie.swimming"
       },
       "render_controllers": [
-        "controller.render.mv.wither_skeleton",
-        "controller.render.mv.wither_skeleton_cape",
-        "controller.render.mv.backpack",
-        "controller.render.mv.piglin_heads"
+        { "controller.render.wither_skeleton": "!v.mv_active" },
+        { "controller.render.mv.wither_skeleton": "v.mv_active" }
       ],
       "spawn_egg": { "texture": "spawn_egg_wither_skeleton" },
-      "enable_attachables": true,
-      "scripts": {
-        "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
-          "variable.riding_y_offset_with_respect_to_player = -1.0;",
-          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
-          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
-        ],
-        "animate": [
-          "look_at_target",
-          "move_controller",
-          "riding",
-          "holding_controller",
-          "brandish_spear_controller",
-          "charging_controller",
-          "attack",
-          "sneaking_controller",
-          "damage_nearby_mobs_controller",
-          "bow_and_arrow_controller",
-          "use_item_progress_controller",
-          "wither_skeleton_attack_controller",
-          "swimming_controller"
-        ],
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      }
+      "enable_attachables": true
     }
   }
 }

@@ -1,15 +1,17 @@
+// Copy of the vanilla controller.render.iron_golem with the skin texture.
+// v.mv_variant: 1-15 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.iron_golem": {
+      "geometry": "Geometry.default",
       "materials": [
-        { "*": "Material.mv_default" }
+        { "*": "Material.default" }
       ],
-      "geometry": "Geometry.mv_default",
-      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
+      "textures": ["v.mv_active ? array.mv_skins[v.mv_variant - 1] : Texture.default"],
       "arrays": {
         "textures": {
-          "array.xskins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",
@@ -24,19 +26,10 @@
             "Texture.mv_default12",
             "Texture.mv_default13",
             "Texture.mv_default14",
-            "Texture.mv_default15",
-            "Texture.mv_item_sorter"
+            "Texture.mv_default15"
           ]
         }
       }
-    },
-    "controller.render.mv.irongolem_rose": {
-      "rebuild_animation_matrices": true,
-      "geometry": "v.mv_variant ? (v.mv_mark ? Geometry.mv_rose : Geometry.mv_empty) : (variable.xvar < 30 ? Geometry.mv_rose : Geometry.mv_empty)",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["Texture.mv_default2"]
     }
   }
 }

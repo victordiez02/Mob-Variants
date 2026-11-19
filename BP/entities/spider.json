@@ -9,13 +9,7 @@
       "properties": {
         "mv:variant": {
           "type": "int",
-          "range": [0, 26],
-          "default": 0,
-          "client_sync": true
-        },
-        "mv:mark_variant": {
-          "type": "int",
-          "range": [0, 1],
+          "range": [0, 25],
           "default": 0,
           "client_sync": true
         }
@@ -468,22 +462,6 @@
               {
                 "weight": 1,
                 "set_property": { "mv:variant": 25 }
-              },
-              {
-                "weight": 1,
-                "set_property": { "mv:variant": 26 }
-              }
-            ]
-          },
-          {
-            "randomize": [
-              {
-                "weight": 85,
-                "set_property": { "mv:mark_variant": 0 }
-              },
-              {
-                "weight": 15,
-                "set_property": { "mv:mark_variant": 1 }
               }
             ]
           }

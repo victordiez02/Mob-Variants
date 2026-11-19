@@ -1,9 +1,11 @@
+// iron_golem: vanilla client entity (iron_golem.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:iron_golem",
-      "materials": { "default": "iron_golem", "mv_default": "iron_golem" },
+      "materials": { "default": "iron_golem" },
       "textures": {
         "default": "textures/entity/iron_golem",
         "cracked_high": "textures/entity/iron_golem/cracked_high",
@@ -24,15 +26,9 @@
         "mv_default12": "textures/entity/iron_golem/iron_golem12",
         "mv_default13": "textures/entity/iron_golem/iron_golem13",
         "mv_default14": "textures/entity/iron_golem/iron_golem14",
-        "mv_default15": "textures/entity/iron_golem/iron_golem15",
-        "mv_item_sorter": "textures/entity/iron_golem/iron_golem_item_sorter"
+        "mv_default15": "textures/entity/iron_golem/iron_golem15"
       },
-      "geometry": {
-        "default": "geometry.irongolem",
-        "mv_default": "geometry.irongolem",
-        "mv_empty": "geometry.mv.zombie_empty",
-        "mv_rose": "geometry.mv.irongolem_rose"
-      },
+      "geometry": { "default": "geometry.irongolem" },
       "animations": {
         "walk": "animation.iron_golem.walk",
         "move": "animation.iron_golem.move",
@@ -44,21 +40,17 @@
         "move_controller": "controller.animation.iron_golem.move",
         "arm_controller": "controller.animation.iron_golem.arm_movement"
       },
-      "render_controllers": [
-        "controller.render.mv.iron_golem",
-        "controller.render.mv.irongolem_rose",
-        "controller.render.iron_golem_cracks"
-      ],
-      "spawn_egg": { "texture": "spawn_egg_iron_golem" },
+      "render_controllers": ["controller.render.mv.iron_golem", "controller.render.iron_golem_cracks"],
       "scripts": {
         "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;",
           "variable.modified_tcos0 = Math.clamp(((Math.cos(query.modified_distance_moved * 13.5) * Math.min(query.modified_move_speed, 0.6) / variable.gliding_speed_value) * 25.0), -12.5, 12.5);"
         ],
         "animate": ["look_at_target", "move_controller", "arm_controller"],
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      }
+        "initialize": ["v.xvar = math.random_integer(1, 15);"]
+      },
+      "spawn_egg": { "texture": "spawn_egg_iron_golem" }
     }
   }
 }

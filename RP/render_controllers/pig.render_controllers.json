@@ -1,125 +1,29 @@
-// Render controller pig: legacy vanilla pig model (+ ears/tail overlay) for the custom skins.
-// v.mv_variant: pig (1-5), capybara (6), snail (7), golden pig (8).
-// v.mv_mark: flower (1), chest (2), both (3) or none (0).
+// Copy of the vanilla controller.render.pig.v4 with the skin texture.
+// v.mv_variant: 1-5 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.pig": {
-      "geometry": "v.mv_variant ? array.geosq[v.mv_variant - 1] : (variable.xvar < 15 ? Geometry.mv_capibara : (variable.xvar < 30 ? Geometry.mv_snail : Geometry.mv_default))",
+      "geometry": "Geometry.mv_legacy",
       "materials": [
-        { "*": "Material.mv_glow" }
+        { "*": "Material.mv_legacy" }
       ],
-      "textures": [
-        "v.mv_variant ? (query.is_saddled ? array.yskinsq[v.mv_variant - 1] : array.xskinsq[v.mv_variant - 1]) : (query.is_saddled ? (variable.xvar < 15 ? Texture.mv_capibara_saddle : (variable.xvar < 30 ? Texture.mv_snail_saddle : array.yskins[variable.xvar])) : (variable.xvar < 15 ? Texture.mv_capibara : (variable.xvar < 30 ? Texture.mv_snail : array.xskins[variable.xvar])))"
-      ],
+      "textures": ["query.is_saddled ? array.mv_saddled[v.mv_variant - 1] : array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
         "textures": {
-          "array.xskins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",
             "Texture.mv_default4",
             "Texture.mv_default5"
           ],
-          "array.yskins": [
+          "array.mv_saddled": [
             "Texture.mv_saddled",
             "Texture.mv_saddled2",
             "Texture.mv_saddled3",
             "Texture.mv_saddled4",
             "Texture.mv_saddled5"
-          ],
-          "array.xskinsq": [
-            "Texture.mv_default",
-            "Texture.mv_default2",
-            "Texture.mv_default3",
-            "Texture.mv_default4",
-            "Texture.mv_default5",
-            "Texture.mv_capibara",
-            "Texture.mv_snail",
-            "Texture.mv_gold"
-          ],
-          "array.yskinsq": [
-            "Texture.mv_saddled",
-            "Texture.mv_saddled2",
-            "Texture.mv_saddled3",
-            "Texture.mv_saddled4",
-            "Texture.mv_saddled5",
-            "Texture.mv_capibara_saddle",
-            "Texture.mv_snail_saddle",
-            "Texture.mv_gold_saddle"
-          ]
-        },
-        "geometries": {
-          "array.geosq": [
-            "Geometry.mv_default",
-            "Geometry.mv_default",
-            "Geometry.mv_default",
-            "Geometry.mv_default",
-            "Geometry.mv_default",
-            "Geometry.mv_capibara",
-            "Geometry.mv_snail",
-            "Geometry.mv_default"
-          ]
-        }
-      }
-    },
-    "controller.render.mv.pig_flower": {
-      "geometry": "v.mv_variant ? ((v.mv_mark == 1 || v.mv_mark == 3) && v.mv_variant < 6 ? Geometry.mv_flower : Geometry.mv_empty) : (variable.xvar > 89 && variable.xvar < 99 ? Geometry.mv_flower : Geometry.mv_empty)",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["Texture.mv_flower"]
-    },
-    "controller.render.mv.pig_chest": {
-      "geometry": "v.mv_variant ? ((v.mv_mark == 2 || v.mv_mark == 3) && v.mv_variant < 6 ? Geometry.mv_chest : Geometry.mv_empty) : (variable.xvar >= 99 ? Geometry.mv_chest : Geometry.mv_empty)",
-      "materials": [
-        { "*": "Material.mv_glow" }
-      ],
-      "textures": ["Texture.mv_chest"]
-    },
-    "controller.render.mv.pig_extras": {
-      "geometry": "Geometry.mv_extras",
-      "materials": [
-        { "*": "Material.mv_glow" }
-      ],
-      "textures": [
-        "v.mv_variant ? (query.is_saddled ? array.yskinsq[v.mv_variant - 1] : array.xskinsq[v.mv_variant - 1]) : (query.is_saddled ? (variable.xvar < 15 ? Texture.mv_capibara_saddle : (variable.xvar < 30 ? Texture.mv_snail_saddle : array.yskins[variable.xvar])) : (variable.xvar < 15 ? Texture.mv_capibara : (variable.xvar < 30 ? Texture.mv_snail : array.xskins[variable.xvar])))"
-      ],
-      "arrays": {
-        "textures": {
-          "array.xskins": [
-            "Texture.mv_default",
-            "Texture.mv_default2",
-            "Texture.mv_default3",
-            "Texture.mv_default4",
-            "Texture.mv_default5"
-          ],
-          "array.yskins": [
-            "Texture.mv_saddled",
-            "Texture.mv_saddled2",
-            "Texture.mv_saddled3",
-            "Texture.mv_saddled4",
-            "Texture.mv_saddled5"
-          ],
-          "array.xskinsq": [
-            "Texture.mv_default",
-            "Texture.mv_default2",
-            "Texture.mv_default3",
-            "Texture.mv_default4",
-            "Texture.mv_default5",
-            "Texture.mv_capibara",
-            "Texture.mv_snail",
-            "Texture.mv_gold"
-          ],
-          "array.yskinsq": [
-            "Texture.mv_saddled",
-            "Texture.mv_saddled2",
-            "Texture.mv_saddled3",
-            "Texture.mv_saddled4",
-            "Texture.mv_saddled5",
-            "Texture.mv_capibara_saddle",
-            "Texture.mv_snail_saddle",
-            "Texture.mv_gold_saddle"
           ]
         }
       }

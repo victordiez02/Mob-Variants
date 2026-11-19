@@ -12,12 +12,6 @@
           "range": [0, 21],
           "default": 0,
           "client_sync": true
-        },
-        "mv:mark_variant": {
-          "type": "int",
-          "range": [0, 4],
-          "default": 0,
-          "client_sync": true
         }
       }
     },
@@ -413,30 +407,6 @@
               {
                 "weight": 5,
                 "set_property": { "mv:variant": 21 }
-              }
-            ]
-          },
-          {
-            "randomize": [
-              {
-                "weight": 60,
-                "set_property": { "mv:mark_variant": 0 }
-              },
-              {
-                "weight": 10,
-                "set_property": { "mv:mark_variant": 1 }
-              },
-              {
-                "weight": 10,
-                "set_property": { "mv:mark_variant": 2 }
-              },
-              {
-                "weight": 10,
-                "set_property": { "mv:mark_variant": 3 }
-              },
-              {
-                "weight": 10,
-                "set_property": { "mv:mark_variant": 4 }
               }
             ]
           }

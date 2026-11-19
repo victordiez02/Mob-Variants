@@ -1,14 +1,12 @@
+// creeper: vanilla client entity (creeper.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:creeper",
       "min_engine_version": "1.8.0",
-      "materials": {
-        "default": "creeper",
-        "charged": "charged_creeper",
-        "mv_default": "enderman"
-      },
+      "materials": { "default": "creeper", "charged": "charged_creeper" },
       "textures": {
         "default": "textures/entity/creeper/creeper",
         "charged": "textures/entity/creeper/creeper_armor",
@@ -27,45 +25,28 @@
         "mv_default13": "textures/entity/creeper/creeper13",
         "mv_default14": "textures/entity/creeper/creeper14",
         "mv_default15": "textures/entity/creeper/creeper15",
-        "mv_default16": "textures/entity/creeper/creeper16",
-        "mv_default17": "textures/entity/creeper/creeper17",
-        "mv_default18": "textures/entity/creeper/creeper18",
-        "mv_default19": "textures/entity/creeper/creeper19",
-        "mv_skeleton": "textures/entity/skeleton/skeleton",
-        "mv_skeleton2": "textures/entity/skeleton/skeleton2",
-        "mv_skeleton3": "textures/entity/skeleton/skeleton3",
-        "mv_skeleton4": "textures/entity/skeleton/skeleton4",
-        "mv_skeleton5": "textures/entity/skeleton/skeleton5",
-        "mv_skeleton6": "textures/entity/skeleton/skeleton6",
-        "mv_skeleton7": "textures/entity/skeleton/skeleton7",
-        "mv_skeleton8": "textures/entity/skeleton/skeleton8",
-        "mv_skeleton9": "textures/entity/skeleton/skeleton9",
-        "mv_skeleton10": "textures/entity/skeleton/skeleton10",
-        "mv_skeleton11": "textures/entity/skeleton/skeleton11",
-        "mv_skeleton12": "textures/entity/skeleton/skeleton12",
-        "mv_skeleton13": "textures/entity/skeleton/skeleton13",
-        "mv_skeleton14": "textures/entity/skeleton/skeleton14",
-        "mv_skeleton15": "textures/entity/skeleton/skeleton15",
-        "mv_tnt": "textures/entity/creeper/creeper_TnT",
-        "mv_cactus": "textures/entity/creeper/creeper_cactus",
-        "mv_stone": "textures/entity/creeper/creeper_stone",
-        "mv_shells": "textures/entity/creeper/creeper_shells"
+        "mv_default16": "textures/entity/creeper/creeper17",
+        "mv_default17": "textures/entity/creeper/creeper18",
+        "mv_default18": "textures/entity/creeper/creeper19"
       },
       "geometry": {
         "default": "geometry.creeper.v1.8",
-        "charged": "geometry.creeper.charged.v1.8",
-        "mv_default": "geometry.creeper.v1.8",
-        "mv_extras": "geometry.mv.creeper_extras",
-        "mv_empty": "geometry.mv.zombie_empty",
-        "mv_skeleton": "geometry.mv.creeper_s",
-        "mv_tnt": "geometry.mv.creeper_TnT",
-        "mv_ribs_tnt": "geometry.mv.creeper_ribs_TnT",
-        "mv_tnt_s": "geometry.mv.creeper_TnT_s",
-        "mv_cactus": "geometry.mv.creeper_cactus",
-        "mv_stone": "geometry.mv.creeper_stone",
-        "mv_shells": "geometry.mv.creeper_shells"
+        "charged": "geometry.creeper.charged.v1.8"
       },
       "spawn_egg": { "texture": "spawn_egg_creeper" },
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;",
+          "variable.wobble = Math.sin(query.swell_amount * 5730) * query.swell_amount * 0.01 + 1.0;",
+          "variable.swelling_scale1 = (Math.pow(Math.clamp(query.swell_amount, 0.0, 1.0), 4.0) * 0.4 + 1.0) * variable.wobble;",
+          "variable.swelling_scale2 = (Math.pow(Math.clamp(query.swell_amount, 0.0, 1.0), 4.0) * 0.1 + 1.0) / variable.wobble;",
+          "variable.leg_rot = Math.cos(query.modified_distance_moved * 38.17326) * 80.22 * query.modified_move_speed;",
+          "variable.flash = Math.mod(Math.Round(query.swell_amount * 10.0), 2.0);"
+        ],
+        "animate": ["creeper_head_controller", "creeper_legs_controller", "creeper_swelling_controller"],
+        "initialize": ["v.xvar = math.random_integer(1, 18);"]
+      },
       "animations": {
         "creeper_head": "animation.common.look_at_target",
         "creeper_legs": "animation.creeper.legs",
@@ -75,26 +56,10 @@
         "creeper_swelling_controller": "controller.animation.creeper.swelling"
       },
       "render_controllers": [
-        "controller.render.mv.creeper",
-        { "controller.render.mv.creeper_extras": "!v.mv_skeleton" },
-        "controller.render.mv.creeper_hat",
-        "controller.render.mv.creeper_TnT_s",
+        { "controller.render.creeper": "!v.mv_active" },
+        { "controller.render.mv.creeper": "v.mv_active" },
         { "controller.render.creeper_armor": "query.is_powered" }
-      ],
-      "scripts": {
-        "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_skeleton = v.mv_variant ? v.mv_variant >= 20 : v.xvar >= 75;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "variable.wobble = Math.sin(query.swell_amount * 5730) * query.swell_amount * 0.01 + 1.0;",
-          "variable.swelling_scale1 = (Math.pow(Math.clamp(query.swell_amount, 0.0, 1.0), 4.0) * 0.4 + 1.0) * variable.wobble;",
-          "variable.swelling_scale2 = (Math.pow(Math.clamp(query.swell_amount, 0.0, 1.0), 4.0) * 0.1 + 1.0) / variable.wobble;",
-          "variable.leg_rot = Math.cos(query.modified_distance_moved * 38.17326) * 80.22 * query.modified_move_speed;",
-          "variable.flash = Math.mod(Math.Round(query.swell_amount * 10.0), 2.0);"
-        ],
-        "animate": ["creeper_head_controller", "creeper_legs_controller", "creeper_swelling_controller"],
-        "initialize": ["v.xvar = Math.random(0, 99);"]
-      }
+      ]
     }
   }
 }

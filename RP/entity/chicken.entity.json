@@ -1,3 +1,5 @@
+// chicken: vanilla client entity (chicken.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
@@ -7,9 +9,7 @@
       "materials": {
         "default": "chicken",
         "legs": "chicken_legs",
-        "cold": "chicken_cold",
-        "mv_default": "entity_alphatest",
-        "mv_legs": "entity_alphatest"
+        "cold": "chicken_cold"
       },
       "textures": {
         "default": "textures/entity/chicken/chicken",
@@ -19,26 +19,15 @@
         "baby_warm": "textures/entity/chicken/chicken_warm_baby",
         "baby_cold": "textures/entity/chicken/chicken_cold_baby",
         "mv_default": "textures/entity/chicken/chicken",
-        "mv_default3": "textures/entity/chicken/chicken3",
-        "mv_default4": "textures/entity/chicken/chicken4",
-        "mv_default5": "textures/entity/chicken/chicken5",
-        "mv_duck": "textures/entity/chicken/duck",
-        "mv_duck2": "textures/entity/chicken/duck2",
-        "mv_duck3": "textures/entity/chicken/duck3",
-        "mv_goose": "textures/entity/chicken/goose",
-        "mv_goose2": "textures/entity/chicken/goose2",
-        "mv_goose3": "textures/entity/chicken/goose3",
-        "mv_goose4": "textures/entity/chicken/goose4"
+        "mv_default2": "textures/entity/chicken/chicken3",
+        "mv_default3": "textures/entity/chicken/chicken4",
+        "mv_default4": "textures/entity/chicken/chicken5"
       },
       "geometry": {
         "default": "geometry.chicken.v1.12",
         "warm": "geometry.chicken.v1.12",
         "cold": "geometry.chicken.cold",
-        "baby": "geometry.chicken.baby",
-        "mv_default": "geometry.chicken.v1.12",
-        "mv_extras": "geometry.mv.chicken_extras",
-        "mv_duck": "geometry.mv.duck",
-        "mv_goose": "geometry.mv.goose"
+        "baby": "geometry.chicken.baby"
       },
       "animations": {
         "move": "animation.chicken.move",
@@ -46,14 +35,6 @@
         "look_at_target": "animation.common.look_at_target",
         "baby_transform": "animation.chicken.baby_transform"
       },
-      "render_controllers": [
-        { "controller.render.chicken.v3": "!v.mv_active" },
-        { "controller.render.mv.chicken": "v.mv_active" },
-        {
-          "controller.render.mv.chicken_extras": "v.mv_active && v.mv_is_chicken"
-        }
-      ],
-      "spawn_egg": { "texture": "spawn_egg_chicken" },
       "scripts": {
         "animate": [
           "general",
@@ -61,16 +42,20 @@
           "look_at_target"
         ],
         "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_active = !q.is_baby && q.property('minecraft:climate_variant') == 'temperate';",
-          "v.mv_is_chicken = v.mv_variant ? v.mv_variant <= 4 : v.xvar >= 30;",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0 && (!q.is_baby && q.property('minecraft:climate_variant') == 'temperate');",
           "t.variant = query.property('minecraft:climate_variant');",
           "v.index = (t.variant == 'temperate') ? 0 : ((t.variant == 'warm') ? 1 : 2);",
           "v.is_cold = t.variant == 'cold';"
         ],
         "scale": "query.is_baby ? 2.0 : 1.0",
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      }
+        "initialize": ["v.xvar = math.random_integer(1, 4);"]
+      },
+      "render_controllers": [
+        { "controller.render.chicken.v3": "!v.mv_active" },
+        { "controller.render.mv.chicken": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_chicken" }
     }
   }
 }

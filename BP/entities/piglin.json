@@ -7,7 +7,7 @@
       "is_spawnable": true,
       "is_summonable": true,
       "properties": {
-        "mv:mark_variant": {
+        "mv:variant": {
           "type": "int",
           "range": [0, 13],
           "default": 0,
@@ -831,61 +831,121 @@
             "randomize": [
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 1 }
+                "set_property": { "mv:variant": 1 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 2 }
+                "set_property": { "mv:variant": 2 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 3 }
+                "set_property": { "mv:variant": 3 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 4 }
+                "set_property": { "mv:variant": 4 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 5 }
+                "set_property": { "mv:variant": 5 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 6 }
+                "set_property": { "mv:variant": 6 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 7 }
+                "set_property": { "mv:variant": 7 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 8 }
+                "set_property": { "mv:variant": 8 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 9 }
+                "set_property": { "mv:variant": 9 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 10 }
+                "set_property": { "mv:variant": 10 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 11 }
+                "set_property": { "mv:variant": 11 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 12 }
+                "set_property": { "mv:variant": 12 }
               },
               {
                 "weight": 1,
-                "set_property": { "mv:mark_variant": 13 }
+                "set_property": { "mv:variant": 13 }
               }
             ]
           }
         ]
       },
-      "minecraft:entity_born": { "trigger": "spawn_baby" },
+      "minecraft:entity_born": {
+        "sequence": [
+          { "trigger": "spawn_baby" },
+          {
+            "randomize": [
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 1 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 2 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 3 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 4 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 5 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 6 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 7 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 8 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 9 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 10 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 11 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 12 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 13 }
+              }
+            ]
+          }
+        ]
+      },
       "spawn_adult_no_hunting": {
         "randomize": [
           { "weight": 1, "trigger": "spawn_adult_ranged_no_hunting" },

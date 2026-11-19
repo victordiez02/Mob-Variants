@@ -1,18 +1,17 @@
-// Render controller pillager
-// v.mv_variant: skin del mob.
-// v.mv_mark: si lleva casco (1, 2, 3, 4) o si no (0).
+// Copy of the vanilla controller.render.pillager with the skin texture.
+// v.mv_variant: 1-23 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.pillager": {
-      "geometry": "Geometry.mv_default",
+      "geometry": "Geometry.default",
       "materials": [
-        { "*": "Material.mv_default" }
+        { "*": "Material.default" }
       ],
-      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
+      "textures": ["array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
         "textures": {
-          "array.xskins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",
@@ -35,25 +34,8 @@
             "Texture.mv_default20",
             "Texture.mv_default21",
             "Texture.mv_default22",
-            "Texture.mv_pillager_totem"
+            "Texture.mv_default23"
           ]
-        }
-      }
-    },
-    "controller.render.mv.pillager_helmet": {
-      "rebuild_animation_matrices": true,
-      "geometry": "v.mv_variant ? array.geosq[v.mv_mark] : (variable.xvar < 60 ? Geometry.mv_helmet : Geometry.mv_empty)",
-      "materials": [
-        { "*": "Material.mv_helmet" }
-      ],
-      "textures": ["v.mv_variant ? array.xskinsq[v.mv_mark] : array.xskins[variable.xvar]"],
-      "arrays": {
-        "textures": {
-          "array.xskins": ["Texture.mv_helmet", "Texture.mv_helmet2", "Texture.mv_helmet3"],
-          "array.xskinsq": ["Texture.mv_helmet", "Texture.mv_helmet", "Texture.mv_helmet2", "Texture.mv_helmet3"]
-        },
-        "geometries": {
-          "array.geosq": ["Geometry.mv_empty", "Geometry.mv_helmet", "Geometry.mv_helmet", "Geometry.mv_helmet"]
         }
       }
     }

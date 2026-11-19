@@ -13,12 +13,6 @@
           "range": [0, 9],
           "default": 0,
           "client_sync": true
-        },
-        "mv:mark_variant": {
-          "type": "int",
-          "range": [0, 2],
-          "default": 0,
-          "client_sync": true
         }
       }
     },
@@ -605,22 +599,6 @@
               {
                 "weight": 5,
                 "set_property": { "mv:variant": 9 }
-              }
-            ]
-          },
-          {
-            "randomize": [
-              {
-                "weight": 60,
-                "set_property": { "mv:mark_variant": 0 }
-              },
-              {
-                "weight": 20,
-                "set_property": { "mv:mark_variant": 1 }
-              },
-              {
-                "weight": 15,
-                "set_property": { "mv:mark_variant": 2 }
               }
             ]
           }

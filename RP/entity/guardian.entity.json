@@ -1,15 +1,12 @@
+// guardian: vanilla client entity (guardian.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:guardian",
       "min_engine_version": "1.8.0",
-      "materials": {
-        "default": "guardian",
-        "ghost": "guardian_ghost",
-        "mv_default": "enderman",
-        "mv_ghost": "guardian_ghost"
-      },
+      "materials": { "default": "guardian", "ghost": "guardian_ghost" },
       "textures": {
         "default": "textures/entity/guardian",
         "elder": "textures/entity/guardian_elder",
@@ -22,13 +19,11 @@
         "mv_default6": "textures/entity/guardian/guardian6",
         "mv_default7": "textures/entity/guardian/guardian7",
         "mv_default8": "textures/entity/guardian/guardian8",
-        "mv_default9": "textures/entity/guardian/guardian9",
-        "mv_elder": "textures/entity/guardian_elder"
+        "mv_default9": "textures/entity/guardian/guardian9"
       },
       "geometry": {
         "default": "geometry.guardian.v1.8",
-        "ghost": "geometry.guardian",
-        "mv_default": "geometry.guardian.v1.8"
+        "ghost": "geometry.guardian"
       },
       "animations": {
         "setup": "animation.guardian.setup",
@@ -37,11 +32,10 @@
         "look_at_target": "animation.common.look_at_target",
         "move_eye": "animation.guardian.move_eye"
       },
-      "render_controllers": ["controller.render.mv.guardian"],
-      "spawn_egg": { "texture": "spawn_egg_guardian" },
       "scripts": {
         "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;",
           "variable.spike_shake = Math.sin(query.life_time * 2000)/50;",
           "variable.spike_animation_speed = query.life_time < 0.1 ? 0.0 : (!query.is_in_water ? (Math.round(Math.sin(query.life_time * 2000)) == 0.0 ? (Math.random(0.0, 1.0)) : (variable.spike_animation_speed)) : (query.is_moving ? (variable.spike_animation_speed - variable.spike_animation_speed * 0.06) : (variable.spike_animation_speed + (1.0 - variable.spike_animation_speed) * 0.06)));",
           "variable.spike_extension = (1.0 - variable.spike_animation_speed) * 0.55;",
@@ -54,9 +48,14 @@
           "variable.spike_animation_speed = 0.0;",
           "variable.tail_animation_speed = 0.0;",
           "variable.tail_swim = 0.0;",
-          "v.xvar = Math.random(0,99);"
+          "v.xvar = math.random_integer(1, 9);"
         ]
-      }
+      },
+      "render_controllers": [
+        { "controller.render.guardian": "!v.mv_active" },
+        { "controller.render.mv.guardian": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_guardian" }
     }
   }
 }

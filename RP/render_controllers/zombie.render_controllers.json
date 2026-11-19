@@ -1,16 +1,17 @@
-// Render controller zombie. Each feature is one property (BP) or one roll (RP alone), see zombie.entity.json:
-// v.mv_variant: skin 1-33, 34 = golden zombie.
-// v.mv_pose: 0 standing, 1-2 broken jaw, 3-6 crawling (zombie2-5, own animation; 4-6 lost legs).
-// v.mv_miner: miner helmet + pickaxe. v.mv_sword: stuck sword 0 none, 1-2 chest, 3 head.
-// v.mv_sword_type (sword and pickaxe): 0 wood, 1 stone, 2 gold, 3 iron, 4 diamond, 5 netherite.
-// v.mv_arrow, v.mv_arrow2: stuck arrow 0 none, 1-2 head, 3-4 chest, 5 knee.
+// Copy of the vanilla controller.render.zombie.v2 with the skin texture.
+// v.mv_variant: 1-33 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.zombie": {
+      "geometry": "query.is_baby ? Geometry.baby : Geometry.default",
+      "materials": [
+        { "*": "Material.default" }
+      ],
+      "textures": ["query.is_baby ? Texture.baby : array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
         "textures": {
-          "array.skins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",
@@ -43,125 +44,10 @@
             "Texture.mv_default30",
             "Texture.mv_default31",
             "Texture.mv_default32",
-            "Texture.mv_default33",
-            "Texture.mv_gold"
-          ]
-        },
-        "geometries": {
-          "array.poses": [
-            "Geometry.mv_default",
-            "Geometry.mv_brokenjaw",
-            "Geometry.mv_brokenjaw2",
-            "Geometry.mv_default2",
-            "Geometry.mv_default3",
-            "Geometry.mv_default4",
-            "Geometry.mv_default5"
+            "Texture.mv_default33"
           ]
         }
-      },
-      "geometry": "array.poses[v.mv_pose]",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["array.skins[v.mv_variant - 1]"]
-    },
-    "controller.render.mv.zombie_leg": {
-      "geometry": "v.mv_pose >= 3 ? Geometry.mv_leg : Geometry.mv_empty",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["Texture.mv_leg"]
-    },
-    "controller.render.mv.zombie_sword": {
-      "arrays": {
-        "textures": {
-          "array.tools": [
-            "Texture.mv_overlay",
-            "Texture.mv_overlay2",
-            "Texture.mv_overlay3",
-            "Texture.mv_overlay4",
-            "Texture.mv_overlay5",
-            "Texture.mv_overlay6"
-          ]
-        },
-        "geometries": {
-          "array.swords": [
-            "Geometry.mv_empty",
-            "Geometry.mv_sword_chest",
-            "Geometry.mv_sword_chest2",
-            "Geometry.mv_sword_head"
-          ]
-        }
-      },
-      "geometry": "array.swords[v.mv_sword]",
-      "materials": [
-        { "*": "Material.mv_overlay" }
-      ],
-      "textures": ["array.tools[v.mv_sword_type]"]
-    },
-    "controller.render.mv.zombie_arrow": {
-      "arrays": {
-        "geometries": {
-          "array.arrows": [
-            "Geometry.mv_empty",
-            "Geometry.mv_arrow_head_1",
-            "Geometry.mv_arrow_head_2",
-            "Geometry.mv_arrow_chest_1",
-            "Geometry.mv_arrow_chest_2",
-            "Geometry.mv_arrow_knee"
-          ]
-        }
-      },
-      "geometry": "array.arrows[v.mv_arrow]",
-      "materials": [
-        { "*": "Material.mv_overlay" }
-      ],
-      "textures": ["Texture.mv_arrows"]
-    },
-    "controller.render.mv.zombie_arrow2": {
-      "arrays": {
-        "geometries": {
-          "array.arrows": [
-            "Geometry.mv_empty",
-            "Geometry.mv_arrow_head_1",
-            "Geometry.mv_arrow_head_2",
-            "Geometry.mv_arrow_chest_1",
-            "Geometry.mv_arrow_chest_2",
-            "Geometry.mv_arrow_knee"
-          ]
-        }
-      },
-      "geometry": "array.arrows[v.mv_arrow2]",
-      "materials": [
-        { "*": "Material.mv_overlay" }
-      ],
-      "textures": ["Texture.mv_arrows"]
-    },
-    "controller.render.mv.zombie_miner": {
-      "geometry": "v.mv_miner ? Geometry.mv_miner : Geometry.mv_empty",
-      "materials": [
-        { "*": "Material.mv_overlay" }
-      ],
-      "textures": ["Texture.mv_miner"]
-    },
-    "controller.render.mv.zombie_miner_pickaxe": {
-      "arrays": {
-        "textures": {
-          "array.tools": [
-            "Texture.mv_overlay",
-            "Texture.mv_overlay2",
-            "Texture.mv_overlay3",
-            "Texture.mv_overlay4",
-            "Texture.mv_overlay5",
-            "Texture.mv_overlay6"
-          ]
-        }
-      },
-      "geometry": "v.mv_miner ? Geometry.mv_pickaxe : Geometry.mv_empty",
-      "materials": [
-        { "*": "Material.mv_overlay" }
-      ],
-      "textures": ["array.tools[v.mv_sword_type]"]
+      }
     }
   }
 }

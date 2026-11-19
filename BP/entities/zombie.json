@@ -13,43 +13,7 @@
         },
         "mv:variant": {
           "type": "int",
-          "range": [0, 34],
-          "default": 0,
-          "client_sync": true
-        },
-        "mv:pose": {
-          "type": "int",
-          "range": [0, 6],
-          "default": 0,
-          "client_sync": true
-        },
-        "mv:miner": {
-          "type": "int",
-          "range": [0, 1],
-          "default": 0,
-          "client_sync": true
-        },
-        "mv:sword": {
-          "type": "int",
-          "range": [0, 3],
-          "default": 0,
-          "client_sync": true
-        },
-        "mv:sword_type": {
-          "type": "int",
-          "range": [0, 5],
-          "default": 0,
-          "client_sync": true
-        },
-        "mv:arrow": {
-          "type": "int",
-          "range": [0, 5],
-          "default": 0,
-          "client_sync": true
-        },
-        "mv:arrow2": {
-          "type": "int",
-          "range": [0, 5],
+          "range": [0, 33],
           "default": 0,
           "client_sync": true
         }
@@ -718,7 +682,147 @@
       }
     },
     "events": {
-      "minecraft:entity_born": { "trigger": "minecraft:as_baby" },
+      "minecraft:entity_born": {
+        "sequence": [
+          { "trigger": "minecraft:as_baby" },
+          {
+            "randomize": [
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 1 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 2 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 3 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 4 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 5 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 6 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 7 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 8 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 9 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 10 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 11 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 12 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 13 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 14 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 15 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 16 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 17 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 18 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 19 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 20 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 21 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 22 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 23 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 24 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 25 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 26 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 27 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 28 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 29 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 30 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 31 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 32 }
+              },
+              {
+                "weight": 100,
+                "set_property": { "mv:variant": 33 }
+              }
+            ]
+          }
+        ]
+      },
       "minecraft:entity_spawned": {
         "sequence": [
           {
@@ -872,173 +976,6 @@
               {
                 "weight": 100,
                 "set_property": { "mv:variant": 33 }
-              },
-              {
-                "weight": 1,
-                "set_property": { "mv:variant": 34 }
-              }
-            ]
-          },
-          {
-            "randomize": [
-              {
-                "weight": 23.4,
-                "set_property": { "mv:pose": 0 }
-              },
-              {
-                "weight": 23.3,
-                "set_property": { "mv:pose": 1 }
-              },
-              {
-                "weight": 23.3,
-                "set_property": { "mv:pose": 2 }
-              },
-              {
-                "weight": 7.5,
-                "set_property": { "mv:pose": 3 }
-              },
-              {
-                "weight": 7.5,
-                "set_property": { "mv:pose": 4 }
-              },
-              {
-                "weight": 7.5,
-                "set_property": { "mv:pose": 5 }
-              },
-              {
-                "weight": 7.5,
-                "set_property": { "mv:pose": 6 }
-              }
-            ]
-          },
-          {
-            "filters": {
-              "test": "int_property",
-              "domain": "mv:pose",
-              "operator": "<",
-              "value": 3
-            },
-            "sequence": [
-              {
-                "filters": {
-                  "test": "is_altitude",
-                  "operator": "<",
-                  "value": 30
-                },
-                "randomize": [
-                  {
-                    "weight": 70,
-                    "set_property": { "mv:miner": 0 }
-                  },
-                  {
-                    "weight": 30,
-                    "set_property": { "mv:miner": 1 }
-                  }
-                ]
-              },
-              {
-                "randomize": [
-                  {
-                    "weight": 80,
-                    "set_property": { "mv:sword": 0 }
-                  },
-                  {
-                    "weight": 7.5,
-                    "set_property": { "mv:sword": 1 }
-                  },
-                  {
-                    "weight": 7.5,
-                    "set_property": { "mv:sword": 2 }
-                  },
-                  {
-                    "weight": 5,
-                    "set_property": { "mv:sword": 3 }
-                  }
-                ]
-              },
-              {
-                "randomize": [
-                  {
-                    "weight": 76,
-                    "set_property": { "mv:arrow": 0 }
-                  },
-                  {
-                    "weight": 4,
-                    "set_property": { "mv:arrow": 1 }
-                  },
-                  {
-                    "weight": 5,
-                    "set_property": { "mv:arrow": 2 }
-                  },
-                  {
-                    "weight": 5,
-                    "set_property": { "mv:arrow": 3 }
-                  },
-                  {
-                    "weight": 5,
-                    "set_property": { "mv:arrow": 4 }
-                  },
-                  {
-                    "weight": 5,
-                    "set_property": { "mv:arrow": 5 }
-                  }
-                ]
-              },
-              {
-                "randomize": [
-                  {
-                    "weight": 76,
-                    "set_property": { "mv:arrow2": 0 }
-                  },
-                  {
-                    "weight": 4,
-                    "set_property": { "mv:arrow2": 1 }
-                  },
-                  {
-                    "weight": 5,
-                    "set_property": { "mv:arrow2": 2 }
-                  },
-                  {
-                    "weight": 5,
-                    "set_property": { "mv:arrow2": 3 }
-                  },
-                  {
-                    "weight": 5,
-                    "set_property": { "mv:arrow2": 4 }
-                  },
-                  {
-                    "weight": 5,
-                    "set_property": { "mv:arrow2": 5 }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "randomize": [
-              {
-                "weight": 25,
-                "set_property": { "mv:sword_type": 0 }
-              },
-              {
-                "weight": 25,
-                "set_property": { "mv:sword_type": 1 }
-              },
-              {
-                "weight": 20,
-                "set_property": { "mv:sword_type": 2 }
-              },
-              {
-                "weight": 25,
-                "set_property": { "mv:sword_type": 3 }
-              },
-              {
-                "weight": 4,
-                "set_property": { "mv:sword_type": 4 }
-              },
-              {
-                "weight": 1,
-                "set_property": { "mv:sword_type": 5 }
               }
             ]
           }

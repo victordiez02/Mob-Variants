@@ -685,9 +685,45 @@
         ]
       },
       "minecraft:entity_born": {
-        "add": {
-          "component_groups": ["bee_baby", "shelter_detection", "track_attacker", "look_for_food"]
-        }
+        "sequence": [
+          {
+            "add": {
+              "component_groups": ["bee_baby", "shelter_detection", "track_attacker", "look_for_food"]
+            }
+          },
+          {
+            "randomize": [
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 1 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 2 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 3 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 4 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 5 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 6 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 7 }
+              }
+            ]
+          }
+        ]
       },
       "minecraft:spawn_adult": {
         "add": {

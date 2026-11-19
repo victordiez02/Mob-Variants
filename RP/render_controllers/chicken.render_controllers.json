@@ -1,51 +1,21 @@
-// Render controller chicken
-// v.mv_variant: puede ser un pollo (1, 2, 3, 4), un ganso (5, 6, 7, 8) o un pato (9, 10, 11).
-// Pollos: modelo vanilla geometry.chicken.v1.12 + capa chicken_extras (cola, papada, cresta, pico inferior).
+// Copy of the vanilla controller.render.chicken.v3 with the skin texture.
+// v.mv_variant: 1-4 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.chicken": {
-      "geometry": "v.mv_variant ? array.geosq[(v.mv_variant - 1) / 4] : (variable.xvar >= 30 ? Geometry.mv_default : (variable.xvar < 15 ? Geometry.mv_duck : Geometry.mv_goose))",
+      "geometry": "query.is_baby ? Geometry.baby : Array.geos[v.index]",
       "materials": [
-        { "*": "Material.mv_default" },
-        { "leg*": "Material.mv_legs" }
+        { "*": "v.is_cold ? Material.cold : Material.default" },
+        { "leg*": "Material.legs" }
       ],
-      "textures": [
-        "v.mv_variant ? array.skinsq[v.mv_variant - 1] : (variable.xvar < 15 ? array.dskins[variable.xvar] : (variable.xvar < 30 ? array.gskins[variable.xvar] : array.xskins[variable.xvar]))"
-      ],
+      "textures": ["array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
-        "textures": {
-          "array.xskins": ["Texture.mv_default", "Texture.mv_default3", "Texture.mv_default4", "Texture.mv_default5"],
-          "array.dskins": ["Texture.mv_duck", "Texture.mv_duck2", "Texture.mv_duck3"],
-          "array.gskins": ["Texture.mv_goose", "Texture.mv_goose2", "Texture.mv_goose3", "Texture.mv_goose4"],
-          "array.skinsq": [
-            "Texture.mv_default",
-            "Texture.mv_default3",
-            "Texture.mv_default4",
-            "Texture.mv_default5",
-            "Texture.mv_goose",
-            "Texture.mv_goose2",
-            "Texture.mv_goose3",
-            "Texture.mv_goose4",
-            "Texture.mv_duck",
-            "Texture.mv_duck2",
-            "Texture.mv_duck3"
-          ]
-        },
         "geometries": {
-          "array.geosq": ["Geometry.mv_default", "Geometry.mv_goose", "Geometry.mv_duck"]
-        }
-      }
-    },
-    "controller.render.mv.chicken_extras": {
-      "geometry": "Geometry.mv_extras",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
-      "arrays": {
+          "Array.geos": ["Geometry.default", "Geometry.warm", "Geometry.cold"]
+        },
         "textures": {
-          "array.xskins": ["Texture.mv_default", "Texture.mv_default3", "Texture.mv_default4", "Texture.mv_default5"]
+          "array.mv_skins": ["Texture.mv_default", "Texture.mv_default2", "Texture.mv_default3", "Texture.mv_default4"]
         }
       }
     }

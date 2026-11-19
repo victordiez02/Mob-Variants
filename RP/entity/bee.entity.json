@@ -1,9 +1,11 @@
+// bee: vanilla client entity (bee.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:bee",
-      "materials": { "default": "bee", "mv_default": "bee" },
+      "materials": { "default": "bee" },
       "textures": {
         "default": "textures/entity/bee/bee",
         "angry": "textures/entity/bee/bee_angry",
@@ -14,27 +16,21 @@
         "baby_nectar": "textures/entity/bee/bee_nectar_baby",
         "baby_angry_nectar": "textures/entity/bee/bee_angry_nectar_baby",
         "mv_default": "textures/entity/bee/bee",
-        "mv_angry": "textures/entity/bee/bee_angry",
         "mv_default2": "textures/entity/bee/bee2",
-        "mv_angry2": "textures/entity/bee/bee_angry2",
         "mv_default3": "textures/entity/bee/bee3",
-        "mv_angry3": "textures/entity/bee/bee_angry3",
         "mv_default4": "textures/entity/bee/bee4",
-        "mv_angry4": "textures/entity/bee/bee_angry4",
         "mv_default5": "textures/entity/bee/bee5",
-        "mv_angry5": "textures/entity/bee/bee_angry5",
         "mv_default6": "textures/entity/bee/bee6",
-        "mv_angry6": "textures/entity/bee/bee_angry6",
         "mv_default7": "textures/entity/bee/bee7",
-        "mv_angry7": "textures/entity/bee/bee_angry7",
-        "mv_nectar": "textures/entity/bee/nectar"
+        "mv_angry": "textures/entity/bee/bee_angry",
+        "mv_angry2": "textures/entity/bee/bee_angry2",
+        "mv_angry3": "textures/entity/bee/bee_angry3",
+        "mv_angry4": "textures/entity/bee/bee_angry4",
+        "mv_angry5": "textures/entity/bee/bee_angry5",
+        "mv_angry6": "textures/entity/bee/bee_angry6",
+        "mv_angry7": "textures/entity/bee/bee_angry7"
       },
-      "geometry": {
-        "default": "geometry.bee",
-        "baby": "geometry.bee.baby",
-        "mv_default": "geometry.bee",
-        "mv_nectar": "geometry.mv.bee_nectar"
-      },
+      "geometry": { "default": "geometry.bee", "baby": "geometry.bee.baby" },
       "animations": {
         "flying": "animation.bee.flying",
         "drip": "controller.animation.bee.drip",
@@ -45,26 +41,23 @@
         "bee_root_controller": "controller.animation.bee.root"
       },
       "particle_effects": { "nectar_dripping": "minecraft:nectar_drip_particle" },
-      "render_controllers": [
-        { "controller.render.bee.v2": "!v.mv_active" },
-        { "controller.render.mv.bee": "v.mv_active" },
-        {
-          "controller.render.mv.bee_nectar": "v.mv_active && q.property('minecraft:has_nectar')"
-        }
-      ],
-      "spawn_egg": { "texture": "spawn_egg_bee" },
       "scripts": {
         "animate": [
           "bee_root_controller",
           { "bee_no_stinger": "query.mark_variant == 1" }
         ],
         "scale": "query.is_baby ? 2.0 : 1.0",
-        "initialize": ["v.xvar = Math.random(0,99);"],
+        "initialize": ["v.xvar = math.random_integer(1, 7);"],
         "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_active = !q.is_baby;"
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0 && (!q.is_baby);"
         ]
-      }
+      },
+      "render_controllers": [
+        { "controller.render.bee.v2": "!v.mv_active" },
+        { "controller.render.mv.bee": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_bee" }
     }
   }
 }

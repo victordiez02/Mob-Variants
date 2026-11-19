@@ -1,14 +1,12 @@
+// spider: vanilla client entity (spider.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:spider",
       "min_engine_version": "1.8.0",
-      "materials": {
-        "default": "spider",
-        "invisible": "spider_invisible",
-        "mv_default": "enderman"
-      },
+      "materials": { "default": "spider", "invisible": "spider_invisible" },
       "textures": {
         "default": "textures/entity/spider/spider",
         "mv_default": "textures/entity/spider/spider",
@@ -26,24 +24,18 @@
         "mv_default13": "textures/entity/spider/spider13",
         "mv_default14": "textures/entity/spider/spider14",
         "mv_default15": "textures/entity/spider/spider15",
-        "mv_default16": "textures/entity/spider/spider16",
-        "mv_default17": "textures/entity/spider/spider17",
-        "mv_default18": "textures/entity/spider/spider18",
-        "mv_default19": "textures/entity/spider/spider19",
-        "mv_default20": "textures/entity/spider/spider20",
-        "mv_default21": "textures/entity/spider/spider21",
-        "mv_default22": "textures/entity/spider/spider22",
-        "mv_default23": "textures/entity/spider/spider23",
-        "mv_default24": "textures/entity/spider/spider24",
-        "mv_default25": "textures/entity/spider/spider25",
-        "mv_default26": "textures/entity/spider/spider26"
+        "mv_default16": "textures/entity/spider/spider17",
+        "mv_default17": "textures/entity/spider/spider18",
+        "mv_default18": "textures/entity/spider/spider19",
+        "mv_default19": "textures/entity/spider/spider20",
+        "mv_default20": "textures/entity/spider/spider21",
+        "mv_default21": "textures/entity/spider/spider22",
+        "mv_default22": "textures/entity/spider/spider23",
+        "mv_default23": "textures/entity/spider/spider24",
+        "mv_default24": "textures/entity/spider/spider25",
+        "mv_default25": "textures/entity/spider/spider26"
       },
-      "geometry": {
-        "default": "geometry.spider.v1.8",
-        "mv_default": "geometry.spider.v1.8",
-        "mv_fangs": "geometry.mv.spider_fangs",
-        "mv_giant_legs": "geometry.mv.spider_giant_legs"
-      },
+      "geometry": { "default": "geometry.spider.v1.8" },
       "animations": {
         "default_leg_pose": "animation.spider.default_leg_pose",
         "look_at_target": "animation.spider.look_at_target",
@@ -51,19 +43,17 @@
         "move": "controller.animation.spider.move"
       },
       "render_controllers": [
-        "controller.render.mv.spider",
-        "controller.render.mv.spider_fangs",
-        { "controller.render.mv.spider_giant_legs": "v.mv_giant" }
+        { "controller.render.spider": "!v.mv_active" },
+        { "controller.render.mv.spider": "v.mv_active" }
       ],
       "spawn_egg": { "texture": "spawn_egg_spider" },
       "scripts": {
-        "animate": ["move"],
-        "initialize": ["v.xvar = math.random(0,99);"],
+        "initialize": ["v.xvar = math.random_integer(1, 25);"],
         "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "v.mv_giant = q.has_property('mv:mark_variant') ? v.mv_mark == 1 : v.xvar >= 85;"
-        ]
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;"
+        ],
+        "animate": ["move"]
       }
     }
   }

@@ -1,13 +1,11 @@
+// pillager: vanilla client entity (pillager.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:pillager",
-      "materials": {
-        "default": "pillager",
-        "mv_default": "enderman",
-        "mv_helmet": "enderman"
-      },
+      "materials": { "default": "pillager" },
       "textures": {
         "default": "textures/entity/pillager",
         "mv_default": "textures/entity/pillager",
@@ -32,18 +30,22 @@
         "mv_default20": "textures/entity/pillager/pillager20",
         "mv_default21": "textures/entity/pillager/pillager21",
         "mv_default22": "textures/entity/pillager/pillager22",
-        "mv_pillager_totem": "textures/entity/pillager/pillager_totem",
-        "mv_helmet": "textures/entity/pillager/helmet_d",
-        "mv_helmet2": "textures/entity/pillager/helmet_r",
-        "mv_helmet3": "textures/entity/pillager/helmet_g"
+        "mv_default23": "textures/entity/pillager/pillager_totem"
       },
-      "geometry": {
-        "default": "geometry.pillager",
-        "mv_default": "geometry.pillager",
-        "mv_empty": "geometry.mv.zombie_empty",
-        "mv_helmet": "geometry.mv.pillager_helmet"
-      },
+      "geometry": { "default": "geometry.pillager" },
       "spawn_egg": { "texture": "spawn_egg_pillager" },
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;",
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.riding_y_offset_with_respect_to_player = 1.25;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
+        ],
+        "animate": ["pillager_root_controller"],
+        "initialize": ["v.xvar = math.random_integer(1, 23);"]
+      },
       "animations": {
         "humanoid_base_pose": "animation.humanoid.base_pose",
         "look_at_target_default": "animation.humanoid.look_at_target.default",
@@ -68,21 +70,12 @@
         "pillager_root_controller": "controller.animation.pillager.root",
         "riding.body": "animation.humanoid.riding.body"
       },
-      "render_controllers": ["controller.render.mv.pillager", "controller.render.mv.pillager_helmet"],
+      "render_controllers": [
+        { "controller.render.pillager": "!v.mv_active" },
+        { "controller.render.mv.pillager": "v.mv_active" }
+      ],
       "enable_attachables": true,
-      "hide_armor": true,
-      "scripts": {
-        "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
-          "variable.riding_y_offset_with_respect_to_player = 1.25;",
-          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
-          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
-        ],
-        "animate": ["pillager_root_controller"],
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      }
+      "hide_armor": true
     }
   }
 }

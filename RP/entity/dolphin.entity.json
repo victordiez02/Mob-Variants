@@ -1,9 +1,11 @@
+// dolphin: vanilla client entity (dolphin.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:dolphin",
-      "materials": { "default": "dolphin", "mv_default": "dolphin" },
+      "materials": { "default": "dolphin" },
       "textures": {
         "default": "textures/entity/dolphin",
         "baby": "textures/entity/dolphin/dolphin_baby",
@@ -17,28 +19,27 @@
       },
       "geometry": {
         "default": "geometry.dolphin",
-        "baby": "geometry.dolphin.baby",
-        "mv_default": "geometry.dolphin"
+        "baby": "geometry.dolphin.baby"
       },
       "animations": {
         "move": "animation.dolphin.move",
         "move_controller": "controller.animation.dolphin.general"
+      },
+      "scripts": {
+        "animate": ["move_controller"],
+        "scale": "query.is_baby ? (1 / 0.65) : 1.0",
+        "initialize": ["v.xvar = math.random_integer(1, 7);"],
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0 && (!q.is_baby);"
+        ]
       },
       "particle_effects": { "dolphin_move_particle": "minecraft:dolphin_move_particle" },
       "render_controllers": [
         { "controller.render.dolphin.v2": "!v.mv_active" },
         { "controller.render.mv.dolphin": "v.mv_active" }
       ],
-      "spawn_egg": { "texture": "spawn_egg_dolphin" },
-      "scripts": {
-        "animate": ["move_controller"],
-        "scale": "query.is_baby ? (1 / 0.65) : 1.0",
-        "initialize": ["v.xvar = Math.random(0,99);"],
-        "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_active = !q.is_baby;"
-        ]
-      }
+      "spawn_egg": { "texture": "spawn_egg_dolphin" }
     }
   }
 }

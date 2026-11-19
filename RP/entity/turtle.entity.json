@@ -1,23 +1,37 @@
+// turtle: vanilla client entity (turtle.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:turtle",
-      "materials": { "default": "turtle", "mv_default": "turtle" },
+      "materials": { "default": "turtle" },
       "textures": {
         "default": "textures/entity/sea_turtle",
         "baby": "textures/entity/turtle/sea_turtle_baby",
         "mv_default": "textures/entity/sea_turtle",
-        "mv_donatello": "textures/entity/sea_turtle/donatello",
-        "mv_leonardo": "textures/entity/sea_turtle/leonardo",
-        "mv_michelangelo": "textures/entity/sea_turtle/michelangelo",
-        "mv_raphael": "textures/entity/sea_turtle/raphael",
-        "mv_squirtle": "textures/entity/sea_turtle/squirtle"
+        "mv_default2": "textures/entity/sea_turtle/donatello",
+        "mv_default3": "textures/entity/sea_turtle/leonardo",
+        "mv_default4": "textures/entity/sea_turtle/michelangelo",
+        "mv_default5": "textures/entity/sea_turtle/raphael",
+        "mv_default6": "textures/entity/sea_turtle/squirtle"
       },
       "geometry": {
         "default": "geometry.turtle",
-        "baby": "geometry.turtle.baby",
-        "mv_default": "geometry.turtle"
+        "baby": "geometry.turtle.baby"
+      },
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0 && (!q.is_baby);",
+          "variable.timeMultiplier = query.has_rider ? 0.39972 : 1.0;",
+          "variable.backLegMultiplier = query.has_rider ? 0.5 : 3.0;",
+          "variable.frontLegMultiplier = query.has_rider ? 2.0 : 8.0;",
+          "variable.legSpeedMultiplier = query.has_rider ? 2.0 : 5.0;"
+        ],
+        "scale": "query.is_baby ? (1 / 0.16) : 1.0",
+        "initialize": ["v.xvar = math.random_integer(1, 6);"],
+        "animate": ["general_controller", "move_controller"]
       },
       "animations": {
         "general": "animation.turtle.general",
@@ -32,20 +46,7 @@
         { "controller.render.turtle.v2": "!v.mv_active" },
         { "controller.render.mv.turtle": "v.mv_active" }
       ],
-      "spawn_egg": { "texture": "spawn_egg_turtle" },
-      "scripts": {
-        "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_active = !q.is_baby;",
-          "variable.timeMultiplier = query.has_rider ? 0.39972 : 1.0;",
-          "variable.backLegMultiplier = query.has_rider ? 0.5 : 3.0;",
-          "variable.frontLegMultiplier = query.has_rider ? 2.0 : 8.0;",
-          "variable.legSpeedMultiplier = query.has_rider ? 2.0 : 5.0;"
-        ],
-        "scale": "query.is_baby ? (1 / 0.16) : 1.0",
-        "animate": ["general_controller", "move_controller"],
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      }
+      "spawn_egg": { "texture": "spawn_egg_turtle" }
     }
   }
 }

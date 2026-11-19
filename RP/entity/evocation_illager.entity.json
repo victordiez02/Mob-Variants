@@ -1,14 +1,12 @@
+// evocation_illager: vanilla client entity (evocation_illager.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:evocation_illager",
       "min_engine_version": "1.8.0",
-      "materials": {
-        "default": "evoker",
-        "mv_default": "evoker",
-        "mv_glow": "enderman"
-      },
+      "materials": { "default": "evoker" },
       "textures": {
         "default": "textures/entity/illager/evoker",
         "mv_default": "textures/entity/illager/evoker",
@@ -38,30 +36,23 @@
         "mv_default25": "textures/entity/illager/evoker25",
         "mv_default26": "textures/entity/illager/evoker26",
         "mv_default27": "textures/entity/illager/evoker27",
-        "mv_default28": "textures/entity/illager/evoker28",
-        "mv_default29": "textures/entity/illager/evoker29",
-        "mv_default30": "textures/entity/illager/evoker30",
-        "mv_default31": "textures/entity/illager/evoker31",
-        "mv_default32": "textures/entity/illager/evoker32",
-        "mv_no_hat": "textures/entity/illager/evoker_no_hat",
-        "mv_hat": "textures/entity/illager/evoker_hat",
-        "mv_hat2": "textures/entity/illager/evoker_hat2",
-        "mv_hat3": "textures/entity/illager/evoker_hat3",
-        "mv_wizard": "textures/entity/illager/evoker_wizard",
-        "mv_windcaller": "textures/entity/illager/evoker_windcaller",
-        "mv_enchanter": "textures/entity/illager/evoker_enchanter",
-        "mv_geomancer": "textures/entity/illager/evoker_geomancer",
-        "mv_chef": "textures/entity/illager/evoker_chef"
+        "mv_default28": "textures/entity/illager/evoker29",
+        "mv_default29": "textures/entity/illager/evoker30",
+        "mv_default30": "textures/entity/illager/evoker31",
+        "mv_default31": "textures/entity/illager/evoker32"
       },
-      "geometry": {
-        "default": "geometry.evoker.v1.8",
-        "mv_default": "geometry.evoker.v1.8",
-        "mv_hat": "geometry.mv.evoker_hat",
-        "mv_wizard": "geometry.mv.evoker_wizard",
-        "mv_windcaller": "geometry.mv.evoker_windcaller",
-        "mv_enchanter": "geometry.mv.evoker_enchanter",
-        "mv_geomancer": "geometry.mv.evoker_geomancer",
-        "mv_chef": "geometry.mv.evoker_chef"
+      "geometry": { "default": "geometry.evoker.v1.8" },
+      "scripts": {
+        "scale": "0.9375",
+        "animate": ["controller_general", "controller_move"],
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;",
+          "variable.riding_y_offset_with_respect_to_player = 1.25;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
+        ],
+        "initialize": ["v.xvar = math.random_integer(1, 31);"]
       },
       "animations": {
         "general": "animation.evoker.general",
@@ -76,20 +67,11 @@
         "riding.body": "animation.humanoid.riding.body"
       },
       "particle_effects": { "spell": "minecraft:evoker_spell" },
-      "render_controllers": ["controller.render.mv.evoker", "controller.render.mv.evoker_hat"],
-      "spawn_egg": { "texture": "spawn_egg_evoker" },
-      "scripts": {
-        "scale": "0.9375",
-        "animate": ["controller_general", "controller_move"],
-        "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "variable.riding_y_offset_with_respect_to_player = 1.25;",
-          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
-          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
-        ],
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      }
+      "render_controllers": [
+        { "controller.render.evoker": "!v.mv_active" },
+        { "controller.render.mv.evocation_illager": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_evoker" }
     }
   }
 }

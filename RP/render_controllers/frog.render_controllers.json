@@ -1,75 +1,63 @@
-// Render controller frog: one array with the 10 skins of each climate (temperate, cold, warm) and the
-// 10 special skins. v.mv_skin (entity) = index: climate skins 0-29 (q.variant * 10), specials 30-39.
-// v.mv_variant: 1-10 = skin of the frog's climate (1 = vanilla), 11-19 = special, 20 = cake frog.
-// v.mv_mark: 1 = no crown, 2 = crown.
+// Copy of the vanilla controller.render.frog with the skin texture.
+// v.mv_variant: 1-10 skin of the frog's own climate (temperate, cold, warm), 11-20 special skins.
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.frog": {
+      "geometry": "Geometry.default",
+      "part_visibility": [
+        { "croaking_body": "!query.is_eating_mob" }
+      ],
+      "materials": [
+        { "*": "Material.default" }
+      ],
+      "textures": ["array.mv_skins[v.mv_skin]"],
       "arrays": {
         "textures": {
-          "array.skins": [
-            "Texture.mv_temperate",
-            "Texture.mv_temperate2",
-            "Texture.mv_temperate3",
-            "Texture.mv_temperate4",
-            "Texture.mv_temperate5",
-            "Texture.mv_temperate6",
-            "Texture.mv_temperate7",
-            "Texture.mv_temperate8",
-            "Texture.mv_temperate9",
-            "Texture.mv_temperate10",
-            "Texture.mv_cold",
-            "Texture.mv_cold2",
-            "Texture.mv_cold3",
-            "Texture.mv_cold4",
-            "Texture.mv_cold5",
-            "Texture.mv_cold6",
-            "Texture.mv_cold7",
-            "Texture.mv_cold8",
-            "Texture.mv_cold9",
-            "Texture.mv_cold10",
-            "Texture.mv_warm",
-            "Texture.mv_warm2",
-            "Texture.mv_warm3",
-            "Texture.mv_warm4",
-            "Texture.mv_warm5",
-            "Texture.mv_warm6",
-            "Texture.mv_warm7",
-            "Texture.mv_warm8",
-            "Texture.mv_warm9",
-            "Texture.mv_warm10",
-            "Texture.mv_special",
-            "Texture.mv_special2",
-            "Texture.mv_special3",
-            "Texture.mv_special4",
-            "Texture.mv_special5",
-            "Texture.mv_special6",
-            "Texture.mv_special7",
-            "Texture.mv_special8",
-            "Texture.mv_special9",
-            "Texture.mv_cake_frog"
+          "array.mv_skins": [
+            "Texture.mv_default",
+            "Texture.mv_default2",
+            "Texture.mv_default3",
+            "Texture.mv_default4",
+            "Texture.mv_default5",
+            "Texture.mv_default6",
+            "Texture.mv_default7",
+            "Texture.mv_default8",
+            "Texture.mv_default9",
+            "Texture.mv_default10",
+            "Texture.mv_default11",
+            "Texture.mv_default12",
+            "Texture.mv_default13",
+            "Texture.mv_default14",
+            "Texture.mv_default15",
+            "Texture.mv_default16",
+            "Texture.mv_default17",
+            "Texture.mv_default18",
+            "Texture.mv_default19",
+            "Texture.mv_default20",
+            "Texture.mv_default21",
+            "Texture.mv_default22",
+            "Texture.mv_default23",
+            "Texture.mv_default24",
+            "Texture.mv_default25",
+            "Texture.mv_default26",
+            "Texture.mv_default27",
+            "Texture.mv_default28",
+            "Texture.mv_default29",
+            "Texture.mv_default30",
+            "Texture.mv_default31",
+            "Texture.mv_default32",
+            "Texture.mv_default33",
+            "Texture.mv_default34",
+            "Texture.mv_default35",
+            "Texture.mv_default36",
+            "Texture.mv_default37",
+            "Texture.mv_default38",
+            "Texture.mv_default39",
+            "Texture.mv_default40"
           ]
         }
-      },
-      "geometry": "Geometry.mv_default",
-      "part_visibility": [
-        { "croaking_body": "!query.is_eating_mob" }
-      ],
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["array.skins[v.mv_skin]"]
-    },
-    "controller.render.mv.frog_crown": {
-      "geometry": "v.mv_mark == 2 ? Geometry.mv_crown : Geometry.mv_empty",
-      "part_visibility": [
-        { "croaking_body": "!query.is_eating_mob" }
-      ],
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["Texture.mv_crown"]
+      }
     }
   }
 }

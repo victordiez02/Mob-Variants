@@ -1,3 +1,5 @@
+// ender_dragon: vanilla client entity (ender_dragon.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
@@ -8,10 +10,7 @@
         "beam_material": "entity_beam",
         "death_material": "entity_beam_additive",
         "dissolve_0": "entity_dissolve_layer0.skinning",
-        "dissolve_1": "entity_dissolve_layer1.skinning",
-        "mv_default": "enderman",
-        "mv_dissolve_0": "entity_dissolve_layer0.skinning",
-        "mv_dissolve_1": "entity_dissolve_layer1.skinning"
+        "dissolve_1": "entity_dissolve_layer1.skinning"
       },
       "textures": {
         "default": "textures/entity/dragon/dragon",
@@ -23,35 +22,13 @@
         "mv_default4": "textures/entity/dragon/dragon4",
         "mv_default5": "textures/entity/dragon/dragon5",
         "mv_default6": "textures/entity/dragon/dragon6",
-        "mv_default7": "textures/entity/dragon/dragon7",
-        "mv_exploding": "textures/entity/dragon/dragon_exploding"
+        "mv_default7": "textures/entity/dragon/dragon7"
       },
-      "geometry": {
-        "default": "geometry.dragon",
-        "mv_default": "geometry.dragon"
-      },
-      "animations": {
-        "setup": "animation.ender_dragon.setup",
-        "jaw_movement": "animation.ender_dragon.jaw_movement",
-        "neck_head_movement": "animation.ender_dragon.neck_head_movement",
-        "wings_limbs_movement": "animation.ender_dragon.wings_limbs_movement",
-        "tail_movement": "animation.ender_dragon.tail_movement"
-      },
-      "render_controllers": [
-        {
-          "controller.render.mv.ender_dragon_death_pre_pass": "query.death_ticks > 1.0"
-        },
-        {
-          "controller.render.mv.ender_dragon_death_main_pass": "query.death_ticks > 1.0"
-        },
-        {
-          "controller.render.mv.ender_dragon_default": "query.death_ticks <= 1.0"
-        }
-      ],
-      "spawn_egg": { "texture": "spawn_egg_ender_dragon" },
+      "geometry": { "default": "geometry.dragon" },
       "scripts": {
         "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;",
           "variable.flap_time = query.wing_flap_position * 360.0;",
           "variable.base_rotation = Math.sin(variable.flap_time - 57.3) + 57.3;",
           "variable.rotation_factor = (variable.base_rotation * variable.base_rotation + variable.base_rotation * 114.6) * 2.87;",
@@ -230,8 +207,30 @@
           "variable.tail_12_position_z = variable.tail_11_position_z - Math.cos(variable.tail_11_rotation_y) * Math.cos(variable.tail_11_rotation_x) * 10.0;"
         ],
         "animate": ["setup", "jaw_movement", "neck_head_movement", "wings_limbs_movement", "tail_movement"],
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      }
+        "initialize": ["v.xvar = math.random_integer(1, 7);"]
+      },
+      "animations": {
+        "setup": "animation.ender_dragon.setup",
+        "jaw_movement": "animation.ender_dragon.jaw_movement",
+        "neck_head_movement": "animation.ender_dragon.neck_head_movement",
+        "wings_limbs_movement": "animation.ender_dragon.wings_limbs_movement",
+        "tail_movement": "animation.ender_dragon.tail_movement"
+      },
+      "render_controllers": [
+        {
+          "controller.render.ender_dragon_death_pre_pass": "query.death_ticks > 1.0"
+        },
+        {
+          "controller.render.ender_dragon_death_main_pass": "query.death_ticks > 1.0"
+        },
+        {
+          "controller.render.ender_dragon_default": "(query.death_ticks <= 1.0) && !v.mv_active"
+        },
+        {
+          "controller.render.mv.ender_dragon": "(query.death_ticks <= 1.0) && v.mv_active"
+        }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_ender_dragon" }
     }
   }
 }

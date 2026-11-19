@@ -1,62 +1,68 @@
+// frog: vanilla client entity (frog.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:frog",
-      "materials": { "default": "frog", "mv_default": "enderman" },
+      "materials": { "default": "frog" },
       "textures": {
         "temperate": "textures/entity/frog/temperate_frog",
         "cold": "textures/entity/frog/cold_frog",
         "warm": "textures/entity/frog/warm_frog",
-        "mv_temperate": "textures/entity/frog/temperate_frog",
-        "mv_temperate2": "textures/entity/frog/temperate_frog2",
-        "mv_temperate3": "textures/entity/frog/temperate_frog3",
-        "mv_temperate4": "textures/entity/frog/temperate_frog4",
-        "mv_temperate5": "textures/entity/frog/temperate_frog5",
-        "mv_temperate6": "textures/entity/frog/temperate_frog6",
-        "mv_temperate7": "textures/entity/frog/temperate_frog7",
-        "mv_temperate8": "textures/entity/frog/temperate_frog8",
-        "mv_temperate9": "textures/entity/frog/temperate_frog9",
-        "mv_temperate10": "textures/entity/frog/temperate_frog10",
-        "mv_cold": "textures/entity/frog/cold_frog",
-        "mv_cold2": "textures/entity/frog/cold_frog2",
-        "mv_cold3": "textures/entity/frog/cold_frog3",
-        "mv_cold4": "textures/entity/frog/cold_frog4",
-        "mv_cold5": "textures/entity/frog/cold_frog5",
-        "mv_cold6": "textures/entity/frog/cold_frog6",
-        "mv_cold7": "textures/entity/frog/cold_frog7",
-        "mv_cold8": "textures/entity/frog/cold_frog8",
-        "mv_cold9": "textures/entity/frog/cold_frog9",
-        "mv_cold10": "textures/entity/frog/cold_frog10",
-        "mv_warm": "textures/entity/frog/warm_frog",
-        "mv_warm2": "textures/entity/frog/warm_frog2",
-        "mv_warm3": "textures/entity/frog/warm_frog3",
-        "mv_warm4": "textures/entity/frog/warm_frog4",
-        "mv_warm5": "textures/entity/frog/warm_frog5",
-        "mv_warm6": "textures/entity/frog/warm_frog6",
-        "mv_warm7": "textures/entity/frog/warm_frog7",
-        "mv_warm8": "textures/entity/frog/warm_frog8",
-        "mv_warm9": "textures/entity/frog/warm_frog9",
-        "mv_warm10": "textures/entity/frog/warm_frog10",
-        "mv_special": "textures/entity/frog/special_frog",
-        "mv_special2": "textures/entity/frog/special_frog2",
-        "mv_special3": "textures/entity/frog/special_frog3",
-        "mv_special4": "textures/entity/frog/special_frog4",
-        "mv_special5": "textures/entity/frog/special_frog5",
-        "mv_special6": "textures/entity/frog/special_frog6",
-        "mv_special7": "textures/entity/frog/special_frog7",
-        "mv_special8": "textures/entity/frog/special_frog8",
-        "mv_special9": "textures/entity/frog/special_frog9",
-        "mv_cake_frog": "textures/entity/frog/cake_frog",
-        "mv_crown": "textures/entity/frog/frog_crown"
+        "mv_default": "textures/entity/frog/temperate_frog",
+        "mv_default2": "textures/entity/frog/temperate_frog2",
+        "mv_default3": "textures/entity/frog/temperate_frog3",
+        "mv_default4": "textures/entity/frog/temperate_frog4",
+        "mv_default5": "textures/entity/frog/temperate_frog5",
+        "mv_default6": "textures/entity/frog/temperate_frog6",
+        "mv_default7": "textures/entity/frog/temperate_frog7",
+        "mv_default8": "textures/entity/frog/temperate_frog8",
+        "mv_default9": "textures/entity/frog/temperate_frog9",
+        "mv_default10": "textures/entity/frog/temperate_frog10",
+        "mv_default11": "textures/entity/frog/cold_frog",
+        "mv_default12": "textures/entity/frog/cold_frog2",
+        "mv_default13": "textures/entity/frog/cold_frog3",
+        "mv_default14": "textures/entity/frog/cold_frog4",
+        "mv_default15": "textures/entity/frog/cold_frog5",
+        "mv_default16": "textures/entity/frog/cold_frog6",
+        "mv_default17": "textures/entity/frog/cold_frog7",
+        "mv_default18": "textures/entity/frog/cold_frog8",
+        "mv_default19": "textures/entity/frog/cold_frog9",
+        "mv_default20": "textures/entity/frog/cold_frog10",
+        "mv_default21": "textures/entity/frog/warm_frog",
+        "mv_default22": "textures/entity/frog/warm_frog2",
+        "mv_default23": "textures/entity/frog/warm_frog3",
+        "mv_default24": "textures/entity/frog/warm_frog4",
+        "mv_default25": "textures/entity/frog/warm_frog5",
+        "mv_default26": "textures/entity/frog/warm_frog6",
+        "mv_default27": "textures/entity/frog/warm_frog7",
+        "mv_default28": "textures/entity/frog/warm_frog8",
+        "mv_default29": "textures/entity/frog/warm_frog9",
+        "mv_default30": "textures/entity/frog/warm_frog10",
+        "mv_default31": "textures/entity/frog/special_frog",
+        "mv_default32": "textures/entity/frog/special_frog2",
+        "mv_default33": "textures/entity/frog/special_frog3",
+        "mv_default34": "textures/entity/frog/special_frog4",
+        "mv_default35": "textures/entity/frog/special_frog5",
+        "mv_default36": "textures/entity/frog/special_frog6",
+        "mv_default37": "textures/entity/frog/special_frog7",
+        "mv_default38": "textures/entity/frog/special_frog8",
+        "mv_default39": "textures/entity/frog/special_frog9",
+        "mv_default40": "textures/entity/frog/cake_frog"
       },
-      "geometry": {
-        "default": "geometry.frog",
-        "mv_default": "geometry.frog",
-        "mv_crown": "geometry.mv.frog_crown",
-        "mv_empty": "geometry.mv.zombie_empty"
-      },
+      "geometry": { "default": "geometry.frog" },
       "spawn_egg": { "texture": "spawn_egg_frog" },
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 15 ? 11 : 1) + math.mod(math.floor(v.xvar), 10);",
+          "v.mv_skin = v.mv_variant > 10 ? 19 + v.mv_variant : q.variant * 10 + v.mv_variant - 1;",
+          "v.mv_active = v.mv_variant > 0;",
+          "variable.moving = query.ground_speed > 0 || query.vertical_speed > 0;"
+        ],
+        "initialize": ["v.xvar = math.random(0, 100);"],
+        "animate": ["general", "croaking", "eat_mob"]
+      },
       "animations": {
         "croak": "animation.frog.croak",
         "jump": "animation.frog.jump",
@@ -70,20 +76,9 @@
         "eat_mob": "controller.animation.frog.eat_mob"
       },
       "render_controllers": [
-        { "controller.render.mv.frog": "v.mv_active" },
-        { "controller.render.mv.frog_crown": "v.mv_active" }
-      ],
-      "scripts": {
-        "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : (v.xvar < 15 ? 11 : 1) + math.mod(math.floor(v.xvar), 10);",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : (v.yvar < 20 ? 2 : 1);",
-          "v.mv_skin = v.mv_variant > 10 ? 19 + v.mv_variant : q.variant * 10 + v.mv_variant - 1;",
-          "v.mv_active = true;",
-          "variable.moving = query.ground_speed > 0 || query.vertical_speed > 0;"
-        ],
-        "animate": ["general", "croaking", "eat_mob"],
-        "initialize": ["v.xvar = math.random(0,99);", "v.yvar = math.random(0, 99);"]
-      }
+        { "controller.render.frog": "!v.mv_active" },
+        { "controller.render.mv.frog": "v.mv_active" }
+      ]
     }
   }
 }

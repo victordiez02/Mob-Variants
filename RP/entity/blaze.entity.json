@@ -1,15 +1,12 @@
+// blaze: vanilla client entity (blaze.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:blaze",
       "min_engine_version": "1.8.0",
-      "materials": {
-        "body": "blaze_body",
-        "head": "blaze_head",
-        "mv_body": "blaze_body",
-        "mv_head": "blaze_head"
-      },
+      "materials": { "body": "blaze_body", "head": "blaze_head" },
       "textures": {
         "default": "textures/entity/blaze",
         "mv_default": "textures/entity/blaze",
@@ -21,10 +18,7 @@
         "mv_default7": "textures/entity/blaze/blaze7",
         "mv_default8": "textures/entity/blaze/blaze8"
       },
-      "geometry": {
-        "default": "geometry.blaze",
-        "mv_default": "geometry.blaze"
-      },
+      "geometry": { "default": "geometry.blaze" },
       "animations": {
         "look_at_target": "animation.common.look_at_target",
         "move": "animation.blaze.move",
@@ -32,12 +26,18 @@
         "flame": "controller.animation.blaze.flame"
       },
       "particle_effects": { "charged_flames": "minecraft:mobflame_emitter" },
-      "render_controllers": ["controller.render.mv.blaze"],
+      "render_controllers": [
+        { "controller.render.blaze": "!v.mv_active" },
+        { "controller.render.mv.blaze": "v.mv_active" }
+      ],
       "spawn_egg": { "texture": "spawn_egg_blaze" },
       "scripts": {
-        "animate": ["move_controller", "flame"],
-        "initialize": ["v.xvar = Math.floor(Math.random(0, 99));"],
-        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"]
+        "initialize": ["v.xvar = math.random_integer(1, 8);"],
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;"
+        ],
+        "animate": ["move_controller", "flame"]
       }
     }
   }

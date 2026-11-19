@@ -1,3 +1,5 @@
+// ravager: vanilla client entity (ravager.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
@@ -15,12 +17,12 @@
         "mv_default8": "textures/entity/illager/ravager8",
         "mv_default9": "textures/entity/illager/ravager9"
       },
-      "materials": { "default": "ravager", "mv_default": "ravager" },
-      "geometry": {
-        "default": "geometry.ravager",
-        "mv_default": "geometry.ravager"
-      },
-      "render_controllers": ["controller.render.mv.ravager"],
+      "materials": { "default": "ravager" },
+      "geometry": { "default": "geometry.ravager" },
+      "render_controllers": [
+        { "controller.render.ravager": "!v.mv_active" },
+        { "controller.render.mv.ravager": "v.mv_active" }
+      ],
       "spawn_egg": { "texture": "spawn_egg_ravager" },
       "animations": {
         "walk": "animation.ravager.walk",
@@ -32,17 +34,18 @@
         "head": "controller.animation.ravager.head_movement",
         "biting": "animation.ravager.biting"
       },
-      "particle_effects": { "stun_particles": "minecraft:stunned_emitter" },
       "scripts": {
         "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;",
           "variable.roar_length = 1.0;",
           "variable.bite_anim_duration = 0.75f;",
           "variable.bite_neck_length = 10;"
         ],
         "animate": ["move", "head"],
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      }
+        "initialize": ["v.xvar = math.random_integer(1, 9);"]
+      },
+      "particle_effects": { "stun_particles": "minecraft:stunned_emitter" }
     }
   }
 }

@@ -1,54 +1,59 @@
+// ghast: vanilla client entity (ghast.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:ghast",
-      "materials": { "default": "ghast", "mv_default": "ghast" },
+      "materials": { "default": "ghast" },
       "textures": {
         "default": "textures/entity/ghast/ghast",
         "shooting": "textures/entity/ghast/ghast_shooting",
         "mv_default": "textures/entity/ghast/ghast",
-        "mv_shooting": "textures/entity/ghast/ghast_shooting",
         "mv_default2": "textures/entity/ghast/ghast2",
-        "mv_shooting2": "textures/entity/ghast/ghast2s",
         "mv_default3": "textures/entity/ghast/ghast3",
-        "mv_shooting3": "textures/entity/ghast/ghast3s",
         "mv_default4": "textures/entity/ghast/ghast4",
-        "mv_shooting4": "textures/entity/ghast/ghast4s",
         "mv_default5": "textures/entity/ghast/ghast5",
-        "mv_shooting5": "textures/entity/ghast/ghast5s",
         "mv_default6": "textures/entity/ghast/ghast6",
-        "mv_shooting6": "textures/entity/ghast/ghast6s",
         "mv_default7": "textures/entity/ghast/ghast7",
-        "mv_shooting7": "textures/entity/ghast/ghast7s",
         "mv_default8": "textures/entity/ghast/ghast8",
-        "mv_shooting8": "textures/entity/ghast/ghast8s",
         "mv_default9": "textures/entity/ghast/ghast9",
-        "mv_shooting9": "textures/entity/ghast/ghast9s",
         "mv_default10": "textures/entity/ghast/ghast10",
-        "mv_shooting10": "textures/entity/ghast/ghast10s",
         "mv_default11": "textures/entity/ghast/ghast11",
-        "mv_shooting11": "textures/entity/ghast/ghast11s",
         "mv_default12": "textures/entity/ghast/ghast12",
-        "mv_shooting12": "textures/entity/ghast/ghast12s",
         "mv_default13": "textures/entity/ghast/ghast13",
-        "mv_shooting13": "textures/entity/ghast/ghast13s"
+        "mv_charging": "textures/entity/ghast/ghast_shooting",
+        "mv_charging2": "textures/entity/ghast/ghast2s",
+        "mv_charging3": "textures/entity/ghast/ghast3s",
+        "mv_charging4": "textures/entity/ghast/ghast4s",
+        "mv_charging5": "textures/entity/ghast/ghast5s",
+        "mv_charging6": "textures/entity/ghast/ghast6s",
+        "mv_charging7": "textures/entity/ghast/ghast7s",
+        "mv_charging8": "textures/entity/ghast/ghast8s",
+        "mv_charging9": "textures/entity/ghast/ghast9s",
+        "mv_charging10": "textures/entity/ghast/ghast10s",
+        "mv_charging11": "textures/entity/ghast/ghast11s",
+        "mv_charging12": "textures/entity/ghast/ghast12s",
+        "mv_charging13": "textures/entity/ghast/ghast13s"
       },
-      "geometry": {
-        "default": "geometry.ghast",
-        "mv_default": "geometry.ghast"
-      },
+      "geometry": { "default": "geometry.ghast" },
       "spawn_egg": { "texture": "spawn_egg_ghast" },
       "animations": {
         "move": "animation.ghast.move",
         "scale": "animation.ghast.scale",
         "move_controller": "controller.animation.ghast.move"
       },
-      "render_controllers": ["controller.render.mv.ghast"],
+      "render_controllers": [
+        { "controller.render.ghast": "!v.mv_active" },
+        { "controller.render.mv.ghast": "v.mv_active" }
+      ],
       "scripts": {
-        "animate": ["move_controller"],
-        "initialize": ["v.xvar = Math.random(0,99);"],
-        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"]
+        "initialize": ["v.xvar = math.random_integer(1, 13);"],
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;"
+        ],
+        "animate": ["move_controller"]
       }
     }
   }

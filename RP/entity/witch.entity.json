@@ -1,10 +1,12 @@
+// witch: vanilla client entity (witch.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:witch",
       "min_engine_version": "1.8.0",
-      "materials": { "default": "witch", "mv_default": "enderman" },
+      "materials": { "default": "witch" },
       "textures": {
         "default": "textures/entity/witch",
         "mv_default": "textures/entity/witch/witch",
@@ -17,10 +19,15 @@
         "mv_default8": "textures/entity/witch/witch8",
         "mv_default9": "textures/entity/witch/witch9"
       },
-      "geometry": {
-        "default": "geometry.villager.witch.v1.8",
-        "mv_default": "geometry.villager.witch.v1.8",
-        "mv_extras": "geometry.mv.witch_extras"
+      "geometry": { "default": "geometry.villager.witch.v1.8" },
+      "scripts": {
+        "scale": "0.9375",
+        "initialize": ["v.xvar = math.random_integer(1, 9);"],
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;"
+        ],
+        "animate": ["general_controller", "move_controller"]
       },
       "animations": {
         "villager_general": "animation.villager.general",
@@ -30,14 +37,11 @@
         "general_controller": "controller.animation.witch.general",
         "move_controller": "controller.animation.villager.move"
       },
-      "render_controllers": ["controller.render.mv.witch", "controller.render.mv.witch_extras"],
-      "spawn_egg": { "texture": "spawn_egg_witch" },
-      "scripts": {
-        "scale": "0.9375",
-        "animate": ["general_controller", "move_controller"],
-        "initialize": ["v.xvar = Math.random(0,99);"],
-        "pre_animation": ["v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;"]
-      }
+      "render_controllers": [
+        { "controller.render.witch": "!v.mv_active" },
+        { "controller.render.mv.witch": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_witch" }
     }
   }
 }

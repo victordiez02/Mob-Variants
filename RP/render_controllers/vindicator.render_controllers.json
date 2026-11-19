@@ -1,11 +1,10 @@
-// Render controller vindicator
-// v.mv_variant: skin del mob.
-// v.mv_mark: si lleva armadura (1, 2, 3), armadura con bander (4) o no lleva armadura (0).
+// Copy of the vanilla controller.render.vindicator with the skin texture.
+// v.mv_variant: 1-21 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.vindicator": {
-      "geometry": "Geometry.mv_default",
+      "geometry": "Geometry.default",
       "part_visibility": [
         { "rightArm": "query.is_angry || query.is_celebrating" },
         { "leftArm": "query.is_angry || query.is_celebrating" },
@@ -13,12 +12,12 @@
         { "arms": "!(query.is_angry || query.is_celebrating)" }
       ],
       "materials": [
-        { "*": "Material.mv_default" }
+        { "*": "Material.default" }
       ],
-      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
+      "textures": ["array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
         "textures": {
-          "array.xskins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",
@@ -30,6 +29,7 @@
             "Texture.mv_default9",
             "Texture.mv_default10",
             "Texture.mv_default11",
+            "Texture.mv_default12",
             "Texture.mv_default13",
             "Texture.mv_default14",
             "Texture.mv_default15",
@@ -38,43 +38,7 @@
             "Texture.mv_default18",
             "Texture.mv_default19",
             "Texture.mv_default20",
-            "Texture.mv_default21",
-            "Texture.mv_clown"
-          ]
-        }
-      }
-    },
-    "controller.render.mv.vindicator_armor": {
-      "geometry": "v.mv_variant ? array.xgeosq[v.mv_mark] : (variable.xvar < 40 ? array.xgeos[variable.xvar] : Geometry.mv_empty)",
-      "part_visibility": [
-        { "rightArm": "query.is_angry || query.is_celebrating" },
-        { "leftArm": "query.is_angry || query.is_celebrating" },
-        { "rightItem": "query.is_angry" },
-        { "arms": "!(query.is_angry || query.is_celebrating)" }
-      ],
-      "materials": [
-        { "*": "Material.mv_armor" }
-      ],
-      "textures": ["v.mv_variant ? array.xskinsq[v.mv_mark] : array.xskins[variable.xvar]"],
-      "arrays": {
-        "textures": {
-          "array.xskins": ["Texture.mv_armor", "Texture.mv_armor2", "Texture.mv_armor3", "Texture.mv_armor4"],
-          "array.xskinsq": [
-            "Texture.mv_armor",
-            "Texture.mv_armor",
-            "Texture.mv_armor2",
-            "Texture.mv_armor3",
-            "Texture.mv_armor4"
-          ]
-        },
-        "geometries": {
-          "array.xgeos": ["Geometry.mv_armor", "Geometry.mv_armor", "Geometry.mv_armor", "Geometry.mv_armor2"],
-          "array.xgeosq": [
-            "Geometry.mv_empty",
-            "Geometry.mv_armor",
-            "Geometry.mv_armor",
-            "Geometry.mv_armor",
-            "Geometry.mv_armor2"
+            "Texture.mv_default21"
           ]
         }
       }

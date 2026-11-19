@@ -1,15 +1,17 @@
+// Copy of the vanilla controller.render.warden with the skin texture.
+// v.mv_variant: 1-6 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.warden": {
-      "geometry": "Geometry.mv_default",
+      "geometry": "Geometry.default",
       "materials": [
-        { "*": "Material.mv_default" }
+        { "*": "Material.default" }
       ],
-      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
+      "textures": ["array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
         "textures": {
-          "array.xskins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",
@@ -18,76 +20,6 @@
             "Texture.mv_default6"
           ]
         }
-      }
-    },
-    "controller.render.mv.warden_bioluminescent_layer": {
-      "geometry": "Geometry.mv_default",
-      "materials": [
-        { "*": "Material.mv_bioluminescent_layer" }
-      ],
-      "textures": ["Texture.mv_bioluminescent_layer"],
-      "ignore_lighting": true,
-      "color": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
-        "a": "0.7"
-      }
-    },
-    "controller.render.mv.warden_spots_1": {
-      "geometry": "Geometry.mv_default",
-      "materials": [
-        { "*": "Material.mv_bioluminescent_layer" }
-      ],
-      "textures": ["Texture.mv_spots_1"],
-      "ignore_lighting": true,
-      "color": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
-        "a": "variable.spots_1_alpha"
-      }
-    },
-    "controller.render.mv.warden_spots_2": {
-      "geometry": "Geometry.mv_default",
-      "materials": [
-        { "*": "Material.mv_bioluminescent_layer" }
-      ],
-      "textures": ["Texture.mv_spots_2"],
-      "ignore_lighting": true,
-      "color": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
-        "a": "variable.spots_2_alpha"
-      }
-    },
-    "controller.render.mv.warden_tendrils": {
-      "geometry": "Geometry.mv_default",
-      "materials": [
-        { "*": "Material.mv_bioluminescent_layer" }
-      ],
-      "textures": ["Texture.mv_tendrils"],
-      "ignore_lighting": true,
-      "color": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
-        "a": "variable.tendrils_alpha"
-      }
-    },
-    "controller.render.mv.warden_heart": {
-      "geometry": "Geometry.mv_default",
-      "materials": [
-        { "*": "Material.mv_bioluminescent_layer" }
-      ],
-      "textures": ["Texture.mv_heart"],
-      "ignore_lighting": true,
-      "color": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
-        "a": "query.hurt_time > 0 ? 0.2 : variable.heart_alpha"
       }
     }
   }

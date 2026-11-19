@@ -1,17 +1,20 @@
-// Render controller enderman: vanilla model with the custom skins (vanilla angry face).
-// v.mv_variant: skin.
+// Copy of the vanilla controller.render.enderman with the skin texture.
+// v.mv_variant: 1-26 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.enderman": {
-      "geometry": "Geometry.mv_default",
+      "geometry": "Geometry.default",
       "materials": [
-        { "*": "Material.mv_default" }
+        { "*": "Array.materials[query.is_invisible]" }
       ],
-      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
+      "textures": ["array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
+        "materials": {
+          "Array.materials": ["Material.default", "Material.invisible"]
+        },
         "textures": {
-          "array.xskins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",

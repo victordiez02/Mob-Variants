@@ -1,0 +1,57 @@
+// Copy of the vanilla controller.render.evoker with the skin texture.
+// v.mv_variant: 1-31 = array.mv_skins[v.mv_variant - 1]
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.mv.evocation_illager": {
+      "geometry": "Geometry.default",
+      "part_visibility": [
+        { "*": true },
+        { "arms": "!(query.is_casting || query.is_celebrating)" },
+        { "leftarm": "query.is_casting || query.is_celebrating" },
+        { "rightarm": "query.is_casting || query.is_celebrating" }
+      ],
+      "materials": [
+        { "*": "Material.default" }
+      ],
+      "textures": ["array.mv_skins[v.mv_variant - 1]"],
+      "arrays": {
+        "textures": {
+          "array.mv_skins": [
+            "Texture.mv_default",
+            "Texture.mv_default2",
+            "Texture.mv_default3",
+            "Texture.mv_default4",
+            "Texture.mv_default5",
+            "Texture.mv_default6",
+            "Texture.mv_default7",
+            "Texture.mv_default8",
+            "Texture.mv_default9",
+            "Texture.mv_default10",
+            "Texture.mv_default11",
+            "Texture.mv_default12",
+            "Texture.mv_default13",
+            "Texture.mv_default14",
+            "Texture.mv_default15",
+            "Texture.mv_default16",
+            "Texture.mv_default17",
+            "Texture.mv_default18",
+            "Texture.mv_default19",
+            "Texture.mv_default20",
+            "Texture.mv_default21",
+            "Texture.mv_default22",
+            "Texture.mv_default23",
+            "Texture.mv_default24",
+            "Texture.mv_default25",
+            "Texture.mv_default26",
+            "Texture.mv_default27",
+            "Texture.mv_default28",
+            "Texture.mv_default29",
+            "Texture.mv_default30",
+            "Texture.mv_default31"
+          ]
+        }
+      }
+    }
+  }
+}

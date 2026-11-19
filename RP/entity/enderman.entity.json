@@ -1,14 +1,12 @@
+// enderman: vanilla client entity (enderman.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:enderman",
       "min_engine_version": "1.8.0",
-      "materials": {
-        "default": "enderman",
-        "invisible": "enderman_invisible",
-        "mv_default": "enderman"
-      },
+      "materials": { "default": "enderman", "invisible": "enderman_invisible" },
       "textures": {
         "default": "textures/entity/enderman/enderman",
         "mv_default": "textures/entity/enderman/enderman",
@@ -38,9 +36,23 @@
         "mv_default25": "textures/entity/enderman/enderman25",
         "mv_default26": "textures/entity/enderman/enderman26"
       },
-      "geometry": {
-        "default": "geometry.enderman.v1.8",
-        "mv_default": "geometry.enderman.v1.8"
+      "geometry": { "default": "geometry.enderman.v1.8" },
+      "scripts": {
+        "pre_animation": [
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0;",
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 28.65;"
+        ],
+        "initialize": ["v.xvar = math.random_integer(1, 26);"],
+        "animate": [
+          "look_at_target",
+          "move_controller",
+          "attack",
+          "bob_controller",
+          "base_pose_controller",
+          "carrying_controller",
+          "scary_face_controller"
+        ]
       },
       "animations": {
         "look_at_target_default": "animation.humanoid.look_at_target.default",
@@ -61,24 +73,11 @@
         "carrying_controller": "controller.animation.enderman.carrying",
         "scary_face_controller": "controller.animation.enderman.scary_face"
       },
-      "render_controllers": ["controller.render.mv.enderman"],
-      "spawn_egg": { "texture": "spawn_egg_enderman" },
-      "scripts": {
-        "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 28.65;"
-        ],
-        "animate": [
-          "look_at_target",
-          "move_controller",
-          "attack",
-          "bob_controller",
-          "base_pose_controller",
-          "carrying_controller",
-          "scary_face_controller"
-        ],
-        "initialize": ["v.xvar = math.random(0,99);"]
-      }
+      "render_controllers": [
+        { "controller.render.enderman": "!v.mv_active" },
+        { "controller.render.mv.enderman": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_enderman" }
     }
   }
 }

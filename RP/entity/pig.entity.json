@@ -1,14 +1,12 @@
+// pig: vanilla client entity (pig.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:pig",
       "min_engine_version": "1.8.0",
-      "materials": {
-        "default": "pig_v3",
-        "mv_default": "entity_alphatest",
-        "mv_glow": "enderman"
-      },
+      "materials": { "default": "pig_v3", "mv_legacy": "pig" },
       "textures": {
         "default": "textures/entity/pig/pig_v3",
         "saddled": "textures/entity/pig/pig_saddle",
@@ -27,63 +25,42 @@
         "mv_saddled2": "textures/entity/pig/pig_saddle2",
         "mv_saddled3": "textures/entity/pig/pig_saddle3",
         "mv_saddled4": "textures/entity/pig/pig_saddle4",
-        "mv_saddled5": "textures/entity/pig/pig_saddle5",
-        "mv_capibara": "textures/entity/pig/capibara",
-        "mv_capibara_saddle": "textures/entity/pig/capibara_saddle",
-        "mv_snail": "textures/entity/pig/snail",
-        "mv_snail_saddle": "textures/entity/pig/snail_saddle",
-        "mv_gold": "textures/entity/pig/pig_gold",
-        "mv_gold_saddle": "textures/entity/pig/pig_gold_saddle",
-        "mv_chest": "textures/entity/pig/pig_chest",
-        "mv_flower": "textures/entity/iron_golem/iron_golem2"
+        "mv_saddled5": "textures/entity/pig/pig_saddle5"
       },
       "geometry": {
         "default": "geometry.pig.v3",
         "baby": "geometry.pig.baby",
-        "mv_default": "geometry.pig",
-        "mv_capibara": "geometry.mv.capibara",
-        "mv_snail": "geometry.mv.snail",
-        "mv_chest": "geometry.mv.pig_chest",
-        "mv_flower": "geometry.mv.pig_flower",
-        "mv_empty": "geometry.mv.zombie_empty",
-        "mv_extras": "geometry.mv.pig_extras"
+        "mv_legacy": "geometry.pig"
       },
       "animations": {
         "setup": "animation.pig.setup",
         "walk": "animation.quadruped.walk",
         "look_at_target": "animation.common.look_at_target",
         "baby_transform": "animation.pig.baby_transform",
-        "setup_legacy": "animation.pig.setup.v1.0"
+        "mv_setup_legacy": "animation.pig.setup.v1.0"
       },
-      "render_controllers": [
-        { "controller.render.saddle": "!v.mv_active" },
-        { "controller.render.pig.v4": "!v.mv_active" },
-        { "controller.render.mv.pig": "v.mv_active" },
-        {
-          "controller.render.mv.pig_extras": "v.mv_active && v.mv_pig_shape"
-        },
-        { "controller.render.mv.pig_chest": "v.mv_active" },
-        { "controller.render.mv.pig_flower": "v.mv_active" }
-      ],
-      "spawn_egg": { "texture": "spawn_egg_pig" },
       "scripts": {
         "animate": [
           { "setup": "!v.mv_active" },
-          { "setup_legacy": "v.mv_active" },
+          { "mv_setup_legacy": "v.mv_active" },
           { "walk": "query.modified_move_speed" },
           "look_at_target"
         ],
         "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 0;",
-          "v.mv_mark = q.has_property('mv:mark_variant') ? q.property('mv:mark_variant') : 0;",
-          "v.mv_active = !q.is_baby && q.property('minecraft:climate_variant') == 'temperate';",
-          "v.mv_pig_shape = v.mv_variant ? (v.mv_variant != 6 && v.mv_variant != 7) : v.xvar >= 30;",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0 && (!q.is_baby && q.property('minecraft:climate_variant') == 'temperate');",
           "t.variant = query.property('minecraft:climate_variant');",
           "v.index = (t.variant == 'temperate') ? 0 : ((t.variant == 'warm') ? 1 : 2);"
         ],
         "scale": "query.is_baby ? 2.0 : 1.0",
-        "initialize": ["v.xvar = Math.random(0,99);"]
-      }
+        "initialize": ["v.xvar = math.random_integer(1, 5);"]
+      },
+      "render_controllers": [
+        { "controller.render.saddle": "!v.mv_active" },
+        { "controller.render.pig.v4": "!v.mv_active" },
+        { "controller.render.mv.pig": "v.mv_active" }
+      ],
+      "spawn_egg": { "texture": "spawn_egg_pig" }
     }
   }
 }

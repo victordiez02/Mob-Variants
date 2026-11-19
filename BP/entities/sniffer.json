@@ -12,12 +12,6 @@
           "range": [0, 9],
           "default": 0,
           "client_sync": true
-        },
-        "mv:mark_variant": {
-          "type": "int",
-          "range": [0, 7],
-          "default": 0,
-          "client_sync": true
         }
       }
     },
@@ -189,56 +183,6 @@
           "on_fail_during_digging": { "event": "on_fail_during_digging", "target": "self" },
           "on_success": { "event": "on_search_and_digging_success", "target": "self" }
         }
-      },
-      "mv:torchflower_change_1to2": {
-        "minecraft:timer": {
-          "time": [250, 350],
-          "looping": false,
-          "time_down_event": {
-            "event": "mv:torchflower_change_1to2_event",
-            "target": "self"
-          }
-        }
-      },
-      "mv:torchflower_change_2to3": {
-        "minecraft:timer": {
-          "time": [250, 350],
-          "looping": false,
-          "time_down_event": {
-            "event": "mv:torchflower_change_2to3_event",
-            "target": "self"
-          }
-        }
-      },
-      "mv:pitchflower_change_1to2": {
-        "minecraft:timer": {
-          "time": [200, 300],
-          "looping": false,
-          "time_down_event": {
-            "event": "mv:pitchflower_change_1to2_event",
-            "target": "self"
-          }
-        }
-      },
-      "mv:pitchflower_change_2to3": {
-        "minecraft:timer": {
-          "time": [200, 300],
-          "looping": false,
-          "time_down_event": {
-            "event": "mv:pitchflower_change_2to3_event",
-            "target": "self"
-          }
-        }
-      },
-      "mv:pitchflower_change_3to4": {
-        "minecraft:timer": {
-          "time": [200, 300],
-          "looping": false,
-          "time_down_event": {
-            "event": "mv:pitchflower_change_3to4_event",
-            "target": "self"
-          }
-        }
       }
     },
     "events": {
@@ -289,28 +233,6 @@
                 "set_property": { "mv:variant": 9 }
               }
             ]
-          },
-          {
-            "randomize": [
-              {
-                "weight": 50,
-                "set_property": { "mv:mark_variant": 0 }
-              },
-              {
-                "weight": 30,
-                "add": {
-                  "component_groups": ["mv:torchflower_change_1to2"]
-                },
-                "set_property": { "mv:mark_variant": 1 }
-              },
-              {
-                "weight": 20,
-                "add": {
-                  "component_groups": ["mv:pitchflower_change_1to2"]
-                },
-                "set_property": { "mv:mark_variant": 4 }
-              }
-            ]
           }
         ]
       },
@@ -320,9 +242,53 @@
         }
       },
       "minecraft:entity_born": {
-        "add": {
-          "component_groups": ["sniffer_baby", "pushable"]
-        }
+        "sequence": [
+          {
+            "add": {
+              "component_groups": ["sniffer_baby", "pushable"]
+            }
+          },
+          {
+            "randomize": [
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 1 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 2 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 3 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 4 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 5 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 6 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 7 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 8 }
+              },
+              {
+                "weight": 1,
+                "set_property": { "mv:variant": 9 }
+              }
+            ]
+          }
+        ]
       },
       "on_pregnant": {
         "add": {
@@ -396,45 +362,6 @@
       "on_rising_end": {
         "remove": {
           "component_groups": ["stand_up"]
-        }
-      },
-      "mv:pitchflower_change_1to2_event": {
-        "add": {
-          "component_groups": ["mv:pitchflower_change_2to3"]
-        },
-        "set_property": { "mv:mark_variant": 5 },
-        "remove": {
-          "component_groups": ["mv:pitchflower_change_1to2"]
-        }
-      },
-      "mv:torchflower_change_1to2_event": {
-        "add": {
-          "component_groups": ["mv:torchflower_change_2to3"]
-        },
-        "set_property": { "mv:mark_variant": 2 },
-        "remove": {
-          "component_groups": ["mv:torchflower_change_1to2"]
-        }
-      },
-      "mv:torchflower_change_2to3_event": {
-        "set_property": { "mv:mark_variant": 3 },
-        "remove": {
-          "component_groups": ["mv:torchflower_change_2to3"]
-        }
-      },
-      "mv:pitchflower_change_2to3_event": {
-        "add": {
-          "component_groups": ["mv:pitchflower_change_3to4"]
-        },
-        "set_property": { "mv:mark_variant": 6 },
-        "remove": {
-          "component_groups": ["mv:pitchflower_change_2to3"]
-        }
-      },
-      "mv:pitchflower_change_3to4_event": {
-        "set_property": { "mv:mark_variant": 7 },
-        "remove": {
-          "component_groups": ["mv:pitchflower_change_3to4"]
         }
       }
     }

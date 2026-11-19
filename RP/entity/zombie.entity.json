@@ -1,14 +1,12 @@
+// zombie: vanilla client entity (zombie.entity.json) + random skins (Mob Variants).
+// v.mv_variant = mv:variant (BP) or a local roll (RP alone); 0 = vanilla. v.mv_active: draw the skins.
 {
   "format_version": "1.26.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "minecraft:zombie",
       "min_engine_version": "1.8.0",
-      "materials": {
-        "default": "zombie",
-        "mv_default": "enderman",
-        "mv_overlay": "entity_alphatest"
-      },
+      "materials": { "default": "zombie" },
       "textures": {
         "default": "textures/entity/zombie/zombie",
         "baby": "textures/entity/zombie/zombie_baby",
@@ -44,108 +42,17 @@
         "mv_default30": "textures/entity/zombie/zombie30",
         "mv_default31": "textures/entity/zombie/zombie31",
         "mv_default32": "textures/entity/zombie/zombie32",
-        "mv_default33": "textures/entity/zombie/zombie33",
-        "mv_gold": "textures/entity/zombie/zombie_gold",
-        "mv_leg": "textures/entity/zombie/zombie_leg",
-        "mv_overlay": "textures/entity/zombie/zombie_wsword_chest",
-        "mv_overlay2": "textures/entity/zombie/zombie_ssword_chest",
-        "mv_overlay3": "textures/entity/zombie/zombie_gsword_chest",
-        "mv_overlay4": "textures/entity/zombie/zombie_isword_chest",
-        "mv_overlay5": "textures/entity/zombie/zombie_dsword_chest",
-        "mv_overlay6": "textures/entity/zombie/zombie_nsword_chest",
-        "mv_miner": "textures/entity/zombie/miner",
-        "mv_arrows": "textures/entity/arrows"
+        "mv_default33": "textures/entity/zombie/zombie33"
       },
       "geometry": {
         "default": "geometry.zombie.v1.8",
-        "baby": "geometry.zombie.baby",
-        "mv_default": "geometry.zombie.v1.8",
-        "mv_default2": "geometry.mv.zombie2",
-        "mv_default3": "geometry.mv.zombie3",
-        "mv_default4": "geometry.mv.zombie4",
-        "mv_default5": "geometry.mv.zombie5",
-        "mv_brokenjaw": "geometry.mv.zombie_brokenjaw",
-        "mv_brokenjaw2": "geometry.mv.zombie_brokenjaw2",
-        "mv_leg": "geometry.mv.zombie_leg",
-        "mv_empty": "geometry.mv.zombie_empty",
-        "mv_sword_chest": "geometry.mv.zombie_sword_chest",
-        "mv_sword_chest2": "geometry.mv.zombie_sword_chest2",
-        "mv_sword_head": "geometry.mv.zombie_sword_head",
-        "mv_arrow_head_1": "geometry.mv.arrow_head_1",
-        "mv_arrow_head_2": "geometry.mv.arrow_head_2",
-        "mv_arrow_chest_1": "geometry.mv.arrow_chest_1",
-        "mv_arrow_chest_2": "geometry.mv.arrow_chest_2",
-        "mv_arrow_knee": "geometry.mv.arrow_knee",
-        "mv_miner": "geometry.mv.miner",
-        "mv_pickaxe": "geometry.mv.miner_pickaxe"
+        "baby": "geometry.zombie.baby"
       },
       "spawn_egg": { "texture": "spawn_egg_zombie" },
-      "animations": {
-        "humanoid_big_head": "animation.humanoid.big_head",
-        "look_at_target_default": "animation.humanoid.look_at_target.default",
-        "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
-        "look_at_target_swimming": "animation.humanoid.look_at_target.swimming",
-        "move": "animation.humanoid.move",
-        "riding.arms": "animation.humanoid.riding.arms",
-        "riding.legs": "animation.humanoid.riding.legs",
-        "holding": "animation.humanoid.holding",
-        "brandish_spear": "animation.humanoid.brandish_spear",
-        "charging": "animation.humanoid.charging",
-        "attack.rotations": "animation.humanoid.attack.rotations",
-        "sneaking": "animation.humanoid.sneaking",
-        "bob": "animation.humanoid.bob",
-        "damage_nearby_mobs": "animation.humanoid.damage_nearby_mobs",
-        "bow_and_arrow": "animation.humanoid.bow_and_arrow",
-        "use_item_progress": "animation.humanoid.use_item_progress",
-        "zombie_attack_bare_hand": "animation.zombie.attack_bare_hand",
-        "swimming": "animation.zombie.swimming",
-        "humanoid_big_head_controller": "controller.animation.humanoid.baby_big_head",
-        "look_at_target_controller": "controller.animation.humanoid.look_at_target",
-        "move_controller": "controller.animation.humanoid.move",
-        "riding.body": "animation.humanoid.riding.body",
-        "riding_controller": "controller.animation.humanoid.riding",
-        "holding_controller": "controller.animation.humanoid.holding",
-        "brandish_spear_controller": "controller.animation.humanoid.brandish_spear",
-        "charging_controller": "controller.animation.humanoid.charging",
-        "attack_controller": "controller.animation.humanoid.attack",
-        "sneaking_controller": "controller.animation.humanoid.sneaking",
-        "bob_controller": "controller.animation.humanoid.bob",
-        "damage_nearby_mobs_controller": "controller.animation.humanoid.damage_nearby_mobs",
-        "bow_and_arrow_controller": "controller.animation.humanoid.bow_and_arrow",
-        "use_item_progress_controller": "controller.animation.humanoid.use_item_progress",
-        "zombie_attack_bare_hand_controller": "controller.animation.zombie.attack_bare_hand",
-        "swimming_controller": "controller.animation.zombie.swimming",
-        "melee_spear_use": "animation.zombie.melee_spear_use",
-        "melee_spear_hold": "animation.zombie.melee_spear_hold",
-        "melee_spear_controller": "controller.animation.humanoid.melee_spear",
-        "baby_zombie_attack_bare_hand": "animation.zombie.baby_attack_bare_hand",
-        "mv_crawl_idle": "animation.mv.zombie_crawl.idle",
-        "mv_crawl_walk": "animation.mv.zombie_crawl.walk",
-        "mv_crawl_attack": "animation.mv.zombie_crawl.attack",
-        "mv_crawl_death": "animation.mv.zombie_crawl.death"
-      },
-      "render_controllers": [
-        { "controller.render.zombie.v2": "!v.mv_active" },
-        { "controller.render.mv.zombie": "v.mv_active" },
-        { "controller.render.mv.zombie_leg": "v.mv_active" },
-        { "controller.render.mv.zombie_sword": "v.mv_active" },
-        { "controller.render.mv.zombie_arrow": "v.mv_active" },
-        { "controller.render.mv.zombie_arrow2": "v.mv_active" },
-        { "controller.render.mv.zombie_miner": "v.mv_active" },
-        { "controller.render.mv.zombie_miner_pickaxe": "v.mv_active" }
-      ],
-      "enable_attachables": true,
       "scripts": {
         "pre_animation": [
-          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : 1 + math.floor(v.xvar * 0.34);",
-          "v.mv_pose = q.has_property('mv:pose') ? q.property('mv:pose') : (v.r_pose < 70 ? math.floor(v.r_pose / 23.34) : 3 + math.min(3, math.floor((v.r_pose - 70) / 7.5)));",
-          "v.mv_miner = q.has_property('mv:miner') ? q.property('mv:miner') : (v.mv_pose < 3 && v.r_miner < 30);",
-          "v.mv_sword = q.has_property('mv:sword') ? q.property('mv:sword') : (v.mv_pose >= 3 || v.r_sword < 80 ? 0 : (v.r_sword < 87.5 ? 1 : (v.r_sword < 95 ? 2 : 3)));",
-          "v.mv_sword_type = q.has_property('mv:sword_type') ? q.property('mv:sword_type') : (v.r_type < 25 ? 0 : (v.r_type < 50 ? 1 : (v.r_type < 70 ? 2 : (v.r_type < 95 ? 3 : (v.r_type < 99 ? 4 : 5)))));",
-          "v.mv_arrow = q.has_property('mv:arrow') ? q.property('mv:arrow') : (v.mv_pose >= 3 || v.r_arrow < 76 ? 0 : math.min(5, 1 + math.floor((v.r_arrow - 76) / 4.8)));",
-          "v.mv_arrow2 = q.has_property('mv:arrow2') ? q.property('mv:arrow2') : (v.mv_pose >= 3 || v.r_arrow2 < 76 ? 0 : math.min(5, 1 + math.floor((v.r_arrow2 - 76) / 4.8)));",
-          "v.mv_active = !q.is_baby;",
-          "v.mv_crawl = v.mv_active && v.mv_pose >= 3;",
+          "v.mv_variant = q.has_property('mv:variant') ? q.property('mv:variant') : v.xvar;",
+          "v.mv_active = v.mv_variant > 0 && (!q.is_baby);",
           "v.use_dedicated_baby_armor = true;",
           "v.tcos0 = Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / v.gliding_speed_value * 57.3;",
           "v.riding_y_offset_baby_scaling = query.is_baby ? -0.5 : 0.0;",
@@ -187,16 +94,7 @@
           "variable.tp_melee_spear_use_attachable_rotation_z": "public",
           "variable.use_dedicated_baby_armor": "public"
         },
-        "initialize": [
-          "v.tp_melee_spear_base_arm_rotation_x = -30.0;",
-          "v.xvar = math.random(0, 99);",
-          "v.r_pose = math.random(0, 100);",
-          "v.r_miner = (q.position(1) < 30) ? math.random(0, 100) : 100;",
-          "v.r_sword = math.random(0, 100);",
-          "v.r_type = math.random(0, 100);",
-          "v.r_arrow = math.random(0, 100);",
-          "v.r_arrow2 = math.random(0, 100);"
-        ],
+        "initialize": ["v.tp_melee_spear_base_arm_rotation_x = -30.0;", "v.xvar = math.random_integer(1, 33);"],
         "animate": [
           "look_at_target_controller",
           "move_controller",
@@ -214,21 +112,56 @@
             "zombie_attack_bare_hand_controller": "!v.melee_spear_equipped"
           },
           "swimming_controller",
-          { "melee_spear_controller": "v.melee_spear_equipped" },
-          {
-            "mv_crawl_idle": "v.mv_crawl && q.is_alive && q.modified_move_speed < 0.05"
-          },
-          {
-            "mv_crawl_walk": "v.mv_crawl && q.is_alive && q.modified_move_speed >= 0.05"
-          },
-          {
-            "mv_crawl_attack": "v.mv_crawl && q.is_alive && q.has_target && v.attack_time > 0"
-          },
-          { "mv_crawl_death": "v.mv_crawl && !q.is_alive" }
+          { "melee_spear_controller": "v.melee_spear_equipped" }
         ],
         "should_update_effects_offscreen": "1.0",
         "scale": "query.is_baby ? 2.0 : 1.0"
-      }
+      },
+      "animations": {
+        "humanoid_big_head": "animation.humanoid.big_head",
+        "look_at_target_default": "animation.humanoid.look_at_target.default",
+        "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
+        "look_at_target_swimming": "animation.humanoid.look_at_target.swimming",
+        "move": "animation.humanoid.move",
+        "riding.arms": "animation.humanoid.riding.arms",
+        "riding.legs": "animation.humanoid.riding.legs",
+        "holding": "animation.humanoid.holding",
+        "brandish_spear": "animation.humanoid.brandish_spear",
+        "charging": "animation.humanoid.charging",
+        "attack.rotations": "animation.humanoid.attack.rotations",
+        "sneaking": "animation.humanoid.sneaking",
+        "bob": "animation.humanoid.bob",
+        "damage_nearby_mobs": "animation.humanoid.damage_nearby_mobs",
+        "bow_and_arrow": "animation.humanoid.bow_and_arrow",
+        "use_item_progress": "animation.humanoid.use_item_progress",
+        "zombie_attack_bare_hand": "animation.zombie.attack_bare_hand",
+        "swimming": "animation.zombie.swimming",
+        "humanoid_big_head_controller": "controller.animation.humanoid.baby_big_head",
+        "look_at_target_controller": "controller.animation.humanoid.look_at_target",
+        "move_controller": "controller.animation.humanoid.move",
+        "riding.body": "animation.humanoid.riding.body",
+        "riding_controller": "controller.animation.humanoid.riding",
+        "holding_controller": "controller.animation.humanoid.holding",
+        "brandish_spear_controller": "controller.animation.humanoid.brandish_spear",
+        "charging_controller": "controller.animation.humanoid.charging",
+        "attack_controller": "controller.animation.humanoid.attack",
+        "sneaking_controller": "controller.animation.humanoid.sneaking",
+        "bob_controller": "controller.animation.humanoid.bob",
+        "damage_nearby_mobs_controller": "controller.animation.humanoid.damage_nearby_mobs",
+        "bow_and_arrow_controller": "controller.animation.humanoid.bow_and_arrow",
+        "use_item_progress_controller": "controller.animation.humanoid.use_item_progress",
+        "zombie_attack_bare_hand_controller": "controller.animation.zombie.attack_bare_hand",
+        "swimming_controller": "controller.animation.zombie.swimming",
+        "melee_spear_use": "animation.zombie.melee_spear_use",
+        "melee_spear_hold": "animation.zombie.melee_spear_hold",
+        "melee_spear_controller": "controller.animation.humanoid.melee_spear",
+        "baby_zombie_attack_bare_hand": "animation.zombie.baby_attack_bare_hand"
+      },
+      "render_controllers": [
+        { "controller.render.zombie.v2": "!v.mv_active" },
+        { "controller.render.mv.zombie": "v.mv_active" }
+      ],
+      "enable_attachables": true
     }
   }
 }

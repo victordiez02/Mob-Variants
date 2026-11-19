@@ -1,22 +1,17 @@
-// Render controller Creeper
-// v.mv_variant: skin del mob.
-// v.mv_mark: variante del gorro (1, 2, 3, 4) o sin gorro (0).
-// Creepers normales (1-19): modelo vanilla + capa creeper_extras (costillas, pieza del torso, calavera).
-// Creepers esqueleto (20-34): modelo propio creeper_s.
+// Copy of the vanilla controller.render.creeper with the skin texture.
+// v.mv_variant: 1-18 = array.mv_skins[v.mv_variant - 1]
 {
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.mv.creeper": {
-      "geometry": "v.mv_variant ? array.geos[(v.mv_variant - 1) / 19] : array.geos[variable.xvar / 75]",
+      "geometry": "Geometry.default",
       "materials": [
-        { "*": "Material.mv_default" }
+        { "*": "Material.default" }
       ],
-      "textures": [
-        "v.mv_variant ? array.xskinsq[v.mv_variant - 1] : (variable.xvar < 75 ? array.xskins[variable.xvar] : array.sskins[variable.xvar])"
-      ],
+      "textures": ["array.mv_skins[v.mv_variant - 1]"],
       "arrays": {
         "textures": {
-          "array.xskins": [
+          "array.mv_skins": [
             "Texture.mv_default",
             "Texture.mv_default2",
             "Texture.mv_default3",
@@ -34,135 +29,15 @@
             "Texture.mv_default15",
             "Texture.mv_default16",
             "Texture.mv_default17",
-            "Texture.mv_default18",
-            "Texture.mv_default19"
-          ],
-          "array.sskins": [
-            "Texture.mv_skeleton",
-            "Texture.mv_skeleton2",
-            "Texture.mv_skeleton3",
-            "Texture.mv_skeleton4",
-            "Texture.mv_skeleton5",
-            "Texture.mv_skeleton6",
-            "Texture.mv_skeleton7",
-            "Texture.mv_skeleton8",
-            "Texture.mv_skeleton9",
-            "Texture.mv_skeleton10",
-            "Texture.mv_skeleton11",
-            "Texture.mv_skeleton12",
-            "Texture.mv_skeleton13",
-            "Texture.mv_skeleton14",
-            "Texture.mv_skeleton15"
-          ],
-          "array.xskinsq": [
-            "Texture.mv_default",
-            "Texture.mv_default2",
-            "Texture.mv_default3",
-            "Texture.mv_default4",
-            "Texture.mv_default5",
-            "Texture.mv_default6",
-            "Texture.mv_default7",
-            "Texture.mv_default8",
-            "Texture.mv_default9",
-            "Texture.mv_default10",
-            "Texture.mv_default11",
-            "Texture.mv_default12",
-            "Texture.mv_default13",
-            "Texture.mv_default14",
-            "Texture.mv_default15",
-            "Texture.mv_default16",
-            "Texture.mv_default17",
-            "Texture.mv_default18",
-            "Texture.mv_default19",
-            "Texture.mv_skeleton",
-            "Texture.mv_skeleton2",
-            "Texture.mv_skeleton3",
-            "Texture.mv_skeleton4",
-            "Texture.mv_skeleton5",
-            "Texture.mv_skeleton6",
-            "Texture.mv_skeleton7",
-            "Texture.mv_skeleton8",
-            "Texture.mv_skeleton9",
-            "Texture.mv_skeleton10",
-            "Texture.mv_skeleton11",
-            "Texture.mv_skeleton12",
-            "Texture.mv_skeleton13",
-            "Texture.mv_skeleton14",
-            "Texture.mv_skeleton15"
-          ]
-        },
-        "geometries": {
-          "array.geos": ["Geometry.mv_default", "Geometry.mv_skeleton"]
-        }
-      }
-    },
-    "controller.render.mv.creeper_extras": {
-      "geometry": "Geometry.mv_extras",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["v.mv_variant ? array.xskins[v.mv_variant - 1] : array.xskins[variable.xvar]"],
-      "arrays": {
-        "textures": {
-          "array.xskins": [
-            "Texture.mv_default",
-            "Texture.mv_default2",
-            "Texture.mv_default3",
-            "Texture.mv_default4",
-            "Texture.mv_default5",
-            "Texture.mv_default6",
-            "Texture.mv_default7",
-            "Texture.mv_default8",
-            "Texture.mv_default9",
-            "Texture.mv_default10",
-            "Texture.mv_default11",
-            "Texture.mv_default12",
-            "Texture.mv_default13",
-            "Texture.mv_default14",
-            "Texture.mv_default15",
-            "Texture.mv_default16",
-            "Texture.mv_default17",
-            "Texture.mv_default18",
-            "Texture.mv_default19"
+            "Texture.mv_default18"
           ]
         }
-      }
-    },
-    "controller.render.mv.creeper_hat": {
-      "rebuild_animation_matrices": true,
-      "geometry": "v.mv_variant ? array.hatgeosq[v.mv_variant < 20 ? v.mv_mark : 0] : (variable.xvar < 30 ? Array.hatgeos[variable.xvar] : Geometry.mv_empty)",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["v.mv_variant ? array.hatskinsq[v.mv_mark] : array.hatskins[variable.xvar]"],
-      "arrays": {
-        "textures": {
-          "array.hatskins": ["Texture.mv_tnt", "Texture.mv_cactus", "Texture.mv_stone", "Texture.mv_shells"],
-          "array.hatskinsq": ["Texture.mv_tnt", "Texture.mv_tnt", "Texture.mv_cactus", "Texture.mv_stone", "Texture.mv_shells"]
-        },
-        "geometries": {
-          "array.hatgeos": ["Geometry.mv_tnt", "Geometry.mv_cactus", "Geometry.mv_stone", "Geometry.mv_shells"],
-          "array.hatgeosq": [
-            "Geometry.mv_empty",
-            "Geometry.mv_tnt",
-            "Geometry.mv_cactus",
-            "Geometry.mv_stone",
-            "Geometry.mv_shells"
-          ]
-        }
-      }
-    },
-    "controller.render.mv.creeper_TnT_s": {
-      "rebuild_animation_matrices": true,
-      "geometry": "v.mv_variant ? array.tntgeos[(v.mv_variant - 1) / 19] : array.tntgeos[variable.xvar / 75]",
-      "materials": [
-        { "*": "Material.mv_default" }
-      ],
-      "textures": ["Texture.mv_tnt"],
-      "arrays": {
-        "geometries": {
-          "array.tntgeos": ["Geometry.mv_ribs_tnt", "Geometry.mv_tnt_s"]
-        }
+      },
+      "overlay_color": {
+        "r": "((variable.flash == 0.0) || (query.swelling_dir < 0.0)) ? this : 1.0",
+        "g": "((variable.flash == 0.0) || (query.swelling_dir < 0.0)) ? this : 1.0",
+        "b": "((variable.flash == 0.0) || (query.swelling_dir < 0.0)) ? this : 1.0",
+        "a": "((variable.flash == 0.0) || (query.swelling_dir < 0.0)) ? this : 0.5"
       }
     }
   }
