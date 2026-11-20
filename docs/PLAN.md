@@ -23,12 +23,15 @@ Orden propuesto (de menos a más riesgo); el usuario elige qué vuelve:
 Antes de las capas de mobs con objetos en la mano: comprobar con la base si el hacha del vindicador y la
 espada del esqueleto wither se ven (ver sus fichas).
 
-## Fase C: compatibilidad con Actions & Stuff (pregunta 2)
+## Fase C: compatibilidad con Actions & Stuff (rama `ans-compat`, docs/ANS.md)
+- [x] Análisis de A&S 1.1.68 y `tools/ans_patch.py` (pack local fusionado)
+- [ ] Prueba en el juego del zombi (SP0)
+- [ ] Resto de mobs de SP0; SP1/SP2
 
 ## Fase D: release
 - [ ] bdstest de todos los mobs, package, tag
 
 ## Preguntas para el usuario
 1. Probar la base en el juego con mobs **recién aparecidos** (Content Log incluido).
-2. Actions & Stuff: hace falta su pack (versión actual) para ver qué entidades redefine.
+2. Actions & Stuff: probar el zombi con el pack generado (docs/ANS.md).
 3. Ahogado y enderman: aplazados (recordar).

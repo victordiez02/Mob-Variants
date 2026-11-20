@@ -55,6 +55,7 @@ En la base: 33 skins sobre el modelo vanilla, puerta `!q.is_baby`; BP con `mv:va
 
 - En el juego: el **casco de minero salía en zombis tumbados** como si estuvieran de pie. Sospecha: los filtros `int_property mv:pose < 3` del mismo evento leen la propiedad antes de que se aplique el `set_property` de la pose; por la misma razón saldrían espadas y flechas en los tumbados.
 - Antes solo salían espadas de madera y nunca flechas (codificación en dos números): arreglado con una propiedad por rasgo (be1cf62).
+- **Actions & Stuff (SP0)**: primer mob de la prueba de compatibilidad (docs/ANS.md). Su modelo no tiene sombrero y usa esa zona de la textura (x 40-56, y 0-16) para hombreras y pies: `ans_patch.py` limpia esa zona en zombie3, 4, 6, 7, 11, 17, 19, 20, 24, 25, 26, 27, 29 y 31 (pierden el sombrero con A&S). Pendiente de probar en el juego.
 - El zombi que se arrastra (zombie2-5) tenía animación propia `animation.mv.zombie_crawl.*`: el usuario quiere conservarla cuando vuelva (es propia de esa geometría).
 
 ## Antes (`legacy-v5`)
